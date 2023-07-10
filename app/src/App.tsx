@@ -1,4 +1,5 @@
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "react-query";
 import {
   Route,
   RouterProvider,
@@ -8,6 +9,7 @@ import {
 import "./App.css";
 import HomePage from "./pages/Home";
 import { pageRoutes } from "./routes";
+import { theme } from "./theme";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,11 +17,17 @@ const router = createBrowserRouter(
   ),
 );
 
+const queryClient = new QueryClient();
+
 function App() {
   return (
     <>
-      <CssBaseline enableColorScheme />
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline enableColorScheme />
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </QueryClientProvider>
     </>
   );
 }

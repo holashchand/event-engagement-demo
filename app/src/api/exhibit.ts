@@ -1,7 +1,5 @@
 import { useQuery } from "react-query";
-import { apiRoutes } from "../routes";
 import { Exhibit } from "../types/exhibit";
-import { axiosInst } from "./axios";
 
 interface ExhibitsResponse {
   data: Exhibit[];
@@ -9,7 +7,10 @@ interface ExhibitsResponse {
 }
 
 export const useExhibitsData = () => {
-  return useQuery(["exhibits"], () =>
-    axiosInst.get<ExhibitsResponse>(apiRoutes.EXHIBITS).then((res) => res.data),
+  return useQuery(
+    ["exhibits"],
+    () => Promise.resolve({ data: [], count: 0 } as ExhibitsResponse),
+    // replace with actual request below
+    // axiosInst.get<ExhibitsResponse>(apiRoutes.EXHIBITS).then((res) => res.data),
   );
 };

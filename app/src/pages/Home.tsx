@@ -1,4 +1,6 @@
+import { Box } from "@mui/material";
 import { useExhibitsData } from "../api/exhibit";
+import banner from "../assets/banner.svg";
 
 function HomePage() {
   const { data, isLoading } = useExhibitsData();
@@ -6,7 +8,11 @@ function HomePage() {
     return "Loading";
   }
   console.debug(data);
-  return <>Home Page</>;
+  return (
+    <Box display={"flex"} height={"100vh"} justifyContent={"center"}>
+      <img src={banner} className="banner" />
+    </Box>
+  );
 }
 
 export default HomePage;
