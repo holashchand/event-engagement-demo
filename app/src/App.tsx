@@ -1,11 +1,26 @@
-import banner from "./assets/banner.svg";
+import { CssBaseline } from "@mui/material";
+import {
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
 import "./App.css";
+import HomePage from "./pages/Home";
+import { pageRoutes } from "./routes";
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path={pageRoutes.HOME} element={<HomePage />} />,
+  ),
+);
 
 function App() {
   return (
-    <div className="app">
-      <img src={banner} className="banner"/>
-    </div>
+    <>
+      <CssBaseline enableColorScheme />
+      <RouterProvider router={router} />
+    </>
   );
 }
 
