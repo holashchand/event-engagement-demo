@@ -1,6 +1,5 @@
 import { Box, Card, CardContent, Divider, IconButton, Link, Stack, TextField, Typography } from "@mui/material";
 import { useExhibitsData } from "../api/exhibit";
-import banner from "../assets/banner.svg";
 import { useNavigate } from "react-router-dom";
 import Profile from "../layout/Profile";
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
@@ -9,11 +8,11 @@ import { FC, ReactElement } from "react";
 import { apiRoutes } from "../routes";
 
 const UserHome: FC<any> = (): ReactElement => {
-//   const { data, isLoading } = useExhibitsData();
-//   if (isLoading) {
-//     // return "Loading";
-//   }
-//   console.debug(data);
+  const { data, isLoading } = useExhibitsData();
+  if (isLoading) {
+    // return "Loading";
+  }
+  console.debug(data);
   let navigate = useNavigate();
     function handleScan() {
         console.log('start login');

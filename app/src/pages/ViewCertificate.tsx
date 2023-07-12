@@ -1,5 +1,5 @@
 
-import React, {ReactElement, FC} from "react";
+import {ReactElement, FC} from "react";
 import { Box, Card, CardContent, Divider, List, Paper, Typography} from "@mui/material";
 import EmojiEventsRoundedIcon from '@mui/icons-material/EmojiEventsRounded';
 import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
@@ -11,7 +11,6 @@ import Profile from "../layout/Profile";
 const ViewCertificate: FC<any> = (): ReactElement => {
     const { state } = useLocation();
     console.log('navigate ', state);
-    const ariaLabel = { 'aria-label': 'description' };
     let question = [{question: 'question 1: ', options: [{option1: 'option1', option2: 'option2', option3: 'option3', option4: 'option4'}], answer: 'options1', selectedOpt:'', checked: true},
     {question: 'question 2: ', options: [{option1: 'option1', option2: 'option2', option3: 'option3', option4: 'option4'}], answer: 'options2', selectedOpt:'', checked: false},
     {question: 'question 3: ', options: [{option1: 'option1', option2: 'option2', option3: 'option3', option4: 'option4'}], answer: 'options3', selectedOpt:'', checked: true},

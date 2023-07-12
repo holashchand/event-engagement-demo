@@ -1,5 +1,4 @@
 import { useExhibitsData } from "../api/exhibit";
-import banner from "../assets/banner.svg";
 import {Box, Button, Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Stack, Typography} from "@mui/material";
 import CheckCircleOutlinedIcon from '@mui/icons-material/CheckCircleOutlined';
 import { useNavigate } from "react-router-dom";
@@ -7,7 +6,6 @@ import { ReactElement, FC } from "react";
 import { apiRoutes } from "../routes";
 
 const HomePage: FC<any> = (): ReactElement => {
-// function HomePage() {
   const { data, isLoading } = useExhibitsData();
   if (isLoading) {
     // return "Loading";

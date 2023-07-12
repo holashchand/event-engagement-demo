@@ -16,9 +16,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         let path = apiRoutes.QUESTION_SET; 
         navigate(path);
     }
-    function handleScan() {
-        
-    }
+
     return (
         <Box sx={{
             flexGrow: 1,
@@ -35,7 +33,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
                     <Rating
                         name="simple-controlled"
                         value={value}
-                        onChange={(event, newValue) => {
+                        onChange={(_e, newValue) => {
                             setValue(newValue);
                         }}
                     />

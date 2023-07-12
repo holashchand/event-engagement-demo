@@ -3,13 +3,9 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import {
   Route,
   BrowserRouter as Router,
-  RouterProvider,
   Routes,
-  createBrowserRouter,
-  createRoutesFromElements,
 } from "react-router-dom";
 import "./App.css";
-import HomePage from "./pages/Home";
 import { routes as appRoutes } from "./routes";
 import { theme } from "./theme";
 import ToolBar from "./layout/AppBar";
