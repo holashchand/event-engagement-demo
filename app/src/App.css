@@ -2,6 +2,7 @@
     margin: 0 auto;
     width: 100%;
     text-align: center;
+    overflow: hidden;
   }
   
   button, a {
@@ -10,4 +11,20 @@
   
   a {
     color: #6558F4 !important;
+  }
+
+  .inputFields {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 10px;
+  }
+  .inputFields label {
+    width: 20rem;
+    text-align: left;
+    text-wrap: wrap;
+  }
+
+  .inputFields div {
+    width: 90%;
   }

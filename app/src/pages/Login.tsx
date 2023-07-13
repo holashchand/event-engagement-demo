@@ -1,22 +1,38 @@
 
 import {ReactElement, FC} from "react";
-import {Box, Button, Grid, Stack, TextField, Typography, Link} from "@mui/material";
+import {Box, Button, Grid, TextField, Typography, Link, InputLabel} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes";
+import { useForm } from "react-hook-form";
+import ToolBar from "../layout/AppBar";
 
 const FirstLogin: FC<any> = (): ReactElement => {
     let navigate = useNavigate();
-    function login() {
-        console.log('start login');
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data: any) =>  {
+        console.log(data)
+        console.log('submit');
         let path = apiRoutes.USER_HOME; 
         navigate(path);
+    };
+    
+    function ReceiveOTP() {
+        console.log('Receive OTP');
+        // API call to receive otp
     }
+    
+    function ResendOTP() {
+        console.log('Resend OTP');
+        // API call to receive otp
+    }
+
     return (
-        <Box sx={{ backgroundColor: 'white', flexGrow: 1,
+        <Box sx={{flexGrow: 1,
         display: 'flex',
         justifyContent: 'center',
         textAlign: 'center' }}>
-        <Box sx={{ my: 3, mx: 2, color:'primary.dark', width:'100%'}}>
+        <ToolBar show={true} badgeOpt={false} toolbarHeight={false}/>
+        <Box sx={{ my: 25, mx: 2, color:'primary.dark', width:'100%'}}>
             <Grid container alignItems="center">
                 <Grid item xs>
                     <Typography m={2} gutterBottom variant="subtitle1" component="div" color={'primary.dark'} fontWeight={'bold'}>
@@ -24,28 +40,21 @@ const FirstLogin: FC<any> = (): ReactElement => {
                     </Typography>
                 </Grid>
             </Grid>
-            <Box width={'100%'} color={'black'} mt={4} mb={4}>
-            <Stack spacing={3} direction="row" justifyContent={"center"} mt={4}>
-                <Typography component="div" sx={{width: '30%', display: 'flex', justifyContent: 'space-between', m: '2'}}>
-                    My Phone 
-                </Typography>
-                <TextField id="outlined-basic" type="number" label="" variant="outlined" margin="none" sx={{padding: 0, width:'50%'}} />
-                <Button variant="contained" size="small" onClick={login} sx={{backgroundColor:"#6558F4", color:"white", padding: 0, width:'20%', textTransform:'capitalize'}}>Receive OTP</Button>
-            </Stack>
-            <Stack spacing={3} direction="row" justifyContent={"center"} mt={4}>
-                <Typography component="div" sx={{width: '30%', display: 'flex', justifyContent: 'space-between', m: '2'}}>
-                    OTP 
-                </Typography>
-                <TextField id="outlined-basic" label="" variant="outlined" margin="none" sx={{padding: 0, width:'50%'}} />
-                <Link href="#" sx={{padding: 0, width:'20%', textTransform:'capitalize'}}>Resend OTP</Link>
-            </Stack>
-            </Box>
-
-            <Stack spacing={1} direction="column" justifyContent={"center"} mt={4}>
-                <div>
-                    <Button variant="contained" onClick={login} sx={{backgroundColor:"#6558F4", color:"white"}}>Login</Button>
+            <Box width={'100%'} mt={4} mb={4}  component="form" onSubmit={handleSubmit(onSubmit)}>
+                <div className="inputFields">
+                    <InputLabel>My Phone</InputLabel>
+                    <TextField id="outlined-basic" type="number" {...register("phone")} label="" variant="outlined" margin="normal"/>
+                    <Button variant="contained" size="large" onClick={ReceiveOTP} sx={{backgroundColor:"#6558F4", color:"white", padding: 0, width:'10rem', textTransform:'capitalize'}}>Receive OTP</Button>
                 </div>
-            </Stack>
+                <div className="inputFields">
+                    <InputLabel>OTP</InputLabel>
+                    <TextField id="outlined-basic" label="" {...register("otp")} variant="outlined" />
+                    <Link href="#" sx={{padding: 0, width:'10rem', textTransform:'capitalize'}} onClick={ResendOTP}>Resend OTP</Link>
+                </div>
+                <div>
+                    <Button variant="contained" type="submit" sx={{backgroundColor:"#6558F4", color:"white", marginTop: '4rem'}}>Login</Button>
+                </div>
+            </Box>
         </Box>
     </Box>
     );

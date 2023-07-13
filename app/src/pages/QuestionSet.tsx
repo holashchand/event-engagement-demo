@@ -15,7 +15,7 @@ const QuestionSet: FC<any> = (): ReactElement => {
     {question: 'question 5: ', options: [{option1: 'option1', option2: 'option2', option3: 'option3', option4: 'option4'}], answer: 'options4', selectedOpt:'', checked: false},]
     function finishGame() {
         console.log('start login');
-        let path = apiRoutes.VIEW_CERTIFICATE; 
+        let path = apiRoutes.EXHIBIT_RESULT; 
         navigate(path, {state: question});
     }
 

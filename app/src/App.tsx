@@ -8,13 +8,6 @@ import {
 import "./App.css";
 import { routes as appRoutes } from "./routes";
 import { theme } from "./theme";
-import ToolBar from "./layout/AppBar";
-
-// const router = createBrowserRouter(
-//   createRoutesFromElements(
-//     <Route path={pageRoutes.HOME} element={<HomePage />} />,
-//   ),
-// );
 
 const queryClient = new QueryClient();
 
@@ -26,7 +19,6 @@ function App() {
           <CssBaseline enableColorScheme />
           <Box height="100vh" display="flex" flexDirection="column">
             <Router>
-              <ToolBar/>
               <Routes>
                 {appRoutes.map((route) => (
                   <Route
