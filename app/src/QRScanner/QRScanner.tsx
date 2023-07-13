@@ -10,8 +10,6 @@ interface QRScannerProps {
 }
 /**
  * Renders a video of camera stream and scans for QR codes.
- * Renders two video elements if React.StrictMode is enabled,
- * so turn off StrictMode when testing this feature
  *
  * @author Anirudh Kulkarni <anirudh.k@beehyv.com>
  */
@@ -24,7 +22,7 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onError }) => {
 
     const aspectRatio = window.innerHeight / window.innerWidth;
 
-    html5Qrcode
+    const scannerStartPromise = html5Qrcode
       .start(
         config,
         {
@@ -50,6 +48,9 @@ const QRScanner: React.FC<QRScannerProps> = ({ onScan, onError }) => {
       .catch((err) => {
         onError?.(err.message);
       });
+    return () => {
+      scannerStartPromise.then(() => html5Qrcode.stop());
+    };
   }, []);
 
   return <Box id={scannerDivId} width={"100%"} />;
