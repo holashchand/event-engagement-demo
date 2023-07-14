@@ -66,6 +66,11 @@ function ToolBar(props: ToolbarProps) {
         
         }
     }
+
+    const goBack = () => {
+        navigate(-1)
+    }
+
     const listItem = [{label: 'Exhibits', showIcon: true}, {label: 'Leader board',  showIcon: true},{label: 'Credential Verification',  showIcon: true},{label: 'Logout',  showIcon: false}]
   return (
     <>
@@ -79,9 +84,8 @@ function ToolBar(props: ToolbarProps) {
                     color="inherit"
                     aria-label="menu"
                     sx={{position:'absolute', transform: 'translate(0%, -50%)', top: '2.8rem', left:'2%' }}
-                    onClick={ToggleSidebar}
                     >
-                    { !hideBtn ? (show ? (<MenuRoundedIcon fontSize="large"/>) : (<ArrowBackOutlinedIcon fontSize="large"/>)) : <></>}
+                    { !hideBtn ? (show ? (<MenuRoundedIcon onClick={ToggleSidebar} fontSize="large"/>) : (<ArrowBackOutlinedIcon onClick={goBack} fontSize="large"/>)) : <></>}
                 </IconButton>
                 <div>
                     

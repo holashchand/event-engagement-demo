@@ -64,8 +64,8 @@ const Register: FC<any> = (): ReactElement => {
                             }}variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
                     </div>
                     <Button type="submit" variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"white"}}>Go to Login</Button>
-                    <div style={{position: 'absolute', bottom: '1%', left: '25%', transform: 'translate(30%, 0)'}}>
-                        <Link href="#" variant="body2" sx={{ textAlign: 'center', color:'white !important'}}>Already registered</Link>
+                    <div style={{position: 'absolute', left: '25%', transform: 'translate(30%, 0)'}}>
+                        <Link href="#" variant="body2" sx={{ textAlign: 'center', color:'#1F3964 !important'}}>Already registered</Link>
                     </div>
                 </Box>
                 <img src={footer} style={{position:'relative'}}/>

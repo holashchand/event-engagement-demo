@@ -14,13 +14,7 @@ import share from '../assets/share.svg';
 import { apiRoutes } from "../routes";
 import { EmailIcon, EmailShareButton, FacebookIcon, FacebookShareButton, TwitterIcon, TwitterShareButton, WhatsappIcon, WhatsappShareButton } from 'react-share';
 import { grey } from "@mui/material/colors";
-import { Global } from "@emotion/react";
 import { Document, Page, Text, View, StyleSheet, PDFViewer } from '@react-pdf/renderer';
-
-
-const StyledBox = styled(Box)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
-  }));
   
   const Puller = styled(Box)(({ theme }) => ({
     width: 30,
@@ -153,45 +147,38 @@ const ExhibitResult: FC<any> = (): ReactElement => {
                     ))}
                 </Box>
             </Box>
-            <Global
-                styles={{
-                '.MuiDrawer-root > .MuiPaper-root': {
-                    height: `calc(25% - 56px)`,
-                    overflow: 'visible',
-                },
-                }}
-            />
-            {showModal ?
-            (<SwipeableDrawer onClose={() => setShowModal(!showModal)} onOpen={() => setShowModal(!showModal)} open={showModal}  anchor="bottom"
-                swipeAreaWidth={56} disableSwipeToOpen={false} ModalProps={{keepMounted: true,}} sx={{height:'50%'}}>
-                <StyledBox sx={{ position: 'absolute', top: 0, borderTopLeftRadius: 8, borderTopRightRadius: 8,visibility: 'visible',right: 0,left: 0,}}>
+            <SwipeableDrawer onClose={() => setShowModal(!showModal)} onOpen={() => setShowModal(!showModal)} open={showModal} anchor="bottom" disableSwipeToOpen>
+                <Box height={"20vh"}>
+                <Box
+                    p={1}
+                    display={"flex"}
+                    justifyContent={"center"}
+                    alignItems={"center"}>
                     <Puller />
-                    <Box my={2} mx={2} sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <Typography variant="h5">Share</Typography>
-                    </Box>
-                    <StyledBox mx={2} my={2} sx={{ height: '100%', overflow: 'auto'}}>
-                        <Box display={'flex'} justifyContent={'space-around'}>
+                </Box>
+                <Box my={2} mx={2} sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                    <Typography variant="h5">Share</Typography>
+                </Box>
+                    <Box display={'flex'} justifyContent={'space-around'}>
                         <FacebookShareButton
-                                url={'https://www.facebook.com'}
-                                quote={'Dummy text!'}
-                                hashtag="#muo">
-                                <FacebookIcon size={40} round />
-                            </FacebookShareButton>
-                            <EmailShareButton url={'https://www.email.com'}>
-                                <EmailIcon size={40} round ></EmailIcon>
-                            </EmailShareButton>
-                            <WhatsappShareButton
-                                    url={'https://www.whatsapp.com'}>
-                                    <WhatsappIcon size={40} round={true} />
-                                    </WhatsappShareButton>
-                            <TwitterShareButton
-                                url={'https://www.twitter.com'}>
-                                <TwitterIcon size={40} round />
-                                </TwitterShareButton>
-                        </Box>
-                    </StyledBox>
-                    </StyledBox>
-                </SwipeableDrawer>) : <></>}
+                            url={'https://www.facebook.com'}
+                            quote={'Dummy text!'}
+                            hashtag="#muo">
+                            <FacebookIcon size={40} round />
+                        </FacebookShareButton>
+                        <EmailShareButton url={'https://www.email.com'}>
+                            <EmailIcon size={40} round ></EmailIcon>
+                        </EmailShareButton>
+                        <WhatsappShareButton url={'https://www.whatsapp.com'}>
+                                <WhatsappIcon size={40} round={true} />
+                        </WhatsappShareButton>
+                        <TwitterShareButton
+                            url={'https://www.twitter.com'}>
+                            <TwitterIcon size={40} round />
+                        </TwitterShareButton>
+                    </Box>
+                </Box>
+            </SwipeableDrawer>
         </Box>
     );
 };

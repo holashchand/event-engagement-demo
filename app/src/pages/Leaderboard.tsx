@@ -1,6 +1,6 @@
 
 import {ReactElement, FC} from "react";
-import { Avatar, Box, Chip, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
+import { Avatar, Box, Chip, InputLabel, Paper, Table, TableBody, TableCell, TableContainer, TableRow} from "@mui/material";
 import { useLocation } from "react-router-dom";
 import ToolBar from "../layout/AppBar";
 import rank from '../assets/rank.svg';
@@ -33,13 +33,16 @@ const LeaderBoard: FC<any> = (): ReactElement => {
             justifyContent: 'center',
             width: '100%'
         }}>
-            <ToolBar hideBtn={false} show={true} badgeOpt={false} toolbarHeight={true}/>
+            <ToolBar hideBtn={false} show={false} badgeOpt={false} toolbarHeight={true}/>
             <Box sx={{position: 'absolute', left: '15%', top: '12%'}}>
                 <img src={rank}/>
             </Box>
                 <Avatar sx={{position: 'absolute', left: '17%', top: '12%'}}></Avatar>
                 <Avatar sx={{position: 'absolute', top: '8%'}}></Avatar>
                 <Avatar sx={{position: 'absolute', top: '12%', right:'18%'}}></Avatar>
+                <InputLabel sx={{position: 'absolute', left: '25%', top: '30%', color:'white'}}>{rows[0].points}</InputLabel>
+                <InputLabel sx={{position: 'absolute', top: '30%', color:'white'}}>{rows[1].points}</InputLabel>
+                <InputLabel sx={{position: 'absolute', top: '30%', right:'25%', color:'white'}}>{rows[2].points}</InputLabel>
             <Box sx={{ my: 50, mx: 2, color:'primary.dark', width: '100%'}}>
             <TableContainer component={Paper}>
                 <Table sx={{ }} aria-label="simple table">

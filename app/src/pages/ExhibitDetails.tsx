@@ -24,6 +24,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ExhibitCardDetails: FC<any> = (): ReactElement => {
+  let navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
@@ -31,7 +32,6 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
   };
 
   const navigateBack = () => {
-    let navigate = useNavigate()
     navigate(-1)
   }
 
@@ -57,13 +57,14 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
             borderRadius: "10px",
             boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
           }}
+          mx={1}
         >
-          <Box sx={{ width: "100%", height: "80%" }}>
+          <Box sx={{ height: "80%" }}>
             <div style={{ marginTop: "2%" }}>
-              <video src="rain.mp4" width="95%" controls></video>
+              <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" width="95%" controls></video>
             </div>
-            <Box>
-              <Typography variant="body2">
+            <Box mx={2}>
+              <Typography variant="body2" color={"black"} textAlign={"justify"}>
                 Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
                 eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,
                 metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
