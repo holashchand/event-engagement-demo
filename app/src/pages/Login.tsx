@@ -1,53 +1,78 @@
 
-import {ReactElement, FC} from "react";
-import {Box, Button, Grid, Stack, TextField, Typography, Link} from "@mui/material";
+import {ReactElement, FC, useState} from "react";
+import {Box, Button, TextField, Typography, InputAdornment} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes";
+import { useForm } from "react-hook-form";
+import footer from '../assets/footer.svg';
+import anubhavLogo from '../assets/anubhavLogo.svg'
+import key from '../assets/key.svg'
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 const FirstLogin: FC<any> = (): ReactElement => {
     let navigate = useNavigate();
-    function login() {
-        console.log('start login');
-        let path = apiRoutes.USER_HOME; 
-        navigate(path);
+    const { register, handleSubmit } = useForm();
+    const onSubmit = (data: any) =>  {
+        console.log(data)
+        console.log('submit');
+        if (data.phone && data.otp) {
+            let path = apiRoutes.EXHIBITS_HOME; 
+            navigate(path);
+        }
+    };
+    
+    const [otp, setShowOtp] = useState(false);
+    function changeState() {
+        setShowOtp(!otp);
     }
-    return (
-        <Box sx={{ backgroundColor: 'white', flexGrow: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        textAlign: 'center' }}>
-        <Box sx={{ my: 3, mx: 2, color:'primary.dark', width:'100%'}}>
-            <Grid container alignItems="center">
-                <Grid item xs>
-                    <Typography m={2} gutterBottom variant="subtitle1" component="div" color={'primary.dark'} fontWeight={'bold'}>
-                        Hey visitor, please login using your registered phone number and otp
-                    </Typography>
-                </Grid>
-            </Grid>
-            <Box width={'100%'} color={'black'} mt={4} mb={4}>
-            <Stack spacing={3} direction="row" justifyContent={"center"} mt={4}>
-                <Typography component="div" sx={{width: '30%', display: 'flex', justifyContent: 'space-between', m: '2'}}>
-                    My Phone 
-                </Typography>
-                <TextField id="outlined-basic" type="number" label="" variant="outlined" margin="none" sx={{padding: 0, width:'50%'}} />
-                <Button variant="contained" size="small" onClick={login} sx={{backgroundColor:"#6558F4", color:"white", padding: 0, width:'20%', textTransform:'capitalize'}}>Receive OTP</Button>
-            </Stack>
-            <Stack spacing={3} direction="row" justifyContent={"center"} mt={4}>
-                <Typography component="div" sx={{width: '30%', display: 'flex', justifyContent: 'space-between', m: '2'}}>
-                    OTP 
-                </Typography>
-                <TextField id="outlined-basic" label="" variant="outlined" margin="none" sx={{padding: 0, width:'50%'}} />
-                <Link href="#" sx={{padding: 0, width:'20%', textTransform:'capitalize'}}>Resend OTP</Link>
-            </Stack>
-            </Box>
 
-            <Stack spacing={1} direction="column" justifyContent={"center"} mt={4}>
-                <div>
-                    <Button variant="contained" onClick={login} sx={{backgroundColor:"#6558F4", color:"white"}}>Login</Button>
-                </div>
-            </Stack>
+    const emailLogin = () => {
+        console.log('login through email');
+    }
+
+    return (
+        <Box sx={{flexGrow: 1, background: 'linear-gradient(to top, #67C8D1 25%, #FFF 110%) !important',
+            display: 'flex',
+            justifyContent: 'center',
+            textAlign: 'center' }}>
+            <Box sx={{width:'100%'}}>
+                <img src={anubhavLogo}></img>
+                <Typography sx={{margin:'25% 10% 0 10% !important'}} gutterBottom variant="subtitle1" component="div" color={'#1F3665'} fontWeight={'bold'}>
+                    Hey Visitor, please login using your Registered phone number and OTP
+                </Typography>
+                <Box width={'100%'} color={'black'} mt={4} mb={4} component="form">
+                    <div className="inputFields">
+                        <TextField id="phone" type="number" label="" placeholder="Enter you phone number" {...register('phone')}
+                        InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                             <LocalPhoneOutlinedIcon />
+                            </InputAdornment>
+                        ),}}variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                    </div>
+                    { otp ?
+                        (<>
+                        <div className="inputFields">
+                            <TextField id="otp" type="number" label="" placeholder="Enter you organisation name" {...register('otp')}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                <img src={key}/>
+                                </InputAdornment>
+                            )}}
+                            variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                        </div>
+                        <Button type="submit" variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"#1F3964", color:'white'}} onClick={handleSubmit(onSubmit)}>Login</Button>
+                        </>):
+                        (<Button variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"#1F3964", color:'white'}} onClick={changeState}>Send OTP</Button>)}
+                    <div>
+                        <Button variant="contained" sx={{width: '50%', color:"#1F3964", backgroundColor:'white'}} onClick={emailLogin}>Login through email</Button>
+                    </div>
+                </Box>
+
+                <img src={footer} style={{position:'relative'}}/>
+            </Box>
         </Box>
-    </Box>
     );
 };
 

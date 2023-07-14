@@ -1,63 +1,153 @@
-
-import {ReactElement, FC} from "react";
-import { Box, Button, Card, CardContent, Divider, Rating, Typography} from "@mui/material";
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
+import {
+  Box,
+  Button,
+  InputLabel,
+  SwipeableDrawer,
+  Typography,
+  styled,
+} from "@mui/material";
+import { grey } from "@mui/material/colors";
+import { FC, ReactElement, useState } from "react";
+import Quiz from "../Quiz/Quiz";
+import ToolBar from "../layout/AppBar";
+import qBank from "../layout/Questions";
 import { useNavigate } from "react-router-dom";
-import React from "react";
-import Profile from "../layout/Profile";
-import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
-import GradeIcon from '@mui/icons-material/Grade';
-import { apiRoutes } from "../routes";
+
+const Puller = styled(Box)(({ theme }) => ({
+  width: 48,
+  height: 4,
+  color: "primary.main",
+  backgroundColor: theme.palette.mode === "light" ? grey[300] : grey[900],
+  borderRadius: 3,
+}));
 
 const ExhibitCardDetails: FC<any> = (): ReactElement => {
-    const [value, setValue] = React.useState<number | null>(2);
-    let navigate = useNavigate();
-    function finishGame() {
-        console.log('card login ', navigate);
-        let path = apiRoutes.QUESTION_SET; 
-        navigate(path);
-    }
+  let navigate = useNavigate()
 
-    return (
-        <Box sx={{
-            flexGrow: 1,
-            backgroundColor: 'whitesmoke',
-            display: 'flex',
-            justifyContent: 'center',
-            width: '100%'
-        }}>
-            <Box sx={{ my: 2, mx: 2, color:'primary.dark', width: '100%'}}>
-                <Profile></Profile>
-                <Divider/>
-                <Typography variant="h6" component="div" fontWeight={'bold'}>Exhibit 1 - Experience</Typography>
-                <Box sx={{justifyContent:"start"}}>
-                    <Rating
-                        name="simple-controlled"
-                        value={value}
-                        onChange={(_e, newValue) => {
-                            setValue(newValue);
-                        }}
-                    />
-                </Box>
-                <Box border={'1px solid black'} sx={{height: '75%', position: 'relative'}}>
-                    <Box sx={{width:'100%', height:'80%'}}>
-                        <Card sx={{margin: "10px", height: '50%'}}>
-                            <CardContent></CardContent>
-                        </Card>
-                        <Card sx={{margin: "10px", height: '50%'}}>
-                            <CardContent></CardContent>
-                        </Card>
-                    </Box>
-                    <Box mt={4} display={"flex"} justifyContent={"space-around"}>
-                        <Button sx={{color:'#6558F4', border:'1px solid #6558F4'}} variant="outlined" endIcon={<GradeIcon />}>Rate</Button>
-                        <Button sx={{color:'#6558F4', border:'1px solid #6558F4'}} variant="outlined" endIcon={<QrCode2RoundedIcon />}>Scan to play</Button>
-                    </Box>
-                </Box>
-                <Box mt={4}>
-                    <Button sx={{color:'#6558F4', border:'1px solid #6558F4'}} variant="outlined" size="large" onClick={finishGame}>Back</Button>
-                </Box>
+  const [open, setOpen] = useState(false);
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
+
+  const navigateBack = () => {
+    navigate(-1)
+  }
+
+  return (
+    <Box
+      sx={{
+        flexGrow: 1,
+        backgroundColor: "whitesmoke",
+        display: "flex",
+        justifyContent: "center",
+        width: "100%",
+      }}
+    >
+      <ToolBar show={true} badgeOpt={false} toolbarHeight={false} hideBtn={false} />
+      <Box sx={{ my: 17, mx: 2, color: "primary.dark", width: "100%" }}>
+        <Typography variant="h6" mb={2} sx={{ color: "primary.main" }}>
+          Exhibits:
+        </Typography>
+        <Box
+          border={"1px dotted #67C8D1"}
+          sx={{
+            position: "relative",
+            borderRadius: "10px",
+            boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+          }}
+          mx={1}
+        >
+          <Box sx={{ height: "80%" }}>
+            <div style={{ marginTop: "2%" }}>
+              <video src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" width="95%" controls></video>
+            </div>
+            <Box mx={2}>
+              <Typography variant="body2" color={"black"} textAlign={"justify"}>
+                Jorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam
+                eu turpis molestie, dictum est a, mattis tellus. Sed dignissim,
+                metus nec fringilla accumsan, risus sem sollicitudin lacus, ut
+                interdum tellus elit sed risus. Maecenas eget condimentum velit,
+                sit amet feugiat lectus. Class aptent taciti sociosqu
+              </Typography>
             </Box>
+            <Box
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                margin: "1rem",
+                border: "1px solid #348681",
+                boxShadow: "0px 4px 4px 0px rgba(0, 0, 0, 0.25)",
+                width: "60%",
+                transform: "translate(25%, 0%)",
+              }}
+            >
+              <img src="" width={80} height={80}></img>
+              <div style={{ margin: "1rem" }}>
+                <Typography
+                  variant="body2"
+                  color={"#48DDE4"}
+                  fontSize={"16px !important"}
+                >
+                  Quiz Name
+                </Typography>
+                <div style={{ display: "flex", color: "#999999" }}>
+                  <ArticleRoundedIcon fontSize="small" />
+                  <InputLabel sx={{ fontSize: "14px !important" }}>
+                    10 Question
+                  </InputLabel>
+                </div>
+                <div style={{ display: "flex", color: "#999999" }}>
+                  <AccessTimeRoundedIcon fontSize="small" />
+                  <InputLabel sx={{ fontSize: "14px !important" }}>
+                    15 mins
+                  </InputLabel>
+                </div>
+              </div>
+            </Box>
+          </Box>
+          <Box mt={4} mb={2} display={"flex"} justifyContent={"space-around"}>
+            <Button
+              sx={{ color: "#67C8D1", border: "1px solid #67C8D1" }}
+              variant="outlined" onClick={navigateBack}
+            >
+              Back
+            </Button>
+            <Button
+              sx={{ color: "#67C8D1", border: "1px solid #67C8D1" }}
+              variant="outlined"
+              onClick={toggleDrawer(true)}
+            >
+              play
+            </Button>
+          </Box>
         </Box>
-    );
+      </Box>
+      <SwipeableDrawer
+        onClose={toggleDrawer(false)}
+        onOpen={toggleDrawer(true)}
+        open={open}
+        anchor="bottom"
+        disableSwipeToOpen
+      >
+        <Box height={"60vh"}>
+          <Box
+            p={1}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+          >
+            <Puller />
+          </Box>
+          <Box px={4}>
+            <Quiz questions={qBank} onFinish={toggleDrawer(false)} />
+          </Box>
+        </Box>
+      </SwipeableDrawer>
+    </Box>
+  );
 };
 
 export default ExhibitCardDetails;
