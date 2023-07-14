@@ -13,6 +13,7 @@ import { FC, ReactElement, useState } from "react";
 import Quiz from "../Quiz/Quiz";
 import ToolBar from "../layout/AppBar";
 import qBank from "../layout/Questions";
+import { useNavigate } from "react-router-dom";
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 48,
@@ -23,6 +24,7 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ExhibitCardDetails: FC<any> = (): ReactElement => {
+
   const [open, setOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);

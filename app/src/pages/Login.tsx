@@ -1,10 +1,13 @@
 
-import {ReactElement, FC} from "react";
-import {Box, Button, Grid, TextField, Typography, Link, InputLabel} from "@mui/material";
+import {ReactElement, FC, useState} from "react";
+import {Box, Button, TextField, Typography, InputAdornment} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes";
 import { useForm } from "react-hook-form";
-import ToolBar from "../layout/AppBar";
+import footer from '../assets/footer.svg';
+import anubhavLogo from '../assets/anubhavLogo.svg'
+import key from '../assets/key.svg'
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 
 const FirstLogin: FC<any> = (): ReactElement => {
     let navigate = useNavigate();
@@ -12,51 +15,64 @@ const FirstLogin: FC<any> = (): ReactElement => {
     const onSubmit = (data: any) =>  {
         console.log(data)
         console.log('submit');
-        let path = apiRoutes.USER_HOME; 
-        navigate(path);
+        if (data.phone && data.otp) {
+            let path = apiRoutes.EXHIBITS_HOME; 
+            navigate(path);
+        }
     };
     
-    function ReceiveOTP() {
-        console.log('Receive OTP');
-        // API call to receive otp
+    const [otp, setShowOtp] = useState(false);
+    function changeState() {
+        setShowOtp(!otp);
     }
-    
-    function ResendOTP() {
-        console.log('Resend OTP');
-        // API call to receive otp
+
+    const emailLogin = () => {
+        console.log('login through email');
     }
 
     return (
-        <Box sx={{flexGrow: 1,
-        display: 'flex',
-        justifyContent: 'center',
-        textAlign: 'center' }}>
-        <ToolBar show={true} badgeOpt={false} toolbarHeight={false}/>
-        <Box sx={{ my: 25, mx: 2, color:'primary.dark', width:'100%'}}>
-            <Grid container alignItems="center">
-                <Grid item xs>
-                    <Typography m={2} gutterBottom variant="subtitle1" component="div" color={'primary.dark'} fontWeight={'bold'}>
-                        Hey visitor, please login using your registered phone number and otp
-                    </Typography>
-                </Grid>
-            </Grid>
-            <Box width={'100%'} mt={4} mb={4}  component="form" onSubmit={handleSubmit(onSubmit)}>
-                <div className="inputFields">
-                    <InputLabel>My Phone</InputLabel>
-                    <TextField id="outlined-basic" type="number" {...register("phone")} label="" variant="outlined" margin="normal"/>
-                    <Button variant="contained" size="large" onClick={ReceiveOTP} sx={{backgroundColor:"#6558F4", color:"white", padding: 0, width:'10rem', textTransform:'capitalize'}}>Receive OTP</Button>
-                </div>
-                <div className="inputFields">
-                    <InputLabel>OTP</InputLabel>
-                    <TextField id="outlined-basic" label="" {...register("otp")} variant="outlined" />
-                    <Link href="#" sx={{padding: 0, width:'10rem', textTransform:'capitalize'}} onClick={ResendOTP}>Resend OTP</Link>
-                </div>
-                <div>
-                    <Button variant="contained" type="submit" sx={{backgroundColor:"#6558F4", color:"white", marginTop: '4rem'}}>Login</Button>
-                </div>
+        <Box sx={{flexGrow: 1, background: 'linear-gradient(to top, #67C8D1 25%, #FFF 110%) !important',
+            display: 'flex',
+            justifyContent: 'center',
+            textAlign: 'center' }}>
+            <Box sx={{width:'100%'}}>
+                <img src={anubhavLogo}></img>
+                <Typography sx={{margin:'25% 10% 0 10% !important'}} gutterBottom variant="subtitle1" component="div" color={'#1F3665'} fontWeight={'bold'}>
+                    Hey Visitor, please login using your Registered phone number and OTP
+                </Typography>
+                <Box width={'100%'} color={'black'} mt={4} mb={4} component="form">
+                    <div className="inputFields">
+                        <TextField id="phone" type="number" label="" placeholder="Enter you phone number" {...register('phone')}
+                        InputProps={{
+                        startAdornment: (
+                            <InputAdornment position="start">
+                             <LocalPhoneOutlinedIcon />
+                            </InputAdornment>
+                        ),}}variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                    </div>
+                    { otp ?
+                        (<>
+                        <div className="inputFields">
+                            <TextField id="otp" type="number" label="" placeholder="Enter you organisation name" {...register('otp')}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                <img src={key}/>
+                                </InputAdornment>
+                            )}}
+                            variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                        </div>
+                        <Button type="submit" variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"#1F3964", color:'white'}} onClick={handleSubmit(onSubmit)}>Login</Button>
+                        </>):
+                        (<Button variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"#1F3964", color:'white'}} onClick={changeState}>Send OTP</Button>)}
+                    <div>
+                        <Button variant="contained" sx={{width: '50%', color:"#1F3964", backgroundColor:'white'}} onClick={emailLogin}>Login through email</Button>
+                    </div>
+                </Box>
+
+                <img src={footer} style={{position:'relative'}}/>
             </Box>
         </Box>
-    </Box>
     );
 };
 

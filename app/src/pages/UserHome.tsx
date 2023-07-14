@@ -1,7 +1,6 @@
 import { Box, Card, CardContent, Divider, IconButton, Link, TextField, Typography } from "@mui/material";
 import { useExhibitsData } from "../api/exhibit";
 import { useNavigate } from "react-router-dom";
-import Profile from "../layout/Profile";
 import WorkspacePremiumRoundedIcon from '@mui/icons-material/WorkspacePremiumRounded';
 import QrCode2RoundedIcon from '@mui/icons-material/QrCode2Rounded';
 import { FC, ReactElement } from "react";
@@ -29,9 +28,8 @@ const UserHome: FC<any> = (): ReactElement => {
             width: '100%'
         }}>
 
-            <ToolBar show={true} badgeOpt={false} toolbarHeight={false}/>
+            <ToolBar hideBtn={false} show={true} badgeOpt={false} toolbarHeight={false}/>
             <Box sx={{ my: 25, mx: 2, width: '100%'}}>
-                <Profile></Profile>
                 <Divider/>
                 <Box border={'2px dashed #217868'} sx={{justifyContent: 'center', backgroundColor: 'primary.main', mt:2}}>
                     <Typography>Badges won by me at the exhibits</Typography>

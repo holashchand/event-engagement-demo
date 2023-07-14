@@ -7,6 +7,8 @@ import Register from "./pages/Register";
 import UserHome from "./pages/UserHome";
 import HomePage from "./pages/Home";
 import ExhibitsHome from "./pages/ExhibitsHome";
+import LeaderBoard from "./pages/Leaderboard";
+import VerifiedBadges from "./pages/VerifiedBadges";
 
 export const apiRoutes = {
   REGISTER: "/Register",
@@ -16,6 +18,8 @@ export const apiRoutes = {
   EXHIBIT_DETAILS: "/ExhibitCardDetails",
   EXHIBITS_HOME: "/ExhibitsHome",
   EXHIBIT_RESULT: "/ExhibitResult",
+  LEADER_BOARD: "/LeaderBoard",
+  VERIFIED_BADGES: "/VerifiedBadges"
 };
 
 export const pageRoutes = {
@@ -86,5 +90,20 @@ export const routes: Array<Route> = [
       path: '/ExhibitResult',
       enabled: true,
       component: ExhibitResult
+  },
+  {
+    key: 'leaderBoard-route',
+    title: 'LeaderBoard',
+    path: '/LeaderBoard',
+    enabled: true,
+    component: LeaderBoard
+  },
+  {
+    key: 'verifiedBadges-route',
+    title: 'VerifiedBadges',
+    path: '/VerifiedBadges',
+    enabled: true,
+    component: VerifiedBadges
   }
+
 ]
