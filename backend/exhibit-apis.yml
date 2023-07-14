@@ -28,7 +28,8 @@ paths:
       responses:
         '200':
           description: OK
-          schema: {}
+          schema:
+            $ref: '#/definitions/QuizResponse'
   /api/v1/Quiz/getQuestions/{exhibitionId}:
     get:
       parameters:
@@ -463,7 +464,7 @@ definitions:
     required:
       - title
       - visitorName
-      - organization
+      - exhibitDetails
       - date
     properties:
       title:
@@ -478,10 +479,21 @@ definitions:
       date:
         type: string
         title: Date
-        format: date
-      organization:
-        type: string
-        title: Organization
+        format: date-time
+      exhibitDetails:
+        type: object
+        required: 
+          - osid
+          - name
+          - organization,
+        properties:
+          osid:
+            type: string
+            title: id of the exhibit
+          name:
+            type: string
+          organization:
+            type: string
       score:
         type: integer
         title: Score
@@ -624,7 +636,7 @@ definitions:
       - title
       - visitorName
       - visitorMobileNumber
-      - organization
+      - exhibitDetails
       - date
     properties:
       title:
@@ -636,9 +648,20 @@ definitions:
       date:
         type: string
         format: date-time
-      organization:
-        type: string
-        example: Organization
+      exhibitDetails:
+        type: object
+        required: 
+          - osid
+          - name
+          - organization,
+        properties:
+          osid:
+            type: string
+            title: id of the exhibit
+          name:
+            type: string
+          organization:
+            type: string
       score:
         type: integer
         example: 8
