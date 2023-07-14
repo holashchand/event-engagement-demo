@@ -30,6 +30,11 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
     setOpen(newOpen);
   };
 
+  const navigateBack = () => {
+    let navigate = useNavigate()
+    navigate(-1)
+  }
+
   return (
     <Box
       sx={{
@@ -40,7 +45,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         width: "100%",
       }}
     >
-      <ToolBar show={true} badgeOpt={false} toolbarHeight={false} />
+      <ToolBar show={true} badgeOpt={false} toolbarHeight={false} hideBtn={false} />
       <Box sx={{ my: 17, mx: 2, color: "primary.dark", width: "100%" }}>
         <Typography variant="h6" mb={2} sx={{ color: "primary.main" }}>
           Exhibits:
@@ -105,7 +110,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
           <Box mt={4} mb={2} display={"flex"} justifyContent={"space-around"}>
             <Button
               sx={{ color: "#67C8D1", border: "1px solid #67C8D1" }}
-              variant="outlined"
+              variant="outlined" onClick={navigateBack}
             >
               Back
             </Button>

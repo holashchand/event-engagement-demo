@@ -1,10 +1,8 @@
 import { FC } from "react";
 import ExhibitCardDetails from "./pages/ExhibitDetails";
 import FirstLogin from "./pages/Login";
-import QuestionSet from "./pages/QuestionSet";
 import ExhibitResult from "./pages/ExhibitResult";
 import Register from "./pages/Register";
-import UserHome from "./pages/UserHome";
 import HomePage from "./pages/Home";
 import ExhibitsHome from "./pages/ExhibitsHome";
 import LeaderBoard from "./pages/Leaderboard";
@@ -55,20 +53,6 @@ export const routes: Array<Route> = [
       path: '/FirstLogin',
       enabled: true,
       component: FirstLogin
-  },
-  {
-      key: 'userhome-route',
-      title: 'UserHome',
-      path: '/UserHome',
-      enabled: true,
-      component: UserHome
-  },
-  {
-      key: 'questionSet-route',
-      title: 'QuestionSet',
-      path: '/QuestionSet',
-      enabled: true,
-      component: QuestionSet
   },
   {
       key: 'exhibitCardDetails-route',
