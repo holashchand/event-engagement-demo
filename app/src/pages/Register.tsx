@@ -1,54 +1,74 @@
 import {ReactElement, FC} from "react";
-import {Box, Button, Grid, TextField, Typography, Link, InputLabel} from "@mui/material";
+import {Box, Button, TextField, Typography, Link, InputAdornment} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes";
-
 import { useForm } from "react-hook-form";
-import ToolBar from "../layout/AppBar";
+import anubhavLogo from '../assets/anubhavLogo.svg'
+import footer from '../assets/footer.svg';
+import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
+import ApartmentOutlinedIcon from '@mui/icons-material/ApartmentOutlined';
+import ContactEmergencyOutlinedIcon from '@mui/icons-material/ContactEmergencyOutlined';
 
 const Register: FC<any> = (): ReactElement => {
     let navigate = useNavigate();
     const { register, handleSubmit } = useForm();
     const onSubmit = (data: any) =>  {
         console.log(data)
-        console.log('start login');
-        let path = apiRoutes.LOGIN; 
-        navigate(path);
+        if (data.phone.length != 10) {
+        }
+        if(data.name && (data.phone.length == 10) && data.organisation) {
+            let path = apiRoutes.LOGIN; 
+            navigate(path);
+        } else {
+        }   
     };
     return (
-        <Box sx={{flexGrow: 1,
+        <Box sx={{flexGrow: 1, background: 'linear-gradient(to top, #67C8D1 25%, #FFF 110%) !important',
             display: 'flex',
             justifyContent: 'center',
             textAlign: 'center' }}>
-            <ToolBar show={true} badgeOpt={false} toolbarHeight={false}/>
-            <Box sx={{ my: 25, width:'100%'}}>
-                <Grid container alignItems="center">
-                <Grid item xs>
-                    <Typography m={2} gutterBottom variant="subtitle1" component="div" color={'primary.dark'} fontWeight={'bold'}>
-                        Hey visitor, would be great if you could register with us before the experience
-                    </Typography>
-                </Grid>
-                </Grid>
+            <Box sx={{width:'100%'}}>
+                <img src={anubhavLogo}></img>
+                <Typography sx={{margin:'25% 10% 0 10% !important'}} gutterBottom variant="subtitle1" component="div" color={'#1F3665'} fontWeight={'bold'}>
+                    Hey Visitor,would be great if you could register with us before the experience
+                </Typography>
                 <Box width={'100%'} color={'black'} mt={4} mb={4} component="form" onSubmit={handleSubmit(onSubmit)} >
                     <div className="inputFields">
-                        <InputLabel>My Phone</InputLabel>
-                        <TextField id="phone" type="number" {...register("phone")} label=""/>
+                         <TextField id="name" label="" placeholder="Enter you name" {...register("name")}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                <ContactEmergencyOutlinedIcon />
+                                </InputAdornment>
+                            )}}
+                            variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                        </div>
+                        <div className="inputFields">
+                            <TextField id="phone" type="number" label="" placeholder="Enter you phone number"  {...register("phone")}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                <LocalPhoneOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                            }}variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
+                        </div>
+                        <div className="inputFields">
+                            <TextField id="organisation" label="" placeholder="Enter you organisation name"  {...register("organisation")}
+                            InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                <ApartmentOutlinedIcon />
+                                </InputAdornment>
+                            ),
+                            }}variant="outlined" sx={{width: '90%', background: 'white', borderRadius: '10px'}}/>
                     </div>
-                    <div className="inputFields">
-                        <InputLabel>My Name</InputLabel>
-                        <TextField id="name" label="" type="text" {...register("name")}/>
+                    <Button type="submit" variant="contained" sx={{ mt: 10, mb: 2, width: '50%', backgroundColor:"white"}}>Go to Login</Button>
+                    <div style={{position: 'absolute', bottom: '1%', left: '25%', transform: 'translate(30%, 0)'}}>
+                        <Link href="#" variant="body2" sx={{ textAlign: 'center', color:'white !important'}}>Already registered</Link>
                     </div>
-                    <div className="inputFields">
-                        <InputLabel>Name of my organisation</InputLabel>
-                        <TextField id="organisation" label="" type="text" {...register("organisation")}/>
-                    </div>
-                    <Button type="submit" variant="contained" sx={{ mt: 3, mb: 2, backgroundColor:"#6558F4", color:"white"}}>Go to Login</Button>
-                    <Grid container>
-                        <Grid item xs>
-                            <Link href="#" variant="body2">Already registered</Link>
-                        </Grid>
-                    </Grid>
                 </Box>
+                <img src={footer} style={{position:'relative'}}/>
             </Box>
         </Box>
     );

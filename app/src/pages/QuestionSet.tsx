@@ -3,7 +3,6 @@ import {ReactElement, FC} from "react";
 import {Alert, Box, Button, Card, CardContent, Divider, FormControl, FormControlLabel, List, ListItem, ListItemText, Radio, RadioGroup, Typography} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import React from "react";
-import Profile from "../layout/Profile";
 import { apiRoutes } from "../routes";
 
 const QuestionSet: FC<any> = (): ReactElement => {
@@ -48,7 +47,6 @@ const QuestionSet: FC<any> = (): ReactElement => {
             width: '100%'
         }}>
             <Box sx={{ my: 3, mx: 2, color:'primary.dark', width: '100%'}}>
-                <Profile></Profile>
                 <Divider/>
                 <Typography variant="h6" component="div" fontWeight={'bold'}>Exhibit 1 - Experience</Typography>
                 <Box border={'1px solid black'} sx={{height: '40%', position: 'relative'}}>

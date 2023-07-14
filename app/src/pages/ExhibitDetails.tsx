@@ -8,6 +8,7 @@ import { grey } from "@mui/material/colors";
 import { Global } from "@emotion/react";
 import ExpandCircleDownIcon from '@mui/icons-material/ExpandCircleDown';
 import qBank from "../layout/Questions";
+import { useNavigate } from "react-router-dom";
 
 const StyledBox = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'light' ? '#fff' : grey[800],
@@ -25,6 +26,8 @@ const StyledBox = styled(Box)(({ theme }) => ({
   }));
 
 const ExhibitCardDetails: FC<any> = (): ReactElement => {
+    let navigate = useNavigate();
+    // let history = useHistory()
     const [open, setOpen] = useState(false);
     const toggleDrawer = (newOpen: boolean) => () => {
         setOpen(newOpen);
@@ -34,6 +37,11 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         setValue(newValue);
     };
 
+    const navigateBack = () => {
+        console.log('navigate ', navigate);
+        navigate(-1);
+    }
+
     return (
         <Box sx={{
             flexGrow: 1,
@@ -42,7 +50,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
             justifyContent: 'center',
             width: '100%'
         }}>
-            <ToolBar show={true} badgeOpt={false} toolbarHeight={false}/>
+            <ToolBar hideBtn={false} show={true} badgeOpt={false} toolbarHeight={false}/>
             <Box sx={{ my: 17, mx: 2, color:'primary.dark', width: '100%'}}>
                 <Typography variant="h6" mb={2} sx={{color:'primary.main'}}>Exhibits:</Typography>
                 <Box border={'1px dotted #67C8D1'} sx={{position: 'relative', borderRadius: '10px', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'}}>
@@ -67,7 +75,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
                         </Box>
                     </Box>
                     <Box mt={4} mb={2} display={"flex"} justifyContent={"space-around"}>
-                        <Button sx={{color:'#67C8D1', border:'1px solid #67C8D1'}} variant="outlined">Back</Button>
+                        <Button sx={{color:'#67C8D1', border:'1px solid #67C8D1'}} variant="outlined" onClick={navigateBack}>Back</Button>
                         <Button sx={{color:'#67C8D1', border:'1px solid #67C8D1'}} variant="outlined" onClick={toggleDrawer(true)}>play</Button>
                     </Box>
                 </Box>

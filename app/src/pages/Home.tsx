@@ -14,11 +14,6 @@ const HomePage: FC<any> = (): ReactElement => {
     // return "Loading";
   }
   console.debug(data);
-  // return (
-  //   <Box display={"flex"} height={"100vh"} justifyContent={"center"}>
-  //     <img src={banner} className="banner" />
-  //   </Box>
-  // );
   let navigate = useNavigate(); 
     function startExperience() {
         getData((result: any) => {
@@ -32,7 +27,7 @@ const HomePage: FC<any> = (): ReactElement => {
             if (data?.status == 200 && data.data) {
                 console.log('start experience');
             }
-            let path = apiRoutes.EXHIBITS_HOME; 
+            let path = apiRoutes.REGISTER; 
             navigate(path);
         })
     }

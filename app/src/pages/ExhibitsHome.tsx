@@ -1,10 +1,7 @@
-import { Box, Card, CardContent, InputLabel, List, ListItem, Tab, Tabs, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Tab, Tabs, Typography } from "@mui/material";
 import { FC, ReactElement, useState } from "react";
-import { apiRoutes } from "../routes";
 import ToolBar from "../layout/AppBar";
-import MuseumOutlinedIcon from '@mui/icons-material/MuseumOutlined';
-import BookmarkRoundedIcon from '@mui/icons-material/BookmarkRounded';
+import TabContents from "../layout/ExhibitsTable";
 
 interface TabPanelProps {
     children?: React.ReactNode;
@@ -18,6 +15,18 @@ const ExhibitsHome: FC<any> = (): ReactElement => {
     const handleChange = (_event: React.SyntheticEvent, newValue: number) => {
         setValue(newValue);
     };
+
+    const visitedList = [{date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}]
+
     function CustomTabPanel(props: TabPanelProps) {
         const { children, value, index, ...other } = props;
         return (
@@ -52,7 +61,7 @@ const ExhibitsHome: FC<any> = (): ReactElement => {
             justifyContent: 'center',
             width: '100%'
         }}>
-            <ToolBar show={true} badgeOpt={true} toolbarHeight={true}/>
+            <ToolBar show={true} badgeOpt={true} toolbarHeight={true} hideBtn={false}/>
             <Box sx={{ my: 20, mx: 2, width: '100%'}}>
                 <Typography variant="h6" sx={{color:'primary.main', textAlign:'start'}}>Exhibits:</Typography>
                 <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
@@ -62,49 +71,14 @@ const ExhibitsHome: FC<any> = (): ReactElement => {
                     </Tabs>
                 </Box>
                 <CustomTabPanel value={value} index={0}>
-                    <TabContents></TabContents>
+                    <TabContents content={visitedList}></TabContents>
                 </CustomTabPanel>
                 <CustomTabPanel value={value} index={1}>
-                    <TabContents></TabContents>
+                    <TabContents content={visitedList}></TabContents>
                 </CustomTabPanel>
             </Box>
         </Box>
     );
 }
 
-function TabContents() {
-    let navigate = useNavigate();
-    function navigateToDetails() {
-        console.log('start login');
-        let path = apiRoutes.EXHIBIT_DETAILS; 
-        navigate(path);
-    }
-    return (
-        <List>
-            {[1,2,3,4].map((value) => {
-                return (
-                <ListItem key="" disablePadding sx={{marginBottom:'0.5rem'}}>
-                    <Card onClick={navigateToDetails} sx={{width:'100%', border: `1px solid #67C8D1`, borderRadius: '10px', boxShadow: '0px 4px 4px 0px rgba(0, 0, 0, 0.25)'}}>
-                        <CardContent sx={{padding:'0 10px 0 10px !important'}}>
-                            <div style={{display: 'flex', alignItems:'center', justifyContent:'center'}}>
-                                <MuseumOutlinedIcon color={"disabled"}></MuseumOutlinedIcon>
-                                <Typography ml={2} variant="h6" fontWeight={'bold'} color={'#212C62'}>Exhibit {value} </Typography>
-                            </div>
-                            <div>
-                                <InputLabel>Date:</InputLabel>
-                                <InputLabel>Time: </InputLabel>
-                                <InputLabel>Description:</InputLabel>
-                            </div>
-                            <div>
-                                <InputLabel sx={{textAlign:'end', color:'primary.main', fontSize:'10px'}}>More...</InputLabel>
-                            </div>
-                        </CardContent>
-                    </Card>
-                    <BookmarkRoundedIcon fontSize="large" sx={{position: 'absolute', right: '-9px', top: '-5px', color:'primary.main', fontSize:'3rem'}}></BookmarkRoundedIcon>
-                </ListItem>
-                );
-            })} 
-            </List>
-    )
-}
 export default ExhibitsHome;
