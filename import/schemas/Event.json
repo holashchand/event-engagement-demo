@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "Event": {
+      "$ref": "#/definitions/Event"
+    }
+  },
+  "required": [
+    "Event"
+  ],
+  "title": "Event",
+  "definitions": {
+    "Event": {
+      "$id": "#/properties/Event",
+      "type": "object",
+      "title": "The Event Schema",
+      "required": [
+        "did",
+        "title",
+        "organization",
+        "schedule"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string",
+          "title": "Title",
+          "placeholder": "title"
+        },
+        "description": {
+          "type": "string",
+          "title": "Description",
+          "placeholder": "description"
+        },
+        "schedule": {
+          "type": "string",
+          "title": "Schedule",
+          "format": "date-time"
+        },
+        "location": {
+          "type": "string"
+        },
+        "organization": {
+          "type": "string",
+          "title": "Organization",
+          "placeholder": "Organization"
+        }
+      }
+    }
+  },
+  "_osConfig": {
+    "systemFields": [
+      "osCreatedAt",
+      "osUpdatedAt",
+      "osCreatedBy",
+      "osUpdatedBy"
+      ],
+    "ownershipAttributes": [],
+    "roles": [],
+    "inviteRoles": [
+      "anonymous"
+    ],
+    "enableLogin": false
+  }
+}

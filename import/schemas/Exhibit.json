@@ -1,0 +1,157 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "Exhibit": {
+      "$ref": "#/definitions/Exhibit"
+    }
+  },
+  "required": [
+    "Exhibit"
+  ],
+  "title": "Exhibit",
+  "definitions": {
+    "Exhibit": {
+      "$id": "#/properties/Exhibit",
+      "type": "object",
+      "title": "The Exhibit Schema",
+      "required": [
+        "did",
+        "exhibitDetails"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "exhibitDetails": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "title": "Name"
+            },
+            "mobileNumber": {
+              "type": "string",
+              "title": "Mobile Number"
+            },
+            "shortDescription": {
+              "type": "string",
+              "title": "Short Description"
+            },
+            "fullDescription": {
+              "type": "string",
+              "title": "Full Description"
+            },
+            "logoURL": {
+              "type": "string",
+              "title": "Logo URL"
+            },
+            "videoURL": {
+              "type": "string",
+              "title": "Video URL"
+            },
+            "boothNumber": {
+              "type": "string",
+              "title": "Booth Number"
+            },
+            "startDate": {
+              "type": "string",
+              "title": "Start Date",
+              "format": "date"
+            },
+            "endDate": {
+              "type": "string",
+              "title": "End Date",
+              "format": "date"
+            },
+            "organization": {
+              "type": "string",
+              "title": "Organization"
+            },
+            "qrId": {
+              "type": "string",
+              "title": "QR Id"
+            }
+          },
+          "required": [
+            "name", "mobileNumber"
+          ],
+          "label": "Exhibit Details",
+          "input": true
+        },
+        "quizConfig": {
+          "type": "object",
+          "properties": {
+            "title": {
+              "type": "string",
+              "title": "Title",
+              "placeholder": "Title"
+            },
+            "description": {
+              "type": "string",
+              "title": "Description",
+              "placeholder": "Description"
+            },
+            "questions": {
+              "type": "array",
+              "title": "Questions",
+              "items": {
+                "type": "object",
+                "title": "Question Details",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "title": "Question"
+                  },
+                  "correctAnswer": {
+                    "type": "string",
+                    "title": "Correct Answer"
+                  },
+                  "options": {
+                    "type": "array",
+                    "title": "Options",
+                    "items": {
+                      "type": "string",
+                      "title": "Option"
+                    }
+                  }
+                },
+                "required": ["question", "correctAnswer", "options"]
+              }
+            }
+          },
+          "required": ["title", "noOfQuestionPerQuiz", "thresholdLimit", "questions"],
+          "label": "Quiz",
+          "input": true
+        }
+      }
+    }
+  },
+  "_osConfig": {
+    "privateFields": [
+      "$.quizConfig.questions",
+      "$.exhibitDetails.mobileNumber"
+    ],
+    "uniqueIndexFields": [],
+    "ownershipAttributes": [
+      {
+        "email": "/mobileNumber",
+        "mobile": "/mobileNumber",
+        "userId": "/mobileNumber"
+      }
+    ],
+    "systemFields": [
+      "osCreatedAt",
+      "osUpdatedAt",
+      "osCreatedBy",
+      "osUpdatedBy"
+      ],
+    "roles": [
+      "exhibit-service", "Exhibit"
+    ],
+    "inviteRoles": [
+      "anonymous"
+    ],
+    "enableLogin": true
+  }
+}
