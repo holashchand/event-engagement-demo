@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "Visitor": {
+      "$ref": "#/definitions/Visitor"
+    }
+  },
+  "required": [
+    "Visitor"
+  ],
+  "title": "Visitor",
+  "definitions": {
+    "Visitor": {
+      "$id": "#/properties/Visitor",
+      "type": "object",
+      "title": "The Visitor Schema",
+      "required": [
+        "did",
+        "name",
+        "mobileNumber"
+      ],
+      "properties": {
+        "did": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "mobileNumber": {
+          "type": "string",
+          "title": "Mobile Number",
+          "placeholder": "Mobile Number"
+        },
+        "email": {
+          "type": "string",
+          "title": "Email",
+          "placeholder": "Email"
+        },
+        "exhibitsVisited": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "_osConfig": {
+    "uniqueIndexFields": [
+      "mobileNumber",
+      "did"
+    ],
+    "ownershipAttributes": [
+      {
+        "email": "/email",
+        "mobile": "/mobileNumber",
+        "userId": "/mobileNumber"
+      }
+    ],
+    "systemFields": [
+      "osCreatedAt",
+      "osUpdatedAt",
+      "osCreatedBy",
+      "osUpdatedBy"
+      ],
+    "roles": [],
+    "inviteRoles": [
+      "anonymous"
+    ],
+    "enableLogin": true
+  }
+}

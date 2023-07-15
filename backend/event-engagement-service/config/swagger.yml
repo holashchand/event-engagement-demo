@@ -1,0 +1,799 @@
+consumes:
+  - application/json
+produces:
+  - application/json
+schemes:
+  - http
+swagger: '2.0'
+info:
+  description: Sunbird registry and credential api (SunbirdRC)
+  title: Sunbird Registry and Credential
+  version: 1.0.0
+host: 'localhost:8081'
+basePath: /
+paths:
+  '/api/v1/QRCode/{userDid}/verify':
+    parameters:
+      - in: path
+        name: userDid
+        type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              badges:
+                type: integer
+                example: 10
+  /api/v1/QRCode/:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResult'
+  '/api/v1/Quiz/submit/{exhibitionId}':
+    post:
+      description: Submit a Quiz
+      parameters:
+        - in: path
+          name: exhibitionId
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/QuizSubmitRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/QuizResponse'
+  '/api/v1/Quiz/getQuestions/{exhibitionId}':
+    get:
+      parameters:
+        - name: exhibitionId
+          in: path
+          description: Osid of the Exhibition
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/QuizQuestions'
+  /api/v1/Visitor/Quiz/list:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/QuizListResponse'
+  /api/v1/Visitor/Badge/list:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BadgeListResponse'
+  /api/v1/Visitor/details:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Visitor'
+  '/api/v1/Visitor/visit/{exhibitOsid}':
+    put:
+      parameters:
+        - in: path
+          name: exhibitOsid
+          type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResult'
+  '/api/v1/Quiz/{entityId}':
+    get:
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Quiz
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Quiz'
+    put:
+      description: Quiz new update
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Quiz
+          required: true
+          type: string
+        - in: body
+          name: quiz
+          required: false
+          schema:
+            $ref: '#/definitions/Quiz'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Quiz'
+  /api/v1/Quiz/search:
+    post:
+      description: Search in quizes
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            properties:
+              offset:
+                type: integer
+                format: int32
+                default: 0
+              limit:
+                type: integer
+                format: int32
+                default: 0
+              filters:
+                type: object
+                description: 'Ex: (field_path): $.educationDetails.name'
+                properties:
+                  field_path:
+                    type: object
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
+                    properties:
+                      operators:
+                        type: string
+                        example: name
+                        description: Search searchField
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Quiz'
+  /api/v1/Quiz:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Quiz'
+  '/api/v1/Visitor/{entityId}':
+    get:
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Visitor
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Visitor'
+    put:
+      description: Visitor new update
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Visitor
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Visitor'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Visitor'
+  /api/v1/Visitor:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Visitor'
+    post:
+      description: Create new Visitor
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Visitor'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Visitor'
+  '/api/v1/Exhibit/{entityId}':
+    get:
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Exhibit
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exhibit'
+    put:
+      description: Exhibit new update
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Exhibit
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Exhibit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exhibit'
+  /api/v1/Exhibit/search:
+    post:
+      description: Create new Exhibit
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            properties:
+              offset:
+                type: integer
+                format: int32
+                default: 0
+              limit:
+                type: integer
+                format: int32
+                default: 0
+              filters:
+                type: object
+                description: 'Ex: (field_path): $.educationDetails.name'
+                properties:
+                  field_path:
+                    type: object
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
+                    properties:
+                      operators:
+                        type: string
+                        example: name
+                        description: Search searchField
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Exhibit'
+  /api/v1/Exhibit/invite:
+    post:
+      description: Create new Exhibit
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Exhibit'
+      responses:
+        '200':
+          description: OK
+          schema: {}
+  /api/v1/Exhibit:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exhibit'
+    post:
+      description: Create new Exhibit
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Exhibit'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exhibit'
+  '/api/v1/Exhibit/{entityId}/{property}/{propertyId}':
+    get:
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Exhibit
+          required: true
+          type: string
+        - name: property
+          in: path
+          description: Schema property field
+          required: true
+          type: string
+        - name: propertyId
+          in: path
+          description: Id of schema property field
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResult'
+    put:
+      description: ' new update'
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Exhibit
+          required: true
+          type: string
+        - name: property
+          in: path
+          description: Schema property field
+          required: true
+          type: string
+        - name: propertyId
+          in: path
+          description: Id of schema property field
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            type: object
+            properties:
+              key1:
+                type: string
+                default: val1
+              send:
+                type: boolean
+                description: If the required property needs to be sent for attestation
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResult'
+  '/api/v1/Event/{entityId}':
+    get:
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Event
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+    put:
+      description: Event new update
+      parameters:
+        - name: entityId
+          in: path
+          description: Id of the Event
+          required: true
+          type: string
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Event'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+  /api/v1/Event/search:
+    post:
+      description: Search events
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            properties:
+              offset:
+                type: integer
+                format: int32
+                default: 0
+              limit:
+                type: integer
+                format: int32
+                default: 0
+              filters:
+                type: object
+                description: 'Ex: (field_path): $.educationDetails.name'
+                properties:
+                  field_path:
+                    type: object
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
+                    properties:
+                      operators:
+                        type: string
+                        example: name
+                        description: Search searchField
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Event'
+  /api/v1/Event/invite:
+    post:
+      description: Create new Event
+      parameters:
+        - in: body
+          name: body
+          required: false
+          schema:
+            $ref: '#/definitions/Event'
+      responses:
+        '200':
+          description: OK
+          schema: {}
+  /api/v1/Event:
+    get:
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+    post:
+      description: Create new Event
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: '#/definitions/Event'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Event'
+definitions:
+  Quiz:
+    type: object
+    title: The Quiz Schema
+    required:
+      - title
+      - visitorName
+      - exhibitDetails
+      - date
+    properties:
+      title:
+        type: string
+        title: Title
+      visitorName:
+        type: string
+        title: Visitor Name
+      visitorMobileNumber:
+        type: string
+        title: Visitor Contact
+      date:
+        type: string
+        title: Date
+        format: date-time
+      exhibitDetails:
+        type: object
+        required:
+          - osid
+          - name
+          - 'organization,'
+        properties:
+          osid:
+            type: string
+            title: id of the exhibit
+          name:
+            type: string
+          organization:
+            type: string
+      score:
+        type: integer
+        title: Score
+      totalScore:
+        type: integer
+        title: Total Score
+      attemptCount:
+        type: integer
+      badgeWon:
+        type: boolean
+      answers:
+        type: array
+        title: Answers
+        items:
+          type: object
+          properties:
+            questionOsid:
+              type: string
+            question:
+              type: string
+              title: Question
+            answered:
+              type: string
+              title: Answered
+            correctAnswer:
+              type: string
+              title: Correct Answer
+            isCorrect:
+              type: boolean
+              title: Is Correct
+          required:
+            - question
+            - isCorrect
+  Visitor:
+    type: object
+    required:
+      - name
+      - mobileNumber
+    properties:
+      did:
+        type: string
+      name:
+        type: string
+      mobileNumber:
+        type: string
+      email:
+        type: string
+      exhibitsVisited:
+        type: array
+        items:
+          type: string
+          description: osid of the exhibits visited
+  Exhibit:
+    type: object
+    title: The Exhibit Schema
+    required:
+      - exhibitDetails
+      - quizConfig
+    properties:
+      exhibitDetails:
+        type: object
+        properties:
+          name:
+            type: string
+          mobileNumber:
+            type: string
+          shortDescription:
+            type: string
+          fullDescription:
+            type: string
+          logoURL:
+            type: string
+          videoURL:
+            type: string
+          boothNumber:
+            type: string
+          startDate:
+            type: string
+            format: date-time
+          endDate:
+            type: string
+            format: date-time
+          organization:
+            type: string
+          qrId:
+            type: string
+        required:
+          - 'name, mobileNumber'
+      quizConfig:
+        type: object
+        properties:
+          title:
+            type: string
+            title: Title
+          description:
+            type: string
+            title: Description
+          noOfQuestionPerQuiz:
+            type: integer
+            example: 5
+          thresholdLimit:
+            type: integer
+            example: 4
+          questions:
+            type: array
+            items:
+              type: object
+              properties:
+                question:
+                  type: string
+                  title: Question
+                correctAnswer:
+                  type: string
+                options:
+                  type: array
+                  items:
+                    type: string
+              required:
+                - question
+                - correctAnswer
+                - options
+  Event:
+    type: object
+    title: The Event Schema
+    required:
+      - title
+      - organization
+      - schedule
+    properties:
+      title:
+        type: string
+      description:
+        type: string
+      schedule:
+        type: string
+        format: date-time
+      location:
+        type: string
+      organization:
+        type: string
+  SuccessResult:
+    type: object
+    properties:
+      results:
+        type: object
+  QuizResponse:
+    type: object
+    title: The Quiz Schema
+    required:
+      - title
+      - visitorName
+      - visitorMobileNumber
+      - exhibitDetails
+      - date
+    properties:
+      did:
+        type: string
+      title:
+        type: string
+      visitorName:
+        type: string
+      visitorMobileNumber:
+        type: string
+      date:
+        type: string
+        format: date-time
+      exhibitDetails:
+        type: object
+        required:
+          - osid
+          - name
+          - 'organization,'
+        properties:
+          osid:
+            type: string
+            title: id of the exhibit
+          name:
+            type: string
+          organization:
+            type: string
+      score:
+        type: integer
+        example: 8
+      totalScore:
+        type: integer
+        example: 10
+      attempCount:
+        type: integer
+        example: 5
+      badgeWon:
+        type: boolean
+        example: false
+      answers:
+        type: array
+        items:
+          type: object
+          properties:
+            question:
+              type: string
+              example: Example of a Programming Language?
+            answered:
+              type: string
+              example: Java
+            isCorrect:
+              type: boolean
+              example: true
+          required:
+            - question
+            - isCorrect
+  QuizListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/QuizResponse'
+  QuizSubmitRequest:
+    type: object
+    title: The Quiz Submit Request
+    required:
+      - answers
+    properties:
+      answers:
+        type: array
+        title: Answers
+        items:
+          type: object
+          properties:
+            questionOsid:
+              type: string
+              title: Question Osid
+            answer:
+              type: string
+              title: Answer
+          required:
+            - questionOsid
+            - answer
+  QuizQuestions:
+    type: object
+    properties:
+      questions:
+        type: array
+        items:
+          type: object
+          properties:
+            osid:
+              type: string
+            question:
+              type: string
+            options:
+              type: array
+              items:
+                type: string
+  BadgeListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/BadgeResponse'
+  BadgeResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      mobileNumber:
+        type: string
+      work:
+        type: string
