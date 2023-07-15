@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const { credentialUrl, credentialSchemaUrl } = require("../constants");
+const { credentialUrl, credentialSchemaUrl } = require("../config/config");
 const { generateDid } = require("./utils");
 const fs = require('fs');
 

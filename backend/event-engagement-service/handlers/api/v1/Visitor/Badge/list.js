@@ -6,7 +6,7 @@ const { getCurrentUser } = require('../../../../../services/utils.js');
  */
 module.exports = {
     get: async function (req, res, next) {
-        const visitor = getCurrentUser(req);
+        const visitor = await getCurrentUser(req);
         const credentails = await findCredentialsByVisitorDid(visitor?.did);
         res.status(200).send(credentails);
     }

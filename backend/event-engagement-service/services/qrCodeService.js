@@ -1,6 +1,6 @@
 const QRCode = require('qrcode');
-const { findCredentialsByVisitorDid } = require('./credentialService');
-const { VISITOR_QR_BASE_URL } = require('../constants');
+const { verifiedVisitorCredentials } = require('./credentialService');
+const { VISITOR_QR_BASE_URL } = require('../config/config');
 
 
 const getQrCodeForVisitorDid = async (visitor, callback) => {
@@ -12,10 +12,7 @@ const getQrCodeForVisitorDid = async (visitor, callback) => {
 }
 
 const verifyQrCodeForVisitorDid = async (userDid) => {
-    const list = await findCredentialsByVisitorDid(userDid);
-    // find all credentails of a user
-    // verify them
-    // return valid count
+    return verifiedVisitorCredentials(userDid);
 }
 
 module.exports = {

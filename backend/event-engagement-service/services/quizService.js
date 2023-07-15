@@ -2,7 +2,7 @@ const { default: axios } = require("axios");
 const { getServiceAccountToken, generateDid } = require("./utils");
 const { checkAnswers, getExhibitByOsid } = require("./exhibitService");
 const { createCredential } = require("./credentialService");
-const { registryUrl } = require("../constants");
+const { registryUrl } = require("../config/config");
 const { _ } = require("lodash");
 
 const serviceUrl = `${registryUrl}/api/v1/Quiz`;

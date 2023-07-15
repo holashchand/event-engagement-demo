@@ -5,7 +5,7 @@ var Express = require('express');
 var BodyParser = require('body-parser');
 var Swaggerize = require('swaggerize-express');
 var Path = require('path');
-const constants = require('./constants');
+const constants = require('./config/config');
 
 var App = Express();
 

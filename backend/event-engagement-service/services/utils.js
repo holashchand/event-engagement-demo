@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
 const qs = require('qs');
-const { SERVICE_ACCOUNT_CLIENT_SECRET, KEYCLOAK_URL, identityUrl, registryUrl} = require("../constants");
+const { SERVICE_ACCOUNT_CLIENT_SECRET, KEYCLOAK_URL, identityUrl, registryUrl} = require("../config/config");
 const { getVisitorByMobileNumber } = require("./visitorService");
 
 const _axios = require("axios").default;

@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const { registryUrl } = require("../constants");
+const { registryUrl } = require("../config/config");
 const { getServiceAccountToken } = require("./utils");
 
 const serviceUrl = `${registryUrl}/api/v1/Exhibit`;
