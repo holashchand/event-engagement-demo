@@ -8,3 +8,4 @@ app/src/assets/.DS_Store
 .DS_Store
 *.lock
 /keycloak/keycloak-mobile-number-login-spi/target/*
+credentials/data/*
