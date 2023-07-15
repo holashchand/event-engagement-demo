@@ -24,25 +24,21 @@ App.use(Swaggerize({
 App.use(function(err, req, res, next) {
     console.error("Error occurred for ")
     console.error("URL: ", req.url)
-    if (config.LOG_LEVEL === "DEBUG") {
-        console.error("BODY: ", req.body)
-        console.error("HEADERS: ", req.headers)
+    // if (config.LOG_LEVEL === "DEBUG") {
+    //     console.error("BODY: ", req.body)
+    //     console.error("HEADERS: ", req.headers)
+    // }
+    if (err && err?.name === "AxiosError") {
+        res.status(err?.response?.status || 400).send({
+            "status": err?.response?.data?.params?.status,
+            "message": err?.response?.data?.params?.errmsg,
+            "responseCode": err?.response?.data?.responseCode
+        })
+    } else {
+        res.status(500).send({
+            "message": err?.message
+        });
     }
-    console.error(err)
-    res.status(500).send({
-        "id": "sunbird-rc.registry." + req.method,
-        "ver": "1.0",
-        "ets": 1689408594416,
-        "params": {
-            "resmsgid": "",
-            "msgid": "",
-            "err": "",
-            "status": "UNSUCCESSFUL",
-            "errmsg": err.message
-        },
-        "responseCode": "OK",
-        "result": {}
-    })
 });
 
 Server.listen(8000, function () {

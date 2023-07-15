@@ -12,7 +12,7 @@ const getQrCodeForVisitorDid = async (visitor, callback) => {
 }
 
 const verifyQrCodeForVisitorDid = async (userDid) => {
-    return verifiedVisitorCredentials(userDid);
+    return await verifiedVisitorCredentials(userDid);
 }
 
 module.exports = {

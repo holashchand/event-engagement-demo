@@ -1,9 +1,10 @@
 const { default: axios } = require("axios");
 const qs = require('qs');
 const { SERVICE_ACCOUNT_CLIENT_SECRET, KEYCLOAK_URL, identityUrl, registryUrl} = require("../config/config");
-const { getVisitorByMobileNumber } = require("./visitorService");
-
+// const { getVisitorByMobileNumber } = require("./visitorService");
+const { _ } = require("lodash");
 const _axios = require("axios").default;
+const jwt = require("jsonwebtoken");
 
 const result = (promise, res) => {
     return promise.then(result => {
@@ -58,7 +59,7 @@ const generateDid = async (entityName, res) => {
     return did || "default";
 }
 
-async function getServiceAccountToken() {
+const getServiceAccountToken = async () => {
     const response = await axios({
             method: 'post',
             url: `${KEYCLOAK_URL}/realms/sunbird-rc/protocol/openid-connect/token`,
@@ -80,9 +81,29 @@ async function getServiceAccountToken() {
     return response.access_token;
 }
 
+const getVisitorByMobileNumber = async (mobileNumber) => {
+    const token = await getServiceAccountToken();
+    const payload = {
+        "offset": 0,
+        "limit": 1,
+        "filters": {
+          "mobileNumber": {
+            "eq": mobileNumber
+          }
+        }
+    }
+    return axios.post(`${registryUrl}/api/v1/Visitor/search`, payload, {
+        "Authorization": `Bearer ${token}`
+    }).then(results => results?.data[0]);
+};
+
 const getCurrentUser = async (req) => {
     // TODO: find mobile number from token
-    let mobileNumber = "7786995149";
+    const authHeader = req.headers['authorization'] || req.headers['Authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    const results = jwt.decode(token);
+    let mobileNumber = _.get(results, "preferred_username");
+    if (!mobileNumber) throw new Error("mobile number not valid")
     return getVisitorByMobileNumber(mobileNumber);
 }
 

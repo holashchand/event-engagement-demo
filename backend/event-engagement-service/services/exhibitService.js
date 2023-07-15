@@ -1,13 +1,13 @@
 const { default: axios } = require("axios");
 const { registryUrl } = require("../config/config");
-const { getServiceAccountToken } = require("./utils");
+const { getServiceAccountToken, generateDid } = require("./utils");
 
 const serviceUrl = `${registryUrl}/api/v1/Exhibit`;
 
 const checkAnswers = (submitions, questions) => {
     const answers = questions?.map(details  => {
         const { osid, question, correctAnswer } = details;
-        const answer = submitions?.find(d => d.questionOsid == osid)?.answer;
+        const answer = submitions?.answers?.find(d => d.questionOsid == osid)?.answer;
         return {
             questionOsid: osid,
             question,
@@ -16,7 +16,7 @@ const checkAnswers = (submitions, questions) => {
             isCorrect: answer === correctAnswer
         };
     });
-    const score = answers.filter(d => d.isCorrect).length;
+    const score = answers?.filter(d => d.isCorrect).length;
     return {
         answers,
         score,
@@ -50,12 +50,16 @@ const listExhibit = async (headers) => {
         ...headers,
         "Authorization": `Bearer ${token}`
         }
-     }).then(resp => resp?.data);
+     }).then(resp => resp?.data)
+     .catch(err => {
+        if (err?.response?.status === 404) return [];
+        throw err;
+     });
 };
 
 const createExhibit = async (payload, headers) => {
-    const did = await generateDid("exhibit", res);
-    body["did"] = `${did}`;
+    const did = await generateDid("exhibit");
+    payload["did"] = `${did}`;
     const token = await getServiceAccountToken();
     return axios.post(serviceUrl, payload, {
         headers: {

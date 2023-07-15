@@ -2,13 +2,14 @@ const { default: axios } = require("axios");
 const { registryUrl } = require("../config/config");
 const { getExhibitByOsid } = require("./exhibitService");
 const { generateDid, getServiceAccountToken } = require("./utils");
+const { _} = require("lodash");
 
 
 const serviceUrl = `${registryUrl}/api/v1/Visitor`;
 
 const createVisitor = async (payload, headers) => {
-    const did = await generateDid("visitor", res);
-    body["did"] = `${did}`;
+    const did = await generateDid("visitor");
+    payload["did"] = `${did}`;
     const token = await getServiceAccountToken();
     return axios.post(serviceUrl, payload, {
         headers: {
@@ -49,13 +50,12 @@ const markExhibitAsVisited = async (exhibitOsid, visitor, headers) => {
     .catch(err => {
         console.log(err);
     });
-    if(exhibit && !(exhibit?.osid in visitor?.exhibitVisted)) {
-        const payload = {
-            exhibitVisted: [...exhibitVisted, exhibitOsid]
-        }
-        await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload, {
-            headers: { ...headers }
+    if(exhibit && !(exhibit?.osid in _.get(visitor, "exhibitsVisited", []))) {
+        const payload = [..._.get(visitor, "exhibitsVisited", []), exhibitOsid];
+        const response = await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload).catch((err) => {
+            console.log(err);
         });
+        console.log(response);
     }
 };
 

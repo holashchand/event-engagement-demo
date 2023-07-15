@@ -59,7 +59,7 @@
       "osUpdatedBy"
       ],
     "ownershipAttributes": [],
-    "roles": [],
+    "roles": ["anonymous"],
     "inviteRoles": [
       "anonymous"
     ],

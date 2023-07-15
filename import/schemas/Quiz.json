@@ -114,9 +114,9 @@
       "$.quizConfig.answers[].correctAnswer"
     ],
     "ownershipAttributes": [],
-    "roles": ["exhibit-service"],
+    "roles": ["anonymous"],
     "inviteRoles": [
-      "exhibit-service"
+      "anonymous"
     ],
     "systemFields": [
       "osCreatedAt",

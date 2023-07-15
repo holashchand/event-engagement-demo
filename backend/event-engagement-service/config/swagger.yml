@@ -604,6 +604,8 @@ definitions:
       - exhibitDetails
       - quizConfig
     properties:
+      did: 
+        type: string
       exhibitDetails:
         type: object
         properties:

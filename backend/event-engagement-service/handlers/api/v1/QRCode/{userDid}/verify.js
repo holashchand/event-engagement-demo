@@ -6,11 +6,7 @@ const { verifyQrCodeForVisitorDid } = require('../../../../../services/qrCodeSer
 module.exports = {
     get: async function (req, res, next) {
         const userDid = req?.params?.userDid;
-        await verifyQrCodeForVisitorDid(userDid)
-        .then((results) => {
-            res.status(200).send(results);
-        }).catch((err) => {
-            res.status(400).send(err?.message);
-        });
+        const count = await verifyQrCodeForVisitorDid(userDid)
+        res.status(200).send({ badgesWon: count });
     }
 };

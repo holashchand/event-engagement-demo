@@ -12,17 +12,21 @@ const createOrUpdate = async (exhibit, visitor, results) => {
     const quizExists = !!quiz;
     if (!quizExists) {
         quiz = {};
-        const did = generateDid("quiz");
+        const did = await generateDid("quiz");
         quiz.did = did;
         quiz.exhibitDetails = {
             osid: _.get(exhibit, "osid", ""),
             name: _.get(exhibit, "exhibitDetails.name", ""),
             organization: _.get(exhibit, "exhibitDetails.organization", "",)
         }
+        quiz.title = _.get(exhibit, "quizConfig.title", _.get(exhibit, "exhibitDetails.name", "default"));
         quiz.visitorName = _.get(visitor, "name");
         quiz.visitorMobileNumber = _.get(visitor, "mobileNumber");
+        quiz.attemptCount = 1;
+    } else {
         quiz.attemptCount += 1;
     }
+    quiz.date = new Date().toISOString();
     quiz = {...quiz, results};
     const token = await getServiceAccountToken();
     let url = `${serviceUrl}`;
@@ -95,7 +99,7 @@ const submitQuiz = async (exhibitOsid, visitor, submissions) => {
     const exhibit = await getExhibitByOsid(exhibitOsid);
     const result = checkAnswers(submissions, exhibit?.quizConfig?.questions);
     await createOrUpdate(exhibit, visitor, result);
-    if (badgeWon) {
+    if (result?.badgeWon) {
         await createCredential(exhibit, visitor);
     }
     return result?.badgeWon;

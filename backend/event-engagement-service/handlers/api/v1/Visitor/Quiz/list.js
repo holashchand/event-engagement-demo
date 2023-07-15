@@ -1,4 +1,8 @@
 'use strict';
+
+const { listQuizForVisitorMobileNumber } = require("../../../../../services/quizService");
+const { getCurrentUser } = require("../../../../../services/utils");
+
 /**
  * Operations on /api/v1/Visitor/Quiz/list
  */

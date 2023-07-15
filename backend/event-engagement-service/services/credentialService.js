@@ -2,9 +2,10 @@ const { default: axios } = require("axios");
 const { credentialUrl, credentialSchemaUrl } = require("../config/config");
 const { generateDid } = require("./utils");
 const fs = require('fs');
-
+const path = require('path');
 const serviceUrl = `${credentialUrl}/credentials`;
 const schemaServiceUrl = `${credentialSchemaUrl}/credential-schema`;
+const { _ } = require("lodash");
 
 const findCredentialsByVisitorDid = async (did) => {
     const payload = {
@@ -13,21 +14,23 @@ const findCredentialsByVisitorDid = async (did) => {
         }
     };
     return axios.post(`${serviceUrl}/search`, payload)
-    .then(results => results.data);
+    .then(results => results.data)
+    .catch(() => []);
 };
 
 const getOrCreateCredentialSchema = async () => {
-    const schemas = await axios.get(`${schemaServiceUrl}?tags=BadgeSchema2&page=1&limit=1`)
+    const schemas = await axios.get(`${schemaServiceUrl}?tags=BadgeSchema3&page=1&limit=1`)
     .then(resp => resp?.data);
     if(schemas && schemas.length == 1) {
         return schemas[0];
     }
-    const did = generateDid("schema:badge")
-    const rawdata = fs.readFileSync('../config/CredentailSchema.json');
+    const did = await generateDid("schema:badge");
+    var jsonPath = path.join(__dirname, '..', 'config', 'CredentialSchema.json');
+    var rawdata = fs.readFileSync(jsonPath, 'utf8');
     const schemaRequest = {};
     schemaRequest.schema = JSON.parse(rawdata);
     schemaRequest.schema.author = did;
-    schemaRequest.tags = ['BadgeSchema2'];
+    schemaRequest.tags = ['BadgeSchema3'];
     schemaRequest.status = 'DRAFT';
     return axios.post(schemaServiceUrl, schemaRequest, {
         headers: {
@@ -73,18 +76,22 @@ const createCredential = async (exhibit, visitor) => {
 const verifyCredential = async (credentialId) => {
     return axios.get(`${serviceUrl}/${credentialId}/verify`)
     .then(result => {
-        result?.data?.checks?.filter(d => {
+        return result?.data?.checks?.every(d => {
             return d?.active === "OK" && d?.revoked === "OK" && d?.expired === "OK"
             && d?.proof === "OK";
-        })
+        });
     })
-    .catch(() => false);
+    .catch((err) => {
+        console.log(err);
+        return false;
+    });
 }
 
 const verifiedVisitorCredentials = async (visitorDid) => {
     const list = await findCredentialsByVisitorDid(visitorDid);
-    const results = await Promise.all(list.map(d => verifyCredential(_.get(d, "credential.id", ""))));
-    return results.filter(d => d);
+    const results = await Promise.all(list.map(d => verifyCredential(_.get(d, "id", ""))));
+    const count = results?.filter(d => d)?.length || 0;
+    return count;
 }
 
 module.exports = {
