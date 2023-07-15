@@ -12,6 +12,29 @@ info:
 host: 'localhost:8081'
 basePath: /
 paths:
+  '/api/v1/QRCode/{userDid}/verify':
+    parameters:
+      - in: path
+        name: userDid
+        type: string
+        required: true
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: object
+            properties:
+              badges:
+                type: integer
+                example: 10
+  /api/v1/QRCode/:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/SuccessResult'
   '/api/v1/Quiz/submit/{exhibitionId}':
     post:
       description: Submit a Quiz
@@ -50,6 +73,13 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/QuizListResponse'
+  /api/v1/Visitor/Badge/list:
+    get:
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BadgeListResponse'
   /api/v1/Visitor/details:
     get:
       responses:
@@ -508,12 +538,18 @@ definitions:
       totalScore:
         type: integer
         title: Total Score
+      attemptCount:
+        type: integer
+      badgeWon:
+        type: boolean
       answers:
         type: array
         title: Answers
         items:
           type: object
           properties:
+            questionOsid:
+              type: string
             question:
               type: string
               title: Question
@@ -535,6 +571,8 @@ definitions:
       - name
       - mobileNumber
     properties:
+      did:
+        type: string
       name:
         type: string
       mobileNumber:
@@ -630,6 +668,8 @@ definitions:
       schedule:
         type: string
         format: date-time
+      location:
+        type: string
       organization:
         type: string
   SuccessResult:
@@ -647,6 +687,8 @@ definitions:
       - exhibitDetails
       - date
     properties:
+      did:
+        type: string
       title:
         type: string
       visitorName:
@@ -676,6 +718,12 @@ definitions:
       totalScore:
         type: integer
         example: 10
+      attempCount:
+        type: integer
+        example: 5
+      badgeWon:
+        type: boolean
+        example: false
       answers:
         type: array
         items:
@@ -734,3 +782,18 @@ definitions:
               type: array
               items:
                 type: string
+  BadgeListResponse:
+    type: array
+    items:
+      $ref: '#/definitions/BadgeResponse'
+  BadgeResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      name:
+        type: string
+      mobileNumber:
+        type: string
+      work:
+        type: string

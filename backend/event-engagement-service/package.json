@@ -1,14 +1,14 @@
 {
-    "name": "exhibit-service",
+    "name": "event-engagement-service",
     "description": "",
     "version": "1.0.0",
     "author": "Holash Chand <holash.c@beehyv.com>",
     "contributors": [],
     "repository": {
         "type": "git",
-        "url": "git://github.com/holashchand/exhibit-service.git"
+        "url": "git://github.com/holashchand/event-engagement-service.git"
     },
-    "bugs": "http://github.com/holashchand/exhibit-service/issues",
+    "bugs": "http://github.com/holashchand/event-engagement-service/issues",
     "publishConfig": {
         "registry": "https://registry.npmjs.org"
     },
