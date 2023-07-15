@@ -1,51 +1,16 @@
 'use strict';
 var dataProvider = require('../../../../data/api/v1/Quiz/{entityId}.js');
+const { getQuizByOsid } = require('../../../../services/quizService.js');
 /**
  * Operations on /api/v1/Quiz/{entityId}
  */
 module.exports = {
-    /**
-     * summary: 
-     * description: 
-     * parameters: entityId
-     * produces: 
-     * responses: 200
-     */
-    get: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['get']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
+    get: async function (req, res, next) {
+        const quizOsid = req.params.entityId;
+        const quiz = await getQuizByOsid(quizOsid);
+        res.status(200).send(quiz);
     },
-    /**
-     * summary: 
-     * description: Quiz new update
-     * parameters: entityId, quiz
-     * produces: 
-     * responses: 200
-     */
     put: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['put']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
+        // update quiz
     }
 };
