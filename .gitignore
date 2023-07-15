@@ -1,2 +1,10 @@
 backend/*/node_modules
 backend/*/package-lock.json
+.idea
+db-data
+app/node_modules
+app/src/app/.DS_Store
+app/src/assets/.DS_Store
+.DS_Store
+*.lock
+/keycloak/keycloak-mobile-number-login-spi/target/*
