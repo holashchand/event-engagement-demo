@@ -1,14 +1,14 @@
-version: "2.4"
+version: "3"
 
 services:
   db:
-    image: postgres
+    image: postgres:12.1-alpine
     volumes:
       - ./${DB_DIR-db-data}:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=registry
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 10s
@@ -19,30 +19,25 @@ services:
     volumes:
       - ./${SCHEMA_DIR-import/schemas}:/home/sunbirdrc/config/public/_schemas
     environment:
-      - connectionInfo_uri=jdbc:postgresql://db:5432/registry
-      - connectionInfo_username=postgres
-      - connectionInfo_password=postgres
-      - search_providerName=${SEARCH_PROVIDER_NAME-dev.sunbirdrc.registry.service.NativeSearchService}
-      - sunbird_sso_realm=${KEYCLOAK_REALM-sunbird-rc}
-      - sunbird_sso_url=http://keycloak:8080/auth
-      - sunbird_sso_admin_client_id=${KEYCLOAK_ADMIN_CLIENT_ID-admin-api}
-      - sunbird_sso_client_id=${KEYCLOAK_CLIENT_ID-registry-frontend}
+      - connectionInfo_uri=jdbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
+      - connectionInfo_username=${DB_USERNAME}
+      - connectionInfo_password=${DB_PASSWORD}
+      - search_providerName=${SEARCH_PROVIDER_NAME}
+      - sunbird_sso_realm=${KEYCLOAK_REALM}
+      - sunbird_sso_url=${KEYCLOAK_SSO_URL}
+      - sunbird_sso_admin_client_id=${KEYCLOAK_ADMIN_CLIENT_ID}
+      - sunbird_sso_client_id=${KEYCLOAK_CLIENT_ID}
       - sunbird_sso_admin_client_secret=${KEYCLOAK_SECRET}
       - signature_enabled=false
       - sunbird_keycloak_user_set_password=true
-      - filestorage_connection_url=http://file-storage:9000
-      - filestorage_access_key=admin
-      - filestorage_secret_key=12345678
-      - filestorage_bucket_key=issuance
-      - registry_base_apis_enable=false
       - sunbird_keycloak_user_password=abcd@123
       - logging.level.root=INFO
-      - enable_external_templates=true
-      - async_enabled=${ASYNC_ENABLED-false}
+      - enable_external_templates=false
+      - async_enabled=${ASYNC_ENABLED}
       - authentication_enabled=false
-      - manager_type=${MANAGER_TYPE-DefinitionsManager}
-    ports:
-      - "8081:8081"
+      - manager_type=${MANAGER_TYPE}
+#    ports:
+#      - "8081:8081"
     depends_on:
       db:
         condition: service_healthy
@@ -54,18 +49,18 @@ services:
   keycloak:
     image: ghcr.io/sunbird-rc/event-engagement-demo/keycloak:latest
     volumes:
-      - ./${KEYCLOAK_IMPORT_DIR-import/keycloak}:/opt/jboss/keycloak/imports
-      - ./${KEYCLOAK_THEMES_DIR-keycloak/keycloak/themes/nha}:/opt/jboss/keycloak/themes/nha
+      - ./${KEYCLOAK_IMPORT_DIR}:/opt/jboss/keycloak/imports
+      - ./${KEYCLOAK_THEMES_DIR}:/opt/jboss/keycloak/themes/nha
     environment:
       - KEYCLOAK_LOGO=https://raw.githubusercontent.com/Sunbird-RC/demo-donor-registry/main/imports/header_logo.svg
       - DB_VENDOR=postgres
-      - DB_ADDR=db
-      - DB_PORT=5432
-      - DB_DATABASE=registry
-      - DB_USER=postgres
-      - DB_PASSWORD=postgres
-      - KEYCLOAK_USER=${KEYCLOAK_ADMIN_USER-admin}
-      - KEYCLOAK_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD-admin}
+      - DB_ADDR=${DB_URL}
+      - DB_PORT=${DB_PORT}
+      - DB_DATABASE=${DB_NAME}
+      - DB_USER=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - KEYCLOAK_USER=${KEYCLOAK_ADMIN_USER}
+      - KEYCLOAK_PASSWORD=${KEYCLOAK_ADMIN_PASSWORD}
       - KEYCLOAK_IMPORT=/opt/jboss/keycloak/imports/realm-export.json
       - PROXY_ADDRESS_FORWARDING=true
       - KEYCLOAK_PORTAL_TITLE=
@@ -76,7 +71,6 @@ services:
       - LOGIN_USER_ID_TITLE=Mobile Number
       - MOCK_OTP=true
       - MESSAGE_TEMPLATE=${MESSAGE_TEMPLATE}
-      - NOTIFICATION_SERVICE_URL=http://notification-ms:8765/notification-service/v1/notification
       - REGISTER_URL=${REGISTER_URL}
       - INVALID_REGISTRATION=${INVALID_REGISTRATION}
       - INVALID_USERNAME=${INVALID_USERNAME}
@@ -90,14 +84,33 @@ services:
       interval: 30s
       timeout: 10s
       retries: 10
-    ports:
-      - "8080:8080"
-      - "9990:9990"
+#    ports:
+#      - "8080:8080"
+#      - "9990:9990"
     depends_on:
       db:
         condition: service_healthy
+  event-engagement-service:
+    image: ghcr.io/sunbird-rc/event-engagement-demo/event-engagement-service
+    environment:
+      - VISITOR_QR_BASE_URL="http://localhost:8000"
+      - KEYCLOAK_URL=${KEYCLOAK_SSO_URL}
+      - SERVICE_ACCOUNT_CLIENT_SECRET=${KEYCLOAK_SERVICE_ACCOUNT_CLIENT_SECRET}
+      - registryUrl=${REGISTRY_URL}
+      - credentialUrl=${CREDENTIAL_SERVICE_URL}
+      - identityUrl=${IDENTITY_SERVICE_URL}
+      - credentialSchemaUrl=${CREDENTIAL_SCHEMA_SERVICE_URL}
+    healthcheck:
+      test:
+        [ "CMD-SHELL", "curl -f http://localhost:8000/swagger || exit 1" ]
+      interval: 30s
+      timeout: 10s
+      retries: 10
+    depends_on:
+      registry:
+        condition: service_healthy
   nginx:
-    image: tejashjl/sunbird-rc-donor-portal:${PORTAL_RELEASE_VERSION}
+    image: ghcr.io/sunbird-rc/event-engagement-demo/nginx-gateway
     ports:
       - "80:80"
     depends_on:
@@ -111,6 +124,6 @@ services:
       timeout: 10s
       retries: 10
 networks:
-  default:
-    external:
-      name: rcw
+  rcw:
+    external: true
+
