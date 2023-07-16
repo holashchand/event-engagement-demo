@@ -124,6 +124,7 @@ services:
       timeout: 10s
       retries: 10
 networks:
-  rcw:
-    external: true
+  default:
+    external:
+      name: rcw
 
