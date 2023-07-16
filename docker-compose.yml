@@ -50,7 +50,7 @@ services:
     image: ghcr.io/sunbird-rc/event-engagement-demo/keycloak:latest
     volumes:
       - ./${KEYCLOAK_IMPORT_DIR}:/opt/jboss/keycloak/imports
-      - ./${KEYCLOAK_THEMES_DIR}:/opt/jboss/keycloak/themes/nha
+      - ./${KEYCLOAK_THEMES_DIR}:/opt/jboss/keycloak/themes/ndear
     environment:
       - KEYCLOAK_LOGO=https://raw.githubusercontent.com/Sunbird-RC/demo-donor-registry/main/imports/header_logo.svg
       - DB_VENDOR=postgres
@@ -69,7 +69,6 @@ services:
       - SHOW_FOOTER=false
       - SHOW_BANNER=false
       - LOGIN_USER_ID_TITLE=Mobile Number
-      - MOCK_OTP=true
       - MESSAGE_TEMPLATE=${MESSAGE_TEMPLATE}
       - REGISTER_URL=${REGISTER_URL}
       - INVALID_REGISTRATION=${INVALID_REGISTRATION}
@@ -95,7 +94,7 @@ services:
     environment:
       - VISITOR_QR_BASE_URL="http://localhost:8000"
       - KEYCLOAK_URL=${KEYCLOAK_SSO_URL}
-      - SERVICE_ACCOUNT_CLIENT_SECRET=${KEYCLOAK_SERVICE_ACCOUNT_CLIENT_SECRET}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - registryUrl=${REGISTRY_URL}
       - credentialUrl=${CREDENTIAL_SERVICE_URL}
       - identityUrl=${IDENTITY_SERVICE_URL}

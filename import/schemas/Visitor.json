@@ -38,6 +38,9 @@
           "title": "Email",
           "placeholder": "Email"
         },
+        "organization": {
+          "type": "string"
+        },
         "exhibitsVisited": {
           "type": "array",
           "items": {

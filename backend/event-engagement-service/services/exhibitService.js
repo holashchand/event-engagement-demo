@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
 const { registryUrl } = require("../config/config");
-const { getServiceAccountToken, generateDid } = require("./utils");
+const { generateDid } = require("./utils");
 
 const serviceUrl = `${registryUrl}/api/v1/Exhibit`;
 
@@ -26,11 +26,9 @@ const checkAnswers = (submitions, questions) => {
 };
 
 const getExhibitByOsid = async (exhibitOsid) => {
-    const token = await getServiceAccountToken();
     return axios.get(`${serviceUrl}/${exhibitOsid}`, {
         'Content-Type': "application/json",
         'Accept': "*/*",
-        "Authorization": `Bearer ${token}`
     }).then(results => results.data);
 };
 
@@ -44,11 +42,9 @@ const getExhibitQuestionsByOsid = async (exhibitOsid) => {
 };
 
 const listExhibit = async (headers) => {
-    const token = await getServiceAccountToken();
     return axios.get(serviceUrl, {
         headers: {
         ...headers,
-        "Authorization": `Bearer ${token}`
         }
      }).then(resp => resp?.data)
      .catch(err => {
@@ -60,13 +56,7 @@ const listExhibit = async (headers) => {
 const createExhibit = async (payload, headers) => {
     const did = await generateDid("exhibit");
     payload["did"] = `${did}`;
-    const token = await getServiceAccountToken();
-    return axios.post(serviceUrl, payload, {
-        headers: {
-        ...headers,
-        "Authorization": `Bearer ${token}`
-        }
-    }).then(resp => resp.data);
+    return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
 
 const updateExhibit = (exhibit) => {
@@ -78,7 +68,6 @@ const deleteExhibit = (exhibitOsid) => {
 }
 
 const getExhibitByQrId = async (qrId) => {
-    const token = await getServiceAccountToken();
     const payload = {
         "offset": 0,
         "limit": 1,
@@ -88,9 +77,8 @@ const getExhibitByQrId = async (qrId) => {
           }
         }
     }
-    const exhibit = await axios.post(`${serviceUrl}/search`, payload, {
-        "Authorization": `Bearer ${token}`
-    }).then(results => results?.data[0]);
+    const exhibit = await axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results?.data[0]);
     return exhibit;
 }
 

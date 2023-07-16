@@ -59,30 +59,7 @@ const generateDid = async (entityName, res) => {
     return did || "default";
 }
 
-const getServiceAccountToken = async () => {
-    const response = await axios({
-            method: 'post',
-            url: `${KEYCLOAK_URL}/realms/sunbird-rc/protocol/openid-connect/token`,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: qs.stringify({
-                'grant_type': 'client_credentials',
-                'client_id': 'event-engagement-service',
-                'client_secret': SERVICE_ACCOUNT_CLIENT_SECRET
-            })
-        })
-            .then(function (response) {
-                return response.data;
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-    return response.access_token;
-}
-
 const getVisitorByMobileNumber = async (mobileNumber) => {
-    const token = await getServiceAccountToken();
     const payload = {
         "offset": 0,
         "limit": 1,
@@ -92,9 +69,7 @@ const getVisitorByMobileNumber = async (mobileNumber) => {
           }
         }
     }
-    return axios.post(`${registryUrl}/api/v1/Visitor/search`, payload, {
-        "Authorization": `Bearer ${token}`
-    }).then(results => results?.data[0]);
+    return axios.post(`${registryUrl}/api/v1/Visitor/search`, payload).then(results => results?.data[0]);
 };
 
 const getCurrentUser = async (req) => {
@@ -110,6 +85,5 @@ const getCurrentUser = async (req) => {
 module.exports = {
     redirectRequest,
     generateDid,
-    getServiceAccountToken,
     getCurrentUser,
 }

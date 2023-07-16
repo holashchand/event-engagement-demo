@@ -1,36 +1,23 @@
 const { default: axios } = require("axios");
 const { registryUrl } = require("../config/config");
 const { getExhibitByOsid } = require("./exhibitService");
-const { generateDid, getServiceAccountToken } = require("./utils");
+const { generateDid } = require("./utils");
 const { _} = require("lodash");
 
 
 const serviceUrl = `${registryUrl}/api/v1/Visitor`;
 
-const createVisitor = async (payload, headers) => {
+const createVisitor = async (payload) => {
     const did = await generateDid("visitor");
     payload["did"] = `${did}`;
-    const token = await getServiceAccountToken();
-    return axios.post(serviceUrl, payload, {
-        headers: {
-        ...headers,
-        "Authorization": `Bearer ${token}`
-        }
-    }).then(resp => resp.data);
+    return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
 
 const listVisitor = async (headers) => {
-    const token = await getServiceAccountToken();
-    return axios.get(serviceUrl, {
-        headers: {
-        ...headers,
-        "Authorization": `Bearer ${token}`
-        }
-     }).then(resp => resp?.data);
+    return axios.get(serviceUrl).then(resp => resp?.data);
 };
 
 const getVisitorByMobileNumber = async (mobileNumber) => {
-    const token = await getServiceAccountToken();
     const payload = {
         "offset": 0,
         "limit": 1,
@@ -40,9 +27,8 @@ const getVisitorByMobileNumber = async (mobileNumber) => {
           }
         }
     }
-    return axios.post(`${serviceUrl}/search`, payload, {
-        "Authorization": `Bearer ${token}`
-    }).then(results => results?.data[0]);
+    return axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results?.data[0]);
 };
 
 const markExhibitAsVisited = async (exhibitOsid, visitor, headers) => {
