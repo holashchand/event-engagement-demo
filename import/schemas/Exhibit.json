@@ -128,16 +128,16 @@
     }
   },
   "_osConfig": {
-    "privateFields": [
-      "$.quizConfig.questions",
-      "$.exhibitDetails.mobileNumber"
+    "internalFields": [
+      "$.quizConfig.questions"
     ],
+    "privateFields": [],
     "uniqueIndexFields": [],
     "ownershipAttributes": [
       {
-        "email": "/mobileNumber",
-        "mobile": "/mobileNumber",
-        "userId": "/mobileNumber"
+        "email": "/exhibitDetails/mobileNumber",
+        "mobile": "/exhibitDetails/mobileNumber",
+        "userId": "/exhibitDetails/mobileNumber"
       }
     ],
     "systemFields": [
@@ -147,7 +147,7 @@
       "osUpdatedBy"
       ],
     "roles": [
-      "exhibit-service", "Exhibit"
+      "event-engagement-service", "anonymous"
     ],
     "inviteRoles": [
       "anonymous"

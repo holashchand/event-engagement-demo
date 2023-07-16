@@ -48,6 +48,8 @@
     }
   },
   "_osConfig": {
+
+    "privateFields": [],
     "uniqueIndexFields": [
       "mobileNumber",
       "did"
@@ -65,10 +67,13 @@
       "osCreatedBy",
       "osUpdatedBy"
       ],
-    "roles": [],
+    "roles": [
+      "anonymous"
+    ],
     "inviteRoles": [
       "anonymous"
     ],
-    "enableLogin": true
+    "enableLogin": true,
+    "enableSearch": true
   }
 }

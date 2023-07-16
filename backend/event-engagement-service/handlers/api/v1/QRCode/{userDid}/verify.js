@@ -1,29 +1,12 @@
 'use strict';
-var dataProvider = require('../../../../../data/api/v1/QRCode/{userDid}/verify.js');
+const { verifyQrCodeForVisitorDid } = require('../../../../../services/qrCodeService.js');
 /**
  * Operations on /api/v1/QRCode/{userDid}/verify
  */
 module.exports = {
-    /**
-     * summary: 
-     * description: 
-     * parameters: 
-     * produces: 
-     * responses: 200
-     */
-    get: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['get']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
+    get: async function (req, res, next) {
+        const userDid = req?.params?.userDid;
+        const count = await verifyQrCodeForVisitorDid(userDid)
+        res.status(200).send({ badgesWon: count });
     }
 };

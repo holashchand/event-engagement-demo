@@ -1,29 +1,19 @@
 'use strict';
-var dataProvider = require('../../../../../data/api/v1/Visitor/visit/{exhibitOsid}.js');
+const { getCurrentUser } = require('../../../../../services/utils.js');
+const { markExhibitAsVisited } = require('../../../../../services/visitorService.js');
 /**
  * Operations on /api/v1/Visitor/visit/{exhibitOsid}
  */
 module.exports = {
-    /**
-     * summary: 
-     * description: 
-     * parameters: exhibitOsid
-     * produces: 
-     * responses: 200
-     */
-    put: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['put']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
-        });
+    put: async function (req, res, next) {
+        const exhibitOsid = req?.params?.exhibitOsid;
+        const visitor = await getCurrentUser(req);
+        markExhibitAsVisited(exhibitOsid, visitor, req.headers)
+        .then(() => {
+            res.status(200).send("Success");
+        })
+        .catch(() => {
+            res.status(400).send("Unable to mark exhibit as visited");
+        })
     }
 };
