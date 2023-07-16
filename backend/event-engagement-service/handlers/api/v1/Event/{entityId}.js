@@ -1,51 +1,24 @@
 'use strict';
 var dataProvider = require('../../../../data/api/v1/Event/{entityId}.js');
+const { getEventByOsid, updateEvent } = require('../../../../services/eventService.js');
 /**
  * Operations on /api/v1/Event/{entityId}
  */
 module.exports = {
-    /**
-     * summary: 
-     * description: 
-     * parameters: entityId
-     * produces: 
-     * responses: 200
-     */
     get: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['get']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
+        const entityId = req?.params?.entityId;
+        getEventByOsid(entityId).then(results => {
+            res.send(results);
+        }).catch(err => {
+            next(err);
         });
     },
-    /**
-     * summary: 
-     * description: Event new update
-     * parameters: entityId, body
-     * produces: 
-     * responses: 200
-     */
     put: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['put']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
+        const entityId = req?.params?.entityId;
+        updateEvent(entityId, req?.body).then(results => {
+            res.send(results);
+        }).catch(err => {
+            next(err);
         });
     }
 };

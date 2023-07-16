@@ -1,11 +1,11 @@
 const { default: axios } = require("axios");
-const { registryUrl } = require("../config/config");
+const { REGISTRY_URL } = require("../config/config");
 const { getExhibitByOsid } = require("./exhibitService");
-const { generateDid } = require("./utils");
 const { _} = require("lodash");
+const { generateDid } = require("./credentialService");
 
 
-const serviceUrl = `${registryUrl}/api/v1/Visitor`;
+const serviceUrl = `${REGISTRY_URL}/api/v1/Visitor`;
 
 const createVisitor = async (payload) => {
     const did = await generateDid("visitor");

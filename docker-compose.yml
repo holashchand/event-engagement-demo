@@ -95,10 +95,10 @@ services:
       - VISITOR_QR_BASE_URL="http://localhost:8000"
       - KEYCLOAK_URL=${KEYCLOAK_SSO_URL}
       - KEYCLOAK_REALM=${KEYCLOAK_REALM}
-      - registryUrl=${REGISTRY_URL}
-      - credentialUrl=${CREDENTIAL_SERVICE_URL}
-      - identityUrl=${IDENTITY_SERVICE_URL}
-      - credentialSchemaUrl=${CREDENTIAL_SCHEMA_SERVICE_URL}
+      - REGISTRY_URL=${REGISTRY_URL}
+      - CREDENTIAL_URL=${CREDENTIAL_SERVICE_URL}
+      - IDENTITY_URL=${IDENTITY_SERVICE_URL}
+      - CREDENTIAL_SCHEMA_URL=${CREDENTIAL_SCHEMA_SERVICE_URL}
     healthcheck:
       test:
         [ "CMD-SHELL", "curl -f http://localhost:8000/swagger || exit 1" ]

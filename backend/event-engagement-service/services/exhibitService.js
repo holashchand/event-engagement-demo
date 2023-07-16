@@ -1,8 +1,8 @@
 const { default: axios } = require("axios");
-const { registryUrl } = require("../config/config");
-const { generateDid } = require("./utils");
+const { REGISTRY_URL } = require("../config/config");
+const { generateDid } = require("./credentialService");
 
-const serviceUrl = `${registryUrl}/api/v1/Exhibit`;
+const serviceUrl = `${REGISTRY_URL}/api/v1/Exhibit`;
 
 const checkAnswers = (submitions, questions) => {
     const answers = questions?.map(details  => {
@@ -59,9 +59,15 @@ const createExhibit = async (payload, headers) => {
     return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
 
-const updateExhibit = (exhibit) => {
-    // TODO: update exhibit
-}
+const updateExhibit = async (osid, payload) => {
+    const entity = await getExhibitByOsid(osid);
+    const finalEntity = {...entity, ...payload};
+    if (!finalEntity?.did) {
+        const did = await generateDid("exhibit");
+        finalEntity["did"] = `${did}`;
+    }
+    return axios.put(serviceUrl, finalEntity).then(resp => resp.data);
+};
 
 const deleteExhibit = (exhibitOsid) => {
     // TODO: delete exhibit
@@ -77,9 +83,27 @@ const getExhibitByQrId = async (qrId) => {
           }
         }
     }
-    const exhibit = await axios.post(`${serviceUrl}/search`, payload)
+    const exhibit = await searchExhibit(payload);
+    return exhibit && exhibit?.length > 0 && exhibit[0];
+};
+
+const getExhibitByMobileNumber = async (mobileNumber) => {
+    const payload = {
+        "offset": 0,
+        "limit": 1,
+        "filters": {
+          "mobileNumber": {
+            "eq": mobileNumber
+          }
+        }
+    }
+    return axios.post(`${serviceUrl}/search`, payload)
     .then(results => results?.data[0]);
-    return exhibit;
+};
+
+const searchExhibit = async (payload) => {
+    return axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results?.data);
 }
 
 
@@ -92,4 +116,6 @@ module.exports = {
     deleteExhibit,
     listExhibit,
     checkAnswers,
+    searchExhibit,
+    getExhibitByMobileNumber,
 }
