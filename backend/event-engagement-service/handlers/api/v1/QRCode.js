@@ -9,7 +9,7 @@ module.exports = {
         const visitor = await getCurrentUser(req);
         getQrCodeForVisitorDid(visitor, (err, url) => {
             if(err) {
-                res.status(500).send("Error while generating qr code");
+                next(err);
             } else {
                 res.status(200).send(url);
             }

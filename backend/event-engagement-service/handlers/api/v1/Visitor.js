@@ -5,17 +5,17 @@ const { createVisitor, listVisitor } = require('../../../services/visitorService
  */
 module.exports = {
     get: async function (req, res, next) {
-        listVisitor(res?.headers).then(results => {
+        listVisitor(req?.headers).then(results => {
             res.status(200).send(results);
         }).catch((err) => {
-            res.status(400).send(err?.message);
+            next(err);
         })
     },
     post: async function (req, res, next) {
         createVisitor(req.body, req.headers).then(results => {
             res.status(200).send(results);
         }).catch((err) => {
-            res.status(400).send(err?.message);
+            next(err);
         })
     }
 };

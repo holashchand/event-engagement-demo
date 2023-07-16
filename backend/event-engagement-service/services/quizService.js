@@ -1,5 +1,5 @@
 const { default: axios } = require("axios");
-const { getServiceAccountToken, generateDid } = require("./utils");
+const { generateDid } = require("./utils");
 const { checkAnswers, getExhibitByOsid } = require("./exhibitService");
 const { createCredential } = require("./credentialService");
 const { registryUrl } = require("../config/config");
@@ -28,7 +28,6 @@ const createOrUpdate = async (exhibit, visitor, results) => {
     }
     quiz.date = new Date().toISOString();
     quiz = {...quiz, results};
-    const token = await getServiceAccountToken();
     let url = `${serviceUrl}`;
     let method = 'post';
     if (quizExists) {
@@ -41,23 +40,19 @@ const createOrUpdate = async (exhibit, visitor, results) => {
         headers: {
             'Content-Type': "application/json",
             'Accept': "*/*",
-            "Authorization": `Bearer ${token}`
         },
         data: quiz
     });
 };
 
 const getQuizByOsid = async (quizOsid) => {
-    const token = await getServiceAccountToken();
     return axios.get(`${serviceUrl}/${quizOsid}`, {
         'Content-Type': "application/json",
         'Accept': "*/*",
-        "Authorization": `Bearer ${token}`
     }).then(results => results.data);
 };
 
 const findQuizForVisitorMobileNumberAndExhibitOsid = async (mobileNumber, exhibitOsid) => {
-    const token = await getServiceAccountToken();
     const payload = {
         offset: 0,
         limit: 1,
@@ -70,15 +65,11 @@ const findQuizForVisitorMobileNumberAndExhibitOsid = async (mobileNumber, exhibi
           }
         }
     };
-    return axios.post(`${serviceUrl}/search`, payload, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }).then(results => results?.data[0]);
+    return axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results?.data[0]);
 };
 
 const listQuizForVisitorMobileNumber = async (mobileNumber) => {
-    const token = await getServiceAccountToken();
     const payload = {
         offset: 0,
         limit: 1000,
@@ -88,11 +79,8 @@ const listQuizForVisitorMobileNumber = async (mobileNumber) => {
           }
         }
     };
-    return axios.post(`${serviceUrl}/search`, payload, {
-        headers: {
-            "Authorization": `Bearer ${token}`
-        }
-    }).then(results => results.data);
+    return axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results.data);
 };
 
 const submitQuiz = async (exhibitOsid, visitor, submissions) => {
@@ -106,13 +94,7 @@ const submitQuiz = async (exhibitOsid, visitor, submissions) => {
 };
 
 const listQuiz = async (headers) => {
-    const token = await getServiceAccountToken();
-    return axios.get(serviceUrl, {
-        headers: {
-        ...headers,
-        "Authorization": `Bearer ${token}`
-        }
-     }).then(resp => resp?.data);
+    return axios.get(serviceUrl).then(resp => resp?.data);
 };
 
 module.exports = {

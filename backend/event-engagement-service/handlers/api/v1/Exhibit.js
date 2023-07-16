@@ -6,11 +6,11 @@ const { listExhibit, createExhibit } = require('../../../services/exhibitService
  */
 module.exports = {
     get: function (req, res, next) {
-        listExhibit(res?.headers).then(results => {
+        listExhibit(req?.headers).then(results => {
             res.status(200).send(results);
         }).catch((err) => {
-            res.status(400).send(err?.message);
-        });
+            next(err)
+        })
     },
     post: function (req, res, next) {
         createExhibit(req.body, req.headers).then(results => {

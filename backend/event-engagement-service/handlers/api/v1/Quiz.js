@@ -4,8 +4,13 @@ const { listQuiz } = require('../../../services/quizService.js');
  * Operations on /api/v1/Quiz
  */
 module.exports = {
-    get: async function (req, res, next) {
-        const quizes = await listQuiz(req?.headers);
-        return quizes;
+    get: function (req, res, next) {
+        listQuiz(req?.headers)
+        .then(quizes => {
+            res.send(quizes);
+        })
+        .catch((err) => {
+            next(err);
+        });
     }
 };

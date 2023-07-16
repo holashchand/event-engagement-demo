@@ -592,6 +592,8 @@ definitions:
         type: string
       email:
         type: string
+      organization:
+        type: string
       exhibitsVisited:
         type: array
         items:
