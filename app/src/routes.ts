@@ -1,11 +1,11 @@
-import { FC } from "react";
 import ExhibitCardDetails from "./pages/ExhibitDetails";
-import FirstLogin from "./pages/Login";
 import ExhibitResult from "./pages/ExhibitResult";
-import Register from "./pages/Register";
-import HomePage from "./pages/Home";
 import ExhibitsHome from "./pages/ExhibitsHome";
+import HomePage from "./pages/Home";
 import LeaderBoard from "./pages/Leaderboard";
+import FirstLogin from "./pages/Login";
+import Register from "./pages/Register";
+import ScanQR from "./pages/ScanQR";
 import VerifiedBadges from "./pages/VerifiedBadges";
 
 export const apiRoutes = {
@@ -17,7 +17,7 @@ export const apiRoutes = {
   EXHIBITS_HOME: "/ExhibitsHome",
   EXHIBIT_RESULT: "/ExhibitResult",
   LEADER_BOARD: "/LeaderBoard",
-  VERIFIED_BADGES: "/VerifiedBadges"
+  VERIFIED_BADGES: "/VerifiedBadges",
 };
 
 export const pageRoutes = {
@@ -25,69 +25,75 @@ export const pageRoutes = {
 };
 
 interface Route {
-  key: string,
-  title: string,
-  path: string,
-  enabled: boolean,
-  component: FC<{}>
+  key: string;
+  title: string;
+  path: string;
+  enabled: boolean;
+  component: React.FC<{}>;
 }
 
-export const routes: Array<Route> = [
+export const routes: Route[] = [
   {
-      key: 'home-route',
-      title: 'HomePage',
-      path: '/',
-      enabled: true,
-      component: HomePage
-  },
-  {
-      key: 'register-route',
-      title: 'Register',
-      path: '/Register',
-      enabled: true,
-      component: Register
-  },
-  {
-      key: 'firstLogin-route',
-      title: 'FirstLogin',
-      path: '/FirstLogin',
-      enabled: true,
-      component: FirstLogin
-  },
-  {
-      key: 'exhibitCardDetails-route',
-      title: 'ExhibitCardDetails',
-      path: '/ExhibitCardDetails',
-      enabled: true,
-      component: ExhibitCardDetails
-  },
-  {
-    key: 'exhibitsHome-route',
-    title: 'ExhibitsHome',
-    path: '/ExhibitsHome',
+    key: "home-route",
+    title: "HomePage",
+    path: "/",
     enabled: true,
-    component: ExhibitsHome
+    component: HomePage,
   },
   {
-      key: 'ExhibitResult-route',
-      title: 'ExhibitResult',
-      path: '/ExhibitResult',
-      enabled: true,
-      component: ExhibitResult
-  },
-  {
-    key: 'leaderBoard-route',
-    title: 'LeaderBoard',
-    path: '/LeaderBoard',
+    key: "register-route",
+    title: "Register",
+    path: "/Register",
     enabled: true,
-    component: LeaderBoard
+    component: Register,
   },
   {
-    key: 'verifiedBadges-route',
-    title: 'VerifiedBadges',
-    path: '/VerifiedBadges',
+    key: "firstLogin-route",
+    title: "FirstLogin",
+    path: "/FirstLogin",
     enabled: true,
-    component: VerifiedBadges
-  }
-
-]
+    component: FirstLogin,
+  },
+  {
+    key: "exhibitCardDetails-route",
+    title: "ExhibitCardDetails",
+    path: "/ExhibitCardDetails",
+    enabled: true,
+    component: ExhibitCardDetails,
+  },
+  {
+    key: "exhibitsHome-route",
+    title: "ExhibitsHome",
+    path: "/ExhibitsHome",
+    enabled: true,
+    component: ExhibitsHome,
+  },
+  {
+    key: "ExhibitResult-route",
+    title: "ExhibitResult",
+    path: "/ExhibitResult",
+    enabled: true,
+    component: ExhibitResult,
+  },
+  {
+    key: "leaderBoard-route",
+    title: "LeaderBoard",
+    path: "/LeaderBoard",
+    enabled: true,
+    component: LeaderBoard,
+  },
+  {
+    key: "verifiedBadges-route",
+    title: "VerifiedBadges",
+    path: "/VerifiedBadges",
+    enabled: true,
+    component: VerifiedBadges,
+  },
+  {
+    key: "ScanQR-route",
+    title: "ScanQR",
+    path: "/scan-qr",
+    enabled: true,
+    component: ScanQR,
+  },
+];
