@@ -10,7 +10,7 @@ module.exports = {
         getEventByOsid(entityId).then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     },
     put: function (req, res, next) {
@@ -18,7 +18,7 @@ module.exports = {
         updateEvent(entityId, req?.body).then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };

@@ -8,14 +8,14 @@ module.exports = {
         listVisitor(req?.headers).then(results => {
             res.status(200).send(results);
         }).catch((err) => {
-            next(err);
+            next(err, req, res, next);
         })
     },
     post: async function (req, res, next) {
         createVisitor(req.body, req.headers).then(results => {
             res.status(200).send(results);
         }).catch((err) => {
-            next(err);
+            next(err, req, res, next);
         })
     }
 };

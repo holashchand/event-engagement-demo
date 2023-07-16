@@ -10,7 +10,7 @@ module.exports = {
         createExhibit(req?.body).then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };

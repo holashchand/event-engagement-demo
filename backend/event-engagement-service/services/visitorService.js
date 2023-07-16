@@ -32,16 +32,10 @@ const getVisitorByMobileNumber = async (mobileNumber) => {
 };
 
 const markExhibitAsVisited = async (exhibitOsid, visitor, headers) => {
-    const exhibit = await getExhibitByOsid(exhibitOsid)
-    .catch(err => {
-        console.log(err);
-    });
-    if(exhibit && !(exhibit?.osid in _.get(visitor, "exhibitsVisited", []))) {
+    const exhibit = await getExhibitByOsid(exhibitOsid);
+    if(exhibit && !(_.get(visitor, "exhibitsVisited", []).some(exb => exb === exhibit?.osid))) {
         const payload = [..._.get(visitor, "exhibitsVisited", []), exhibitOsid];
-        const response = await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload).catch((err) => {
-            console.log(err);
-        });
-        console.log(response);
+        await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload);
     }
 };
 

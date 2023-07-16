@@ -19,7 +19,7 @@ module.exports = {
             res.send(results);
         })
         .catch(err => {
-            next(err);
+            next(err, req, res, next);
         })
     },
     put: function (req, res, next) {
@@ -27,7 +27,7 @@ module.exports = {
         updateExhibit(entityId, req?.body).then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };

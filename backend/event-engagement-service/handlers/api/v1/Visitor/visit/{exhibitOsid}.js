@@ -12,8 +12,8 @@ module.exports = {
         .then(() => {
             res.status(200).send("Success");
         })
-        .catch(() => {
-            res.status(400).send("Unable to mark exhibit as visited");
+        .catch((err) => {
+            next(err, req, res, next);
         })
     }
 };

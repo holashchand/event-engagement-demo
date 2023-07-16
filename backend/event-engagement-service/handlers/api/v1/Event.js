@@ -8,14 +8,14 @@ module.exports = {
         listEvent().then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     },
     post: function (req, res, next) {
         createEvent(req?.body).then(results => {
             res.send(results);
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };

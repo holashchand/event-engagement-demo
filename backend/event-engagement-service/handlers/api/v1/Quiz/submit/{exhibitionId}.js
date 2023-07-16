@@ -19,7 +19,7 @@ module.exports = {
         }
         res.status(200).send({ badgeWon, message });
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };

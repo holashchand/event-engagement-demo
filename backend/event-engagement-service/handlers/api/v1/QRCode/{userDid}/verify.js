@@ -10,7 +10,7 @@ module.exports = {
         .then(count => {
             res.send({ badgesWon: count });
         }).catch(err => {
-            next(err);
+            next(err, req, res, next);
         })
         
     }

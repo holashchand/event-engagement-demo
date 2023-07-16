@@ -10,7 +10,7 @@ module.exports = {
             res.send(quizes);
         })
         .catch((err) => {
-            next(err);
+            next(err, req, res, next);
         });
     }
 };
