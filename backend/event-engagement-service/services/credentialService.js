@@ -1,10 +1,9 @@
 const { default: axios } = require("axios");
-const { credentialUrl, credentialSchemaUrl } = require("../config/config");
-const { generateDid } = require("./utils");
+const { CREDENTIAL_URL, CREDENTIAL_SCHEMA_URL, IDENTITY_URL } = require("../config/config");
 const fs = require('fs');
 const path = require('path');
-const serviceUrl = `${credentialUrl}/credentials`;
-const schemaServiceUrl = `${credentialSchemaUrl}/credential-schema`;
+const serviceUrl = `${CREDENTIAL_URL}/credentials`;
+const schemaServiceUrl = `${CREDENTIAL_SCHEMA_URL}/credential-schema`;
 const { _ } = require("lodash");
 
 const findCredentialsByVisitorDid = async (did) => {
@@ -94,8 +93,40 @@ const verifiedVisitorCredentials = async (visitorDid) => {
     return count;
 }
 
+const generateDid = async (entityName) => {
+    const payload = {
+        "content": 
+            [
+                {
+                    "alsoKnownAs": [],
+                    "services": [
+                        {
+                            "id": "IdentityHub",
+                            "type": "IdentityHub",
+                            "serviceEndpoint": {
+                                "@context": "schema.identity.foundation/hub",
+                                "@type": "UserServiceEndpoint",
+                                "instance": [
+                                    "did:test:hub.id"
+                                ]
+                            }
+                        }
+                    ],
+                    "method": `upai:${entityName}`
+                }
+            ]
+        
+    }
+    const did = await axios.post(`${IDENTITY_URL}/did/generate`, payload)
+    .then(result => {
+        return result?.data[0]?.id;
+    })
+    return did || "default";
+}
+
 module.exports = {
     createCredential,
     findCredentialsByVisitorDid,
     verifiedVisitorCredentials,
+    generateDid,
 }

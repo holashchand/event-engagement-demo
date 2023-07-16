@@ -1,9 +1,16 @@
 'use strict';
+
+const { createExhibit } = require("../../../../services/exhibitService");
+
 /**
  * Operations on /api/v1/Exhibit/invite
  */
 module.exports = {
     post: function (req, res, next) {
-        // TODO invite exhibits
+        createExhibit(req?.body).then(results => {
+            res.send(results);
+        }).catch(err => {
+            next(err, req, res, next);
+        });
     }
 };

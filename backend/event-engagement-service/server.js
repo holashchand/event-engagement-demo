@@ -81,7 +81,7 @@ App.use(function(err, req, res, next) {
 });
 
 Server.listen(8000, function () {
-    console.log("Server URL: ", constants.credentialSchemaUrl);
+    console.log("Server URL: ", constants.CREDENTIAL_SCHEMA_URL);
     App.swagger.api.host = this.address().address + ':' + this.address().port;
     /* eslint-disable no-console */
     console.log('App running on %s:%d', this.address().address, this.address().port);

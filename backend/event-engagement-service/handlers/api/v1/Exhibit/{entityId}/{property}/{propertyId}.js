@@ -20,7 +20,7 @@ module.exports = {
         var provider = dataProvider['get']['200'];
         provider(req, res, function (err, data) {
             if (err) {
-                next(err);
+                next(err, req, res, next);
                 return;
             }
             res.status(status).send(data && data.responses);
@@ -42,7 +42,7 @@ module.exports = {
         var provider = dataProvider['put']['200'];
         provider(req, res, function (err, data) {
             if (err) {
-                next(err);
+                next(err, req, res, next);
                 return;
             }
             res.status(status).send(data && data.responses);

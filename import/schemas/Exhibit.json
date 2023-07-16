@@ -30,10 +30,6 @@
               "type": "string",
               "title": "Name"
             },
-            "mobileNumber": {
-              "type": "string",
-              "title": "Mobile Number"
-            },
             "shortDescription": {
               "type": "string",
               "title": "Short Description"
@@ -74,7 +70,7 @@
             }
           },
           "required": [
-            "name", "mobileNumber"
+            "name"
           ],
           "label": "Exhibit Details",
           "input": true
@@ -120,7 +116,7 @@
               }
             }
           },
-          "required": ["title", "noOfQuestionPerQuiz", "thresholdLimit", "questions"],
+          "required": ["title", "questions"],
           "label": "Quiz",
           "input": true
         }
@@ -133,13 +129,7 @@
     ],
     "privateFields": [],
     "uniqueIndexFields": [],
-    "ownershipAttributes": [
-      {
-        "email": "/exhibitDetails/mobileNumber",
-        "mobile": "/exhibitDetails/mobileNumber",
-        "userId": "/exhibitDetails/mobileNumber"
-      }
-    ],
+    "ownershipAttributes": [],
     "systemFields": [
       "osCreatedAt",
       "osUpdatedAt",
@@ -147,11 +137,12 @@
       "osUpdatedBy"
       ],
     "roles": [
-      "event-engagement-service", "anonymous"
+      "anonymous"
     ],
     "inviteRoles": [
       "anonymous"
     ],
-    "enableLogin": true
+    "enableLogin": false,
+    "enableSearch": true
   }
 }

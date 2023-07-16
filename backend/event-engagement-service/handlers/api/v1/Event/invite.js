@@ -1,29 +1,15 @@
 'use strict';
 var dataProvider = require('../../../../data/api/v1/Event/invite.js');
+const { createEvent } = require('../../../../services/eventService.js');
 /**
  * Operations on /api/v1/Event/invite
  */
 module.exports = {
-    /**
-     * summary: 
-     * description: Create new Event
-     * parameters: body
-     * produces: 
-     * responses: 200
-     */
     post: function (req, res, next) {
-        /**
-         * Get the data for response 200
-         * For response `default` status 200 is used.
-         */
-        var status = 200;
-        var provider = dataProvider['post']['200'];
-        provider(req, res, function (err, data) {
-            if (err) {
-                next(err);
-                return;
-            }
-            res.status(status).send(data && data.responses);
+        createEvent(req?.body).then(results => {
+            res.send(results);
+        }).catch(err => {
+            next(err, req, res, next);
         });
     }
 };

@@ -1,11 +1,11 @@
 const { default: axios } = require("axios");
-const { registryUrl } = require("../config/config");
+const { REGISTRY_URL } = require("../config/config");
 const { getExhibitByOsid } = require("./exhibitService");
-const { generateDid } = require("./utils");
 const { _} = require("lodash");
+const { generateDid } = require("./credentialService");
 
 
-const serviceUrl = `${registryUrl}/api/v1/Visitor`;
+const serviceUrl = `${REGISTRY_URL}/api/v1/Visitor`;
 
 const createVisitor = async (payload) => {
     const did = await generateDid("visitor");
@@ -32,16 +32,10 @@ const getVisitorByMobileNumber = async (mobileNumber) => {
 };
 
 const markExhibitAsVisited = async (exhibitOsid, visitor, headers) => {
-    const exhibit = await getExhibitByOsid(exhibitOsid)
-    .catch(err => {
-        console.log(err);
-    });
-    if(exhibit && !(exhibit?.osid in _.get(visitor, "exhibitsVisited", []))) {
+    const exhibit = await getExhibitByOsid(exhibitOsid);
+    if(exhibit && !(_.get(visitor, "exhibitsVisited", []).some(exb => exb === exhibit?.osid))) {
         const payload = [..._.get(visitor, "exhibitsVisited", []), exhibitOsid];
-        const response = await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload).catch((err) => {
-            console.log(err);
-        });
-        console.log(response);
+        await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload);
     }
 };
 

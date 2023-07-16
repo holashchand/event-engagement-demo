@@ -8,8 +8,13 @@ const { getCurrentUser } = require("../../../../../services/utils");
  */
 module.exports = {
     get: async function (req, res, next) {
-        const visitor = await getCurrentUser(req);
-        const quizes = listQuizForVisitorMobileNumber(visitor?.mobileNumber);
-        res.status(200).send(quizes);
+        try {
+            const visitor = await getCurrentUser(req);
+            const quizes = await listQuizForVisitorMobileNumber(visitor?.mobileNumber);
+            res.status(200).send(quizes);
+        } catch (err) {
+            next(err, req, res, next);
+        }
+        
     }
 };

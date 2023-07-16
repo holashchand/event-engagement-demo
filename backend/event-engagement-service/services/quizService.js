@@ -1,11 +1,10 @@
 const { default: axios } = require("axios");
-const { generateDid } = require("./utils");
 const { checkAnswers, getExhibitByOsid } = require("./exhibitService");
-const { createCredential } = require("./credentialService");
-const { registryUrl } = require("../config/config");
+const { createCredential, generateDid } = require("./credentialService");
+const { REGISTRY_URL } = require("../config/config");
 const { _ } = require("lodash");
 
-const serviceUrl = `${registryUrl}/api/v1/Quiz`;
+const serviceUrl = `${REGISTRY_URL}/api/v1/Quiz`;
 
 const createOrUpdate = async (exhibit, visitor, results) => {
     let quiz = await findQuizForVisitorMobileNumberAndExhibitOsid(visitor?.mobileNumber, exhibit?.osid);
