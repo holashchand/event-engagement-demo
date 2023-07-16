@@ -8,7 +8,7 @@ import Register from "./pages/Register";
 import ScanQR from "./pages/ScanQR";
 import VerifiedBadges from "./pages/VerifiedBadges";
 
-export const apiRoutes = {
+export const pageRoutes = {
   REGISTER: "/Register",
   LOGIN: "/FirstLogin",
   USER_HOME: "/UserHome",
@@ -20,8 +20,10 @@ export const apiRoutes = {
   VERIFIED_BADGES: "/VerifiedBadges",
 };
 
-export const pageRoutes = {
-  HOME: "/",
+export const apiRoutes = {
+  EXHIBITS: "/exhibits",
+  VISIT_EXHIBIT: "/visit",
+  QUIZ: "/quiz",
 };
 
 interface Route {
@@ -33,6 +35,7 @@ interface Route {
 }
 
 export const routes: Route[] = [
+  
   {
     key: "home-route",
     title: "HomePage",
@@ -57,7 +60,7 @@ export const routes: Route[] = [
   {
     key: "exhibitCardDetails-route",
     title: "ExhibitCardDetails",
-    path: "/ExhibitCardDetails",
+    path: "/ExhibitCardDetails/:exhibitId",
     enabled: true,
     component: ExhibitCardDetails,
   },
