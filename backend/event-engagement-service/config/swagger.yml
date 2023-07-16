@@ -616,8 +616,6 @@ definitions:
         properties:
           name:
             type: string
-          mobileNumber:
-            type: string
           shortDescription:
             type: string
           fullDescription:
@@ -639,7 +637,7 @@ definitions:
           qrId:
             type: string
         required:
-          - 'name, mobileNumber'
+          - 'name'
       quizConfig:
         type: object
         properties:
@@ -649,12 +647,6 @@ definitions:
           description:
             type: string
             title: Description
-          noOfQuestionPerQuiz:
-            type: integer
-            example: 5
-          thresholdLimit:
-            type: integer
-            example: 4
           questions:
             type: array
             items:
