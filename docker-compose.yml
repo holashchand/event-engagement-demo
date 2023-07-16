@@ -94,7 +94,7 @@ services:
     environment:
       - VISITOR_QR_BASE_URL="http://localhost:8000"
       - KEYCLOAK_URL=${KEYCLOAK_SSO_URL}
-      - SERVICE_ACCOUNT_CLIENT_SECRET=${KEYCLOAK_SERVICE_ACCOUNT_CLIENT_SECRET}
+      - KEYCLOAK_REALM=${KEYCLOAK_REALM}
       - registryUrl=${REGISTRY_URL}
       - credentialUrl=${CREDENTIAL_SERVICE_URL}
       - identityUrl=${IDENTITY_SERVICE_URL}

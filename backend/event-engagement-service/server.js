@@ -7,6 +7,8 @@ var Swaggerize = require('swaggerize-express');
 var SwaggerUI = require("swaggerize-ui");
 var Path = require('path');
 const constants = require('./config/config');
+const { _ } = require("lodash");
+const { initKeycloak, startSession } = require('./config/keycloak-config.js');
 
 var App = Express();
 
@@ -16,6 +18,37 @@ App.use(BodyParser.json());
 App.use(BodyParser.urlencoded({
     extended: true
 }));
+const keycloak = initKeycloak();
+App.use(startSession());
+App.use(keycloak.middleware());
+
+App.get('/', keycloak.protect(),  function(req, res){
+    res.send("Server is up!");
+ });
+
+ const purls = {
+    get: (func) =>  {
+        func(["/api/v1/exhibit*", "/api/v1/visitor*"], keycloak.protect(),
+        (req, res, next) => {
+          next();
+       });
+    }
+ }
+
+ App.all(["/api/v1/*"], (req, res, next) => {
+    if((req.method === 'POST' && ['/api/v1/Visitor', '/api/v1/Exhibit', '/api/v1/Event', '/api/v1/Exhibit/search']
+    .some(d => req.path === d))
+    || (req.method === 'GET' && _.startsWith('/api/v1/QRCode/', req.path)
+     && _.endsWith('/verify', req.path))
+     || (req.method === 'GET' && ((req.path === '/api/v1/Exhibit') 
+     || /\/api\/v1\/Exhibit\/([a-z]|[0-9]|\-)*/.test(req.path)))) {
+        next();
+    }else{
+        keycloak.protect()(req, res, next);
+    }
+    // next();
+ });
+
 
 App.use(Swaggerize({
     api: Path.resolve('./config/swagger.yml'),

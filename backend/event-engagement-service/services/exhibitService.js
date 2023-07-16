@@ -56,12 +56,7 @@ const listExhibit = async (headers) => {
 const createExhibit = async (payload, headers) => {
     const did = await generateDid("exhibit");
     payload["did"] = `${did}`;
-    return axios.post(serviceUrl, payload, {
-        headers: {
-        ...headers,
-        "Authorization": `Bearer ${token}`
-        }
-    }).then(resp => resp.data);
+    return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
 
 const updateExhibit = (exhibit) => {

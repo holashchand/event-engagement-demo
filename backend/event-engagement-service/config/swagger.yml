@@ -517,6 +517,7 @@ definitions:
       - visitorName
       - exhibitDetails
       - date
+    additionalProperties: true
     properties:
       title:
         type: string
@@ -583,6 +584,7 @@ definitions:
     required:
       - name
       - mobileNumber
+    additionalProperties: true
     properties:
       did:
         type: string
@@ -605,6 +607,7 @@ definitions:
     required:
       - exhibitDetails
       - quizConfig
+    additionalProperties: true
     properties:
       did: 
         type: string
@@ -677,6 +680,7 @@ definitions:
       - title
       - organization
       - schedule
+    additionalProperties: true
     properties:
       title:
         type: string
