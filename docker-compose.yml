@@ -14,6 +14,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    ports:
+      - "5432:5432"
   registry:
     image: dockerhub/sunbird-rc-core:${RELEASE_VERSION}
     volumes:
@@ -36,8 +38,8 @@ services:
       - async_enabled=${ASYNC_ENABLED}
       - authentication_enabled=false
       - manager_type=${MANAGER_TYPE}
-#    ports:
-#      - "8081:8081"
+    ports:
+      - "8081:8081"
     depends_on:
       db:
         condition: service_healthy
@@ -83,9 +85,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 10
-#    ports:
-#      - "8080:8080"
-#      - "9990:9990"
+    ports:
+      - "8080:8080"
+      - "9990:9990"
     depends_on:
       db:
         condition: service_healthy
