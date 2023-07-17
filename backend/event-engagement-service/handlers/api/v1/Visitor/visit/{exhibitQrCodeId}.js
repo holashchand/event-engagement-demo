@@ -6,11 +6,13 @@ const { markExhibitAsVisited } = require('../../../../../services/visitorService
  */
 module.exports = {
     put: async function (req, res, next) {
-        const exhibitOsid = req?.params?.exhibitOsid;
+        const exhibitQrCodeId = req?.params?.exhibitQrCodeId;
         const visitor = await getCurrentUser(req);
-        markExhibitAsVisited(exhibitOsid, visitor, req.headers)
+        markExhibitAsVisited(exhibitQrCodeId, visitor, req.headers)
         .then(() => {
-            res.status(200).send("Success");
+            res.send({
+                message: "SUCCESSFUL"
+            });
         })
         .catch((err) => {
             next(err, req, res, next);

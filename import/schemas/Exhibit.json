@@ -17,63 +17,53 @@
       "title": "The Exhibit Schema",
       "required": [
         "did",
-        "exhibitDetails"
+        "boothNumber"
       ],
       "properties": {
         "did": {
           "type": "string"
         },
-        "exhibitDetails": {
-          "type": "object",
-          "properties": {
-            "name": {
-              "type": "string",
-              "title": "Name"
-            },
-            "shortDescription": {
-              "type": "string",
-              "title": "Short Description"
-            },
-            "fullDescription": {
-              "type": "string",
-              "title": "Full Description"
-            },
-            "logoURL": {
-              "type": "string",
-              "title": "Logo URL"
-            },
-            "videoURL": {
-              "type": "string",
-              "title": "Video URL"
-            },
-            "boothNumber": {
-              "type": "string",
-              "title": "Booth Number"
-            },
-            "startDate": {
-              "type": "string",
-              "title": "Start Date",
-              "format": "date"
-            },
-            "endDate": {
-              "type": "string",
-              "title": "End Date",
-              "format": "date"
-            },
-            "organization": {
-              "type": "string",
-              "title": "Organization"
-            },
-            "qrId": {
-              "type": "string",
-              "title": "QR Id"
-            }
-          },
-          "required": [
-            "name"
-          ],
-          "label": "Exhibit Details",
-          "input": true
+        "name": {
+          "type": "string",
+          "title": "Name"
+        },
+        "shortDescription": {
+          "type": "string",
+          "title": "Short Description"
+        },
+        "fullDescription": {
+          "type": "string",
+          "title": "Full Description"
+        },
+        "logoURL": {
+          "type": "string",
+          "title": "Logo URL"
+        },
+        "videoURL": {
+          "type": "string",
+          "title": "Video URL"
+        },
+        "boothNumber": {
+          "type": "string",
+          "title": "Booth Number"
+        },
+        "startDate": {
+          "type": "string",
+          "title": "Start Date",
+          "format": "date"
+        },
+        "endDate": {
+          "type": "string",
+          "title": "End Date",
+          "format": "date"
+        },
+        "organization": {
+          "type": "string",
+          "title": "Organization"
+        },
+        "qrId": {
+          "type": "string",
+          "title": "QR Id"
         },
         "quizConfig": {
           "type": "object",
@@ -124,9 +114,7 @@
     }
   },
   "_osConfig": {
-    "internalFields": [
-      "$.quizConfig.questions"
-    ],
+    "internalFields": [],
     "privateFields": [],
     "uniqueIndexFields": [],
     "ownershipAttributes": [],

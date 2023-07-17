@@ -10,16 +10,14 @@ fs.readFile(csvFilePath, (err, inputD) => {
     const rows = data.slice(1);
     const objs = rows.map(row => {
         return {
-            "exhibitDetails": {
-                "name": row[1],
-                "shortDescription": row[34],
-                "fullDescription": row[2],
-                "logoURL": "",
-                "videoURL": row[3],
-                "boothNumber": `${row[0]}`,
-                "organization": "",
-                "qrId": ""
-            },
+            "name": row[1],
+            "shortDescription": row[34],
+            "fullDescription": row[2],
+            "logoURL": "",
+            "videoURL": row[3],
+            "boothNumber": `${row[0]}`,
+            "organization": "",
+            "qrId": "",
             "quizConfig": {
                 "title": "Quiz",
                 "description": "",

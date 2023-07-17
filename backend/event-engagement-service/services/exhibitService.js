@@ -7,7 +7,7 @@ const serviceUrl = `${REGISTRY_URL}/api/v1/Exhibit`;
 const checkAnswers = (submitions, questions) => {
     const answers = questions?.map(details  => {
         const { osid, question, correctAnswer } = details;
-        const answer = submitions?.answers?.find(d => d.questionOsid == osid)?.answer;
+        const answer = submitions?.answers?.find(d => d?.questionOsid == osid)?.answer;
         return {
             questionOsid: osid,
             question,
@@ -101,6 +101,20 @@ const getExhibitByMobileNumber = async (mobileNumber) => {
     .then(results => results?.data[0]);
 };
 
+const findExhibitByKeyValue = async (key, value) => {
+    const payload = {
+        "offset": 0,
+        "limit": 1,
+        "filters": {
+          [key]: {
+            "eq": value
+          }
+        }
+    }
+    return axios.post(`${serviceUrl}/search`, payload)
+    .then(results => results?.data[0]);
+};
+
 const searchExhibit = async (payload) => {
     return axios.post(`${serviceUrl}/search`, payload)
     .then(results => results?.data);
@@ -118,4 +132,5 @@ module.exports = {
     checkAnswers,
     searchExhibit,
     getExhibitByMobileNumber,
+    findExhibitByKeyValue,
 }

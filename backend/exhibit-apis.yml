@@ -9,10 +9,10 @@ info:
   description: Sunbird registry and credential api (SunbirdRC)
   title: Sunbird Registry and Credential
   version: 1.0.0
-host: localhost:8081
+host: 'localhost:8081'
 basePath: /
 paths:
-  /api/v1/QRCode/{userDid}/verify:
+  '/api/v1/QRCode/{userDid}/verify':
     parameters:
       - in: path
         name: userDid
@@ -35,7 +35,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/SuccessResult'
-  /api/v1/Quiz/submit/{exhibitionId}:
+  '/api/v1/Quiz/submit/{exhibitionId}':
     post:
       description: Submit a Quiz
       parameters:
@@ -53,7 +53,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/QuizResponse'
-  /api/v1/Quiz/getQuestions/{exhibitionId}:
+  '/api/v1/Quiz/getQuestions/{exhibitionId}':
     get:
       parameters:
         - name: exhibitionId
@@ -87,11 +87,11 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Visitor'
-  /api/v1/Visitor/visit/{exhibitOsid}:
+  '/api/v1/Visitor/visit/{exhibitQrCodeId}':
     put:
       parameters:
         - in: path
-          name: exhibitOsid
+          name: exhibitQrCodeId
           type: string
           required: true
       responses:
@@ -99,7 +99,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/SuccessResult'
-  /api/v1/Quiz/{entityId}:
+  '/api/v1/Quiz/{entityId}':
     get:
       parameters:
         - name: entityId
@@ -153,7 +153,10 @@ paths:
                 properties:
                   field_path:
                     type: object
-                    description: operators can be gte, lte, contains, gt, lt, eq, between, or, startsWith, endsWith, notContains, notStartsWith, notEndsWith
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
                     properties:
                       operators:
                         type: string
@@ -174,7 +177,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Quiz'
-  /api/v1/Visitor/{entityId}:
+  '/api/v1/Visitor/{entityId}':
     get:
       parameters:
         - name: entityId
@@ -226,7 +229,20 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Visitor'
-  /api/v1/Exhibit/{entityId}:
+  '/api/v1/Exhibit/QRCode/{qrId}':
+    get:
+      parameters:
+        - name: qrId
+          in: path
+          description: QR Id of exhibit
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Exhibit'
+  '/api/v1/Exhibit/{entityId}':
     get:
       parameters:
         - name: entityId
@@ -280,7 +296,10 @@ paths:
                 properties:
                   field_path:
                     type: object
-                    description: operators can be gte, lte, contains, gt, lt, eq, between, or, startsWith, endsWith, notContains, notStartsWith, notEndsWith
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
                     properties:
                       operators:
                         type: string
@@ -313,7 +332,16 @@ paths:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Exhibit'
+            type: object
+            properties:
+              visited:
+                type: array
+                items:
+                  $ref: '#/definitions/Exhibit'
+              unvisited:
+                type: array
+                items:
+                  $ref: '#/definitions/Exhibit'
     post:
       description: Create new Exhibit
       parameters:
@@ -327,7 +355,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Exhibit'
-  /api/v1/Exhibit/{entityId}/{property}/{propertyId}:
+  '/api/v1/Exhibit/{entityId}/{property}/{propertyId}':
     get:
       parameters:
         - name: entityId
@@ -385,7 +413,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/SuccessResult'
-  /api/v1/Event/{entityId}:
+  '/api/v1/Event/{entityId}':
     get:
       parameters:
         - name: entityId
@@ -439,7 +467,10 @@ paths:
                 properties:
                   field_path:
                     type: object
-                    description: operators can be gte, lte, contains, gt, lt, eq, between, or, startsWith, endsWith, notContains, notStartsWith, notEndsWith
+                    description: >-
+                      operators can be gte, lte, contains, gt, lt, eq, between,
+                      or, startsWith, endsWith, notContains, notStartsWith,
+                      notEndsWith
                     properties:
                       operators:
                         type: string
@@ -486,7 +517,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/Event'
-
 definitions:
   Quiz:
     type: object
@@ -496,6 +526,7 @@ definitions:
       - visitorName
       - exhibitDetails
       - date
+    additionalProperties: true
     properties:
       title:
         type: string
@@ -510,20 +541,13 @@ definitions:
         type: string
         title: Date
         format: date-time
-      exhibitDetails:
-        type: object
-        required: 
-          - osid
-          - name
-          - organization,
-        properties:
-          osid:
-            type: string
-            title: id of the exhibit
-          name:
-            type: string
-          organization:
-            type: string
+      exhibitOsid:
+        type: string
+        title: id of the exhibit
+      exhibitName:
+        type: string
+      exhibitOrganization:
+        type: string
       score:
         type: integer
         title: Score
@@ -562,14 +586,15 @@ definitions:
     required:
       - name
       - mobileNumber
+    additionalProperties: true
     properties:
       did:
         type: string
       name:
         type: string
-      mobileNumber:
-        type: string
       email:
+        type: string
+      organization:
         type: string
       exhibitsVisited:
         type: array
@@ -580,38 +605,33 @@ definitions:
     type: object
     title: The Exhibit Schema
     required:
-      - exhibitDetails
-      - quizConfig
+      - boothNumber
+    additionalProperties: true
     properties:
-      exhibitDetails:
-        type: object
-        properties:
-          name:
-            type: string
-          mobileNumber:
-            type: string
-          shortDescription:
-            type: string
-          fullDescription:
-            type: string
-          logoURL:
-            type: string
-          videoURL:
-            type: string
-          boothNumber:
-            type: string
-          startDate:
-            type: string
-            format: date-time
-          endDate:
-            type: string
-            format: date-time
-          organization:
-            type: string
-          qrId:
-            type: string
-        required:
-          - name, mobileNumber
+      did: 
+        type: string
+      name:
+        type: string
+      shortDescription:
+        type: string
+      fullDescription:
+        type: string
+      logoURL:
+        type: string
+      videoURL:
+        type: string
+      boothNumber:
+        type: string
+      startDate:
+        type: string
+        format: date-time
+      endDate:
+        type: string
+        format: date-time
+      organization:
+        type: string
+      qrId:
+        type: string
       quizConfig:
         type: object
         properties:
@@ -621,12 +641,6 @@ definitions:
           description:
             type: string
             title: Description
-          noOfQuestionPerQuiz:
-            type: integer
-            example: 5
-          thresholdLimit:
-            type: integer
-            example: 4
           questions:
             type: array
             items:
@@ -652,10 +666,15 @@ definitions:
       - title
       - organization
       - schedule
+    additionalProperties: true
     properties:
       title:
         type: string
       description:
+        type: string
+      logoUrl: 
+        type: string
+      posterUrl:
         type: string
       schedule:
         type: string
@@ -692,10 +711,10 @@ definitions:
         format: date-time
       exhibitDetails:
         type: object
-        required: 
+        required:
           - osid
           - name
-          - organization,
+          - 'organization,'
         properties:
           osid:
             type: string
@@ -766,7 +785,7 @@ definitions:
         items:
           type: object
           properties:
-            osid: 
+            osid:
               type: string
             question:
               type: string

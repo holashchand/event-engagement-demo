@@ -55,7 +55,7 @@ const createCredential = async (exhibit, visitor) => {
             "id": _.get(visitor, "did"),
             "name": _.get(visitor, "name"),
             "mobileNumber": _.get(visitor, "mobileNumber"),
-            "work": `${_.get(exhibit, "name")}-${_.get(exhibit, "quizConfig.title")}`
+            "work": `${_.get(exhibit, "name")}}`
         }
     };
     const payload = {
