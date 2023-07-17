@@ -80,12 +80,15 @@ function ToolBar(props: ToolbarProps) {
     <>
       <Box className="App wrapper" id="page-wrap">
         <AppBar position="static">
-          <Toolbar sx={{ position: "absolute", padding: "0 4px" }}>
+          <Toolbar sx={{ position: "absolute", padding: "0" }}>
             <img
               src={BgHeader2}
-              style={
-                toolbarHeight ? { marginTop: "-2rem" } : { marginTop: "-5rem" }
-              }
+              style={{
+                marginTop: toolbarHeight ? "-2rem" : "-5rem",
+                width: "100vw",
+                height: "192px",
+                objectFit: "cover",
+              }}
             />
             <IconButton
               size="large"
@@ -122,6 +125,9 @@ function ToolBar(props: ToolbarProps) {
             {show ? (
               <>
                 <QrCodeScannerIcon
+                  onClick={() => {
+                    navigate("/scan-qr");
+                  }}
                   style={{
                     position: "absolute",
                     transform: "translate(-50%, -50%)",
