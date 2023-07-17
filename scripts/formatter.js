@@ -12,7 +12,7 @@ fs.readFile(csvFilePath, (err, inputD) => {
         return {
             "exhibitDetails": {
                 "name": row[1],
-                "shortDescription": row[2],
+                "shortDescription": row[34],
                 "fullDescription": row[2],
                 "logoURL": "",
                 "videoURL": row[3],
