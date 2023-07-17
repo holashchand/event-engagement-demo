@@ -521,11 +521,6 @@ definitions:
   Quiz:
     type: object
     title: The Quiz Schema
-    required:
-      - title
-      - visitorName
-      - exhibitDetails
-      - date
     additionalProperties: true
     properties:
       title:
@@ -691,12 +686,6 @@ definitions:
   QuizResponse:
     type: object
     title: The Quiz Schema
-    required:
-      - title
-      - visitorName
-      - visitorMobileNumber
-      - exhibitDetails
-      - date
     properties:
       did:
         type: string
@@ -709,20 +698,13 @@ definitions:
       date:
         type: string
         format: date-time
-      exhibitDetails:
-        type: object
-        required:
-          - osid
-          - name
-          - 'organization,'
-        properties:
-          osid:
-            type: string
-            title: id of the exhibit
-          name:
-            type: string
-          organization:
-            type: string
+      exhibitOsid:
+        type: string
+        title: id of the exhibit
+      exhibitName:
+        type: string
+      exhibitOrganization:
+        type: string
       score:
         type: integer
         example: 8
