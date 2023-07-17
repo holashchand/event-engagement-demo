@@ -94,6 +94,7 @@ const verifiedVisitorCredentials = async (visitorDid) => {
 }
 
 const generateDid = async (entityName) => {
+    console.log("generating a did for ", entityName);
     const payload = {
         "content": 
             [
@@ -120,7 +121,8 @@ const generateDid = async (entityName) => {
     const did = await axios.post(`${IDENTITY_URL}/did/generate`, payload)
     .then(result => {
         return result?.data[0]?.id;
-    })
+    });
+    console.log("did: ", did);
     return did || "default";
 }
 

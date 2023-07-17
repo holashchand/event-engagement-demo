@@ -8,6 +8,7 @@ const { findExhibitByKeyValue } = require("./exhibitService");
 const serviceUrl = `${REGISTRY_URL}/api/v1/Visitor`;
 
 const createVisitor = async (payload) => {
+    console.log("creating a visitor", payload);
     const did = await generateDid("visitor");
     payload["did"] = `${did}`;
     return axios.post(serviceUrl, payload).then(resp => resp.data);
@@ -18,6 +19,7 @@ const listVisitor = async (headers) => {
 };
 
 const getVisitorByMobileNumber = async (mobileNumber) => {
+    console.log("finding a visitor by mobile number ", mobileNumber);
     return findVisitorByKeyValue("mobileNumber", mobileNumber);;
 };
 
