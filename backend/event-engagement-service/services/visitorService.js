@@ -1,13 +1,14 @@
 const { default: axios } = require("axios");
 const { REGISTRY_URL } = require("../config/config");
-const { getExhibitByOsid } = require("./exhibitService");
-const { _} = require("lodash");
+const { _ } = require("lodash");
 const { generateDid } = require("./credentialService");
+const { findExhibitByKeyValue } = require("./exhibitService");
 
 
 const serviceUrl = `${REGISTRY_URL}/api/v1/Visitor`;
 
 const createVisitor = async (payload) => {
+    console.log("creating a visitor", payload);
     const did = await generateDid("visitor");
     payload["did"] = `${did}`;
     return axios.post(serviceUrl, payload).then(resp => resp.data);
@@ -18,12 +19,17 @@ const listVisitor = async (headers) => {
 };
 
 const getVisitorByMobileNumber = async (mobileNumber) => {
+    console.log("finding a visitor by mobile number ", mobileNumber);
+    return findVisitorByKeyValue("mobileNumber", mobileNumber);;
+};
+
+const findVisitorByKeyValue = async (key, value) => {
     const payload = {
         "offset": 0,
         "limit": 1,
         "filters": {
-          "mobileNumber": {
-            "eq": mobileNumber
+          [key]: {
+            "eq": value
           }
         }
     }
@@ -31,10 +37,10 @@ const getVisitorByMobileNumber = async (mobileNumber) => {
     .then(results => results?.data[0]);
 };
 
-const markExhibitAsVisited = async (exhibitOsid, visitor, headers) => {
-    const exhibit = await getExhibitByOsid(exhibitOsid);
+const markExhibitAsVisited = async (exhibitQrCodeId, visitor, headers) => {
+    const exhibit = await findExhibitByKeyValue("qrId", exhibitQrCodeId);
     if(exhibit && !(_.get(visitor, "exhibitsVisited", []).some(exb => exb === exhibit?.osid))) {
-        const payload = [..._.get(visitor, "exhibitsVisited", []), exhibitOsid];
+        const payload = [..._.get(visitor, "exhibitsVisited", []), _.get(exhibit, "osid")];
         await axios.put(`${serviceUrl}/${visitor?.osid}/exhibitsVisited`, payload);
     }
 };

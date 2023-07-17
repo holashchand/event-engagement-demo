@@ -13,12 +13,10 @@ const createOrUpdate = async (exhibit, visitor, results) => {
         quiz = {};
         const did = await generateDid("quiz");
         quiz.did = did;
-        quiz.exhibitDetails = {
-            osid: _.get(exhibit, "osid", ""),
-            name: _.get(exhibit, "exhibitDetails.name", ""),
-            organization: _.get(exhibit, "exhibitDetails.organization", "",)
-        }
-        quiz.title = _.get(exhibit, "quizConfig.title", _.get(exhibit, "exhibitDetails.name", "default"));
+        quiz.exhibitOsid = _.get(exhibit, "osid", "");
+        quiz.exhibitName = _.get(exhibit, "name", "");
+        quiz.exhibitOrganization = _.get(exhibit, "organization", "");
+        quiz.title = _.get(exhibit, "quizConfig.title", _.get(exhibit, "name", "default"));
         quiz.visitorName = _.get(visitor, "name");
         quiz.visitorMobileNumber = _.get(visitor, "mobileNumber");
         quiz.attemptCount = 1;
@@ -59,7 +57,7 @@ const findQuizForVisitorMobileNumberAndExhibitOsid = async (mobileNumber, exhibi
           visitorMobileNumber: {
             eq: `${mobileNumber}`
           },
-          'exhibitDetails.osid': {
+          'osid': {
             eq: exhibitOsid
           }
         }

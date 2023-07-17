@@ -46,20 +46,14 @@
           "type": "string",
           "format": "date-time"
         },
-        "exhibitDetails": {
-          "type": "object",
-          "required": ["osid", "name", "organization"],
-          "properties": {
-            "osid": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "organization": {
-              "type": "string"
-            }
-          }
+        "exhibitOsid": {
+          "type": "string"
+        },
+        "exhibitName": {
+          "type": "string"
+        },
+        "exhibitOrganization": {
+          "type": "string"
         },
         "score": {
           "type": "integer",

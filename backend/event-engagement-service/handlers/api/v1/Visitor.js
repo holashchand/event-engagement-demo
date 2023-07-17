@@ -13,8 +13,10 @@ module.exports = {
     },
     post: async function (req, res, next) {
         createVisitor(req.body, req.headers).then(results => {
+            console.log("created visitor", results);
             res.status(200).send(results);
         }).catch((err) => {
+            console.log("got error while creating a visitor", err);
             next(err, req, res, next);
         })
     }
