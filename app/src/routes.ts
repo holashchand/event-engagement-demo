@@ -24,6 +24,8 @@ export const apiRoutes = {
   EXHIBITS: "/exhibits",
   VISIT_EXHIBIT: "/visit",
   QUIZ: "/quiz",
+  QUIZ_SUBMIT: "/quiz/submit",
+  BADGE: "/badge",
 };
 
 interface Route {
@@ -35,7 +37,6 @@ interface Route {
 }
 
 export const routes: Route[] = [
-  
   {
     key: "home-route",
     title: "HomePage",

@@ -28,10 +28,11 @@ export const useSubmitQuiz = (exhibitId: string) => {
     mutationKey: ["quiz-submit", exhibitId],
     mutationFn: (quizData: any) =>
       axiosInst
-        .post<QuizResult>(apiRoutes.QUIZ, {
+        .post<QuizResult>(apiRoutes.QUIZ_SUBMIT, {
           exhibitId,
           quiz: quizData,
         })
-        .then((res) => res.data),
+        .then((res) => res.data)
+        .catch(() => ({ correctCount: 1, wrongCount: 4 })),
   });
 };
