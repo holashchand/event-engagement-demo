@@ -1,57 +1,90 @@
 {
-    "exhibits": {
-      "visited": [
-        {
-          "exhibitId": "1",
-          "miniDescription": "A small description",
-          "description": "A long explanative description",
-          "date": "12/07/20203",
-          "name": "Whirpool",
-          "visited": true,
-          "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          "time": "1pm"
-        },
-        {
-          "exhibitId": "2",
-          "miniDescription": "A small description",
-          "date": "12/07/20203",
-          "name": "Samsung",
-          "visited": true,
-          "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          "time": "1pm"
-        },
-        {
-          "exhibitId": "3",
-          "miniDescription": "A small description",
-          "date": "12/07/20203",
-          "name": "Panasonic",
-          "visited": true,
-          "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          "time": "1pm"
-        }
-      ],
-      "notVisited": [
-        {
-          "exhibitId": "5",
-          "miniDescription": "A small description",
-          "date": "12/07/20203",
-          "name": "Sony",
-          "visited": false,
-          "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          "time": "1pm"
-        },
-        {
-          "exhibitId": "6",
-          "miniDescription": "A small description",
-          "date": "12/07/20203",
-          "name": "Reliance",
-          "visited": false,
-          "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-          "time": "1pm"
-        }
-      ],
-      "count": 5
-    },
-    "events": []
+  "exhibits": {
+    "visited": [
+      {
+        "exhibitId": "1",
+        "miniDescription": "A small description",
+        "description": "A long explanative description",
+        "date": "12/07/20203",
+        "name": "Whirpool",
+        "visited": true,
+        "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "time": "1pm"
+      },
+      {
+        "exhibitId": "2",
+        "miniDescription": "A small description",
+        "date": "12/07/20203",
+        "name": "Samsung",
+        "visited": true,
+        "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "time": "1pm"
+      },
+      {
+        "exhibitId": "3",
+        "miniDescription": "A small description",
+        "date": "12/07/20203",
+        "name": "Panasonic",
+        "visited": true,
+        "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "time": "1pm"
+      }
+    ],
+    "notVisited": [
+      {
+        "exhibitId": "5",
+        "miniDescription": "A small description",
+        "date": "12/07/20203",
+        "name": "Sony",
+        "visited": false,
+        "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "time": "1pm"
+      },
+      {
+        "exhibitId": "6",
+        "miniDescription": "A small description",
+        "date": "12/07/20203",
+        "name": "Reliance",
+        "visited": false,
+        "videoSrcUrl": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "time": "1pm"
+      }
+    ],
+    "count": 5
+  },
+  "events": [],
+  "quiz": {
+    "questions": [
+      {
+        "id": 1,
+        "question": "What is the capital of Haryana?",
+        "options": ["Yamunanagar", "Panipat", "Gurgaon", "Chandigarh"],
+        "answer": "Chandigarh"
+      },
+      {
+        "id": 2,
+        "question": "What is the capital of Punjab?",
+        "options": ["Patiala", "Ludhiana", "Amritsar", "Chandigarh"],
+        "answer": "Chandigarh"
+      },
+      {
+        "id": 3,
+        "question": "What is the capital of India?",
+        "options": ["Delhi", "Mumbai", "Kolkata", "Chennai"],
+        "answer": "Delhi"
+      },
+      {
+        "id": 4,
+        "question": "What is the capital of Uttarakhad?",
+        "options": ["Roorkee", "Haridwar", "Dehradun", "Nanital"],
+        "answer": "Dehradun"
+      },
+      {
+        "id": 5,
+        "question": "What is capital of Uttar Pradesh?",
+        "options": ["GB Nagar", "Lucknow", "Prayagraj", "Agra"],
+        "answer": "Lucknow"
+      }
+    ]
   }
-  
+}
