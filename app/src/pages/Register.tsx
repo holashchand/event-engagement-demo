@@ -9,6 +9,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useKeycloak } from "@react-keycloak/web";
 import { FC, ReactElement } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import { pageRoutes } from "../routes";
 
 const Register: FC<{}> = (): ReactElement => {
   let navigate = useNavigate();
+  const { keycloak } = useKeycloak();
   const { register, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
     console.log(data);
@@ -128,8 +130,11 @@ const Register: FC<{}> = (): ReactElement => {
             }}
           >
             <Link
+              component={Typography}
               onClick={() => {
-                navigate(pageRoutes.LOGIN)
+                keycloak.login({
+                  redirectUri: `${window.location.origin}/ExhibitsHome`,
+                });
               }}
               variant="body2"
               sx={{ textAlign: "center", color: "#1F3964 !important" }}

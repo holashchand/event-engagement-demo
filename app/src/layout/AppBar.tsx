@@ -18,9 +18,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useKeycloak } from "@react-keycloak/web";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useBadgeData } from "../api/badge";
+import { useVistorDetails } from "../api/visitors";
 import Badge1 from "../assets/Badge1.svg";
 import Badge2 from "../assets/Badge2.svg";
 import BgHeader2 from "../assets/BgHeader2.svg";
@@ -28,7 +30,6 @@ import appName from "../assets/appName.png";
 import logo from "../assets/logo.svg";
 import menuEvent from "../assets/menuEvent.svg";
 import { pageRoutes } from "../routes";
-import { useVistorDetails } from "../api/visitors";
 
 interface ToolbarProps {
   show: boolean;
@@ -39,16 +40,17 @@ interface ToolbarProps {
 
 function ToolBar(props: ToolbarProps) {
   let navigate = useNavigate();
+  const { keycloak } = useKeycloak();
   const { data: badgeData } = useBadgeData();
   // const { data: exhibitsData } = useExhibitsData();
-  const badgeWonCount = (badgeData?.filter(bg => bg.badgeWon).length) || 0;
-  const badgeLeftCount = (badgeData?.filter(bg => !bg.badgeWon).length) || 0;
-    // (exhibitsData?.visited.length || 0) +
-    // (exhibitsData?.unvisited.length || 0);
+  const badgeWonCount = badgeData?.filter((bg) => bg.badgeWon).length || 0;
+  const badgeLeftCount = badgeData?.filter((bg) => !bg.badgeWon).length || 0;
+  // (exhibitsData?.visited.length || 0) +
+  // (exhibitsData?.unvisited.length || 0);
 
   const { data: visitorDetails } = useVistorDetails();
   // const id = visitorDetails
-  
+
   const { hideBtn, show, badgeOpt, toolbarHeight } = props;
   const [isOpen, setIsopen] = useState(false);
 
@@ -71,7 +73,7 @@ function ToolBar(props: ToolbarProps) {
         navigate(path);
         break;
       case "Logout":
-        console.log("logout");
+        keycloak.logout();
         break;
     }
   };
