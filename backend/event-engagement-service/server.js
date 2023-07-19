@@ -8,12 +8,14 @@ var SwaggerUI = require("swaggerize-ui");
 var Path = require('path');
 const constants = require('./config/config');
 const { _ } = require("lodash");
+const cors = require('cors')
 const { initKeycloak, startSession } = require('./config/keycloak-config.js');
 
 var App = Express();
 
 var Server = Http.createServer(App);
 
+App.use(cosr());
 App.use(BodyParser.json());
 App.use(BodyParser.urlencoded({
     extended: true
@@ -25,15 +27,6 @@ App.use(keycloak.middleware());
 App.get('/', keycloak.protect(),  function(req, res){
     res.send("Server is up!");
  });
-
- const purls = {
-    get: (func) =>  {
-        func(["/api/v1/exhibit*", "/api/v1/visitor*"], keycloak.protect(),
-        (req, res, next) => {
-          next();
-       });
-    }
- }
 
  App.all(["/api/v1/*"], (req, res, next) => {
     if((req.method === 'POST' && ['/api/v1/Visitor', '/api/v1/Exhibit', '/api/v1/Event', '/api/v1/Exhibit/search']
