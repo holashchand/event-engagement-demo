@@ -15,9 +15,9 @@ fs.readFile(csvFilePath, (err, inputD) => {
             "fullDescription": row[2],
             "logoURL": "",
             "videoURL": row[3],
-            "boothNumber": `${row[0]}`,
+            "boothNumber": `${row[35]}`,
             "organization": "",
-            "qrId": "",
+            "qrId": `${row[0]}`,
             "quizConfig": {
                 "title": "Quiz",
                 "description": "",

@@ -1,10 +1,12 @@
 const { default: axios } = require("axios");
-const { CREDENTIAL_URL, CREDENTIAL_SCHEMA_URL, IDENTITY_URL } = require("../config/config");
+const { CREDENTIAL_URL, CREDENTIAL_SCHEMA_URL } = require("../config/config");
 const fs = require('fs');
 const path = require('path');
 const serviceUrl = `${CREDENTIAL_URL}/credentials`;
 const schemaServiceUrl = `${CREDENTIAL_SCHEMA_URL}/credential-schema`;
 const { _ } = require("lodash");
+const { generateDid } = require("./identityService");
+
 
 const findCredentialsByVisitorDid = async (did) => {
     const payload = {
@@ -13,14 +15,14 @@ const findCredentialsByVisitorDid = async (did) => {
         }
     };
     return axios.post(`${serviceUrl}/search`, payload)
-    .then(results => results.data)
-    .catch(() => []);
+        .then(results => results.data)
+        .catch(() => []);
 };
 
 const getOrCreateCredentialSchema = async () => {
     const schemas = await axios.get(`${schemaServiceUrl}?tags=BadgeSchema3&page=1&limit=1`)
-    .then(resp => resp?.data);
-    if(schemas && schemas.length == 1) {
+        .then(resp => resp?.data);
+    if (schemas && schemas.length == 1) {
         return schemas[0];
     }
     const did = await generateDid("schema:badge");
@@ -33,7 +35,7 @@ const getOrCreateCredentialSchema = async () => {
     schemaRequest.status = 'DRAFT';
     return axios.post(schemaServiceUrl, schemaRequest, {
         headers: {
-        "Content-Type": "application/json"
+            "Content-Type": "application/json"
         }
     }).then(resp => resp?.data);
 }
@@ -66,7 +68,7 @@ const createCredential = async (exhibit, visitor) => {
     }
     return axios.post(`${serviceUrl}/issue`, payload, {
         headers: {
-        "Content-Type": "application/json"
+            "Content-Type": "application/json"
         }
     }).then(resp => resp?.data);
 
@@ -74,16 +76,16 @@ const createCredential = async (exhibit, visitor) => {
 
 const verifyCredential = async (credentialId) => {
     return axios.get(`${serviceUrl}/${credentialId}/verify`)
-    .then(result => {
-        return result?.data?.checks?.every(d => {
-            return d?.active === "OK" && d?.revoked === "OK" && d?.expired === "OK"
-            && d?.proof === "OK";
+        .then(result => {
+            return result?.data?.checks?.every(d => {
+                return d?.active === "OK" && d?.revoked === "OK" && d?.expired === "OK"
+                    && d?.proof === "OK";
+            });
+        })
+        .catch((err) => {
+            console.log(err);
+            return false;
         });
-    })
-    .catch((err) => {
-        console.log(err);
-        return false;
-    });
 }
 
 const verifiedVisitorCredentials = async (visitorDid) => {
@@ -93,42 +95,8 @@ const verifiedVisitorCredentials = async (visitorDid) => {
     return count;
 }
 
-const generateDid = async (entityName) => {
-    console.log("generating a did for ", entityName);
-    const payload = {
-        "content": 
-            [
-                {
-                    "alsoKnownAs": [],
-                    "services": [
-                        {
-                            "id": "IdentityHub",
-                            "type": "IdentityHub",
-                            "serviceEndpoint": {
-                                "@context": "schema.identity.foundation/hub",
-                                "@type": "UserServiceEndpoint",
-                                "instance": [
-                                    "did:test:hub.id"
-                                ]
-                            }
-                        }
-                    ],
-                    "method": `upai:${entityName}`
-                }
-            ]
-        
-    }
-    const did = await axios.post(`${IDENTITY_URL}/did/generate`, payload)
-    .then(result => {
-        return result?.data[0]?.id;
-    });
-    console.log("did: ", did);
-    return did || "default";
-}
-
 module.exports = {
     createCredential,
     findCredentialsByVisitorDid,
     verifiedVisitorCredentials,
-    generateDid,
 }

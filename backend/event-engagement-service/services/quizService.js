@@ -1,8 +1,10 @@
 const { default: axios } = require("axios");
 const { checkAnswers, getExhibitByOsid } = require("./exhibitService");
-const { createCredential, generateDid } = require("./credentialService");
+const { createCredential } = require("./credentialService");
 const { REGISTRY_URL } = require("../config/config");
 const { _ } = require("lodash");
+const { generateDid } = require("./identityService");
+const { updateLatestPresentation } = require("./presentationService");
 
 const serviceUrl = `${REGISTRY_URL}/api/v1/Quiz`;
 
@@ -86,12 +88,21 @@ const submitQuiz = async (exhibitOsid, visitor, submissions) => {
     await createOrUpdate(exhibit, visitor, result);
     if (result?.badgeWon) {
         await createCredential(exhibit, visitor);
+        await updateLatestPresentation(visitor);
     }
     return result?.badgeWon;
 };
 
 const listQuiz = async (headers) => {
-    return axios.get(serviceUrl).then(resp => resp?.data);
+    return axios.get(serviceUrl).then(resp => resp?.data)
+    .then(quizes => quizes.map(d => ({
+        ...d,
+        results: {
+            score: d?.score,
+            totalScore: d?.totalScore,
+            badgeWon: d?.badgeWon
+        }
+    })));
 };
 
 module.exports = {

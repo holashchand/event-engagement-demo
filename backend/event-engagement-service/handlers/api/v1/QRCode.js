@@ -1,5 +1,5 @@
 'use strict';
-const { getQrCodeForVisitorDid } = require('../../../services/qrCodeService.js');
+const { getQrCodeForVisitor } = require('../../../services/qrCodeService.js');
 const { getCurrentUser } = require('../../../services/utils.js');
 /**
  * Operations on /api/v1/QRCode/
@@ -7,7 +7,7 @@ const { getCurrentUser } = require('../../../services/utils.js');
 module.exports = {
     get: async function (req, res, next) {
         const visitor = await getCurrentUser(req);
-        getQrCodeForVisitorDid(visitor, (err, url) => {
+        getQrCodeForVisitor(visitor, (err, url) => {
             if(err) {
                 next(err, req, res, next);
             } else {

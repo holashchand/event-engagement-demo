@@ -101,6 +101,8 @@ services:
       - CREDENTIAL_URL=${CREDENTIAL_SERVICE_URL}
       - IDENTITY_URL=${IDENTITY_SERVICE_URL}
       - CREDENTIAL_SCHEMA_URL=${CREDENTIAL_SCHEMA_SERVICE_URL}
+      - BADGE_WIN_MIN_SCORE=${BADGE_WIN_MIN_SCORE}
+      - NO_OF_QUESTIONS=${NO_OF_QUESTIONS}
     healthcheck:
       test:
         [ "CMD-SHELL", "curl -f http://localhost:8000/swagger || exit 1" ]

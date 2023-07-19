@@ -1,25 +1,25 @@
 const { default: axios } = require("axios");
 
 const IDENTITY_URL = "http://localhost:3332"
-const serviceUrl = `http://localhost:8081/api/v1/Exhibit`;
+const serviceUrl = `https://api.up-ai.in/api/v1/Exhibit`;
 
 const saveExhibit = async (searchBy, value, payload) => {
-    const entity = await getExhibitByKeyValue(searchBy, value);
-    const finalEntity = {
-        ...entity,
-        ...payload,
-        quizConfig: {
-            title: "Quiz",
-            ...entity?.quizConfig,
-            ...payload?.quizConfig,
-        }
-    };
-    if (!finalEntity?.did) {
-        const did = await generateDid("exhibit");
-        finalEntity["did"] = `${did}`;
-    }
-    if(!!entity) return axios.put(serviceUrl, finalEntity).then(resp => resp.data);
-    return axios.post(serviceUrl, finalEntity).then(resp => resp.data);
+    // const entity = await getExhibitByKeyValue(searchBy, value);
+    // const finalEntity = {
+    //     ...entity,
+    //     ...payload,
+    //     quizConfig: {
+    //         title: "Quiz",
+    //         ...entity?.quizConfig,
+    //         ...payload?.quizConfig,
+    //     }
+    // };
+    // if (!finalEntity?.did) {
+    //     const did = await generateDid("exhibit");
+    //     finalEntity["did"] = `${did}`;
+    // }
+    // if(!!entity) return axios.put(serviceUrl, finalEntity).then(resp => resp.data);
+    return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
 
 const getExhibitByKeyValue = async (key, value) => {

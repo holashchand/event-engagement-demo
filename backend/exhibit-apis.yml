@@ -12,10 +12,10 @@ info:
 host: 'localhost:8081'
 basePath: /
 paths:
-  '/api/v1/QRCode/{userDid}/verify':
+  '/api/v1/QRCode/{presentationId}/verify':
     parameters:
       - in: path
-        name: userDid
+        name: presentationId
         type: string
         required: true
     get:
@@ -24,10 +24,6 @@ paths:
           description: OK
           schema:
             type: object
-            properties:
-              badges:
-                type: integer
-                example: 10
   /api/v1/QRCode/:
     get:
       responses:
@@ -223,12 +219,12 @@ paths:
           name: body
           required: false
           schema:
-            $ref: '#/definitions/Visitor'
+            $ref: '#/definitions/VisitorCreateRequest'
       responses:
         '200':
           description: OK
           schema:
-            $ref: '#/definitions/Visitor'
+            $ref: '#/definitions/SuccessResult'
   '/api/v1/Exhibit/QRCode/{qrId}':
     get:
       parameters:
@@ -591,6 +587,8 @@ definitions:
         type: string
       organization:
         type: string
+      latestPresentation:
+        type: string
       exhibitsVisited:
         type: array
         items:
@@ -677,6 +675,20 @@ definitions:
       location:
         type: string
       organization:
+        type: string
+  VisitorCreateRequest:
+    type: object
+    required:
+      - name
+      - mobileNumber
+    properties:
+      name:
+        type: string
+      email:
+        type: string
+      organization:
+        type: string
+      latestPresentation:
         type: string
   SuccessResult:
     type: object

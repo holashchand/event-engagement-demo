@@ -1,9 +1,6 @@
 const { default: axios } = require("axios");
-const qs = require('qs');
-const { IDENTITY_URL, REGISTRY_URL} = require("../config/config");
+const { REGISTRY_URL} = require("../config/config");
 const { _ } = require("lodash");
-const _axios = require("axios").default;
-const jwt = require("jsonwebtoken");
 const { getKeycloak } = require("../config/keycloak-config");
 const { getExhibitByMobileNumber } = require("./exhibitService");
 
@@ -35,8 +32,6 @@ const getCurrentUser = async (req) => {
     if (!entity) throw new Error("Entity name not found");
     if(entity === "Visitor") {
         return getVisitorByMobileNumber(mobileNumber);
-    } else if(entity === "Exhibit") {
-        return getExhibitByMobileNumber(mobileNumber);
     }
     throw new Error("Entity not allowed");
 }
