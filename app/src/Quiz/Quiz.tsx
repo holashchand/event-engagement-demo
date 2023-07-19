@@ -17,8 +17,6 @@ import {
 import { useState } from "react";
 import ContainedIconButton from "../mui-component-extra/ContainedIconButton";
 import { Question } from "../types/quiz";
-import { apiRoutes } from "../routes";
-import { useNavigate } from "react-router-dom";
 
 interface QuizProps {
   questions: Question[];
@@ -59,12 +57,6 @@ const Quiz: React.FC<QuizProps> = ({ questions, onFinish }) => {
   };
 
   const currentQuestion = questions[activeStep];
-
-  let navigate = useNavigate()
-  const navigatetoResult = () => {
-    let path = apiRoutes.EXHIBIT_RESULT
-    navigate(path)
-  }
 
   return (
     <Stack spacing={6}>
@@ -119,9 +111,12 @@ const Quiz: React.FC<QuizProps> = ({ questions, onFinish }) => {
           <NavigateBefore />
         </ContainedIconButton>
         <Button
+          disabled = {activeStep !== questions.length - 1}
           variant="outlined"
           color="primary"
-          onClick={() => {onFinish(selectedOptions); navigatetoResult()}}
+          onClick={() => {
+            onFinish(selectedOptions);
+          }}
         >
           Submit Quiz
         </Button>

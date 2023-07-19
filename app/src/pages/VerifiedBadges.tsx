@@ -3,7 +3,7 @@ import {ReactElement, FC, useState} from "react";
 import { Box, Button, Card, CardContent, InputLabel, Typography} from "@mui/material";
 import ToolBar from "../layout/AppBar";
 import verified from '../assets/verified.svg'
-import TabContents from "../layout/ExhibitsTable";
+// import TabContents from "../layout/ExhibitsTable";
 
 const VerifiedBadges: FC<any> = (): ReactElement => {
     const [showMsg, setShow] = useState(true);
@@ -11,16 +11,16 @@ const VerifiedBadges: FC<any> = (): ReactElement => {
         setShow(!showMsg);
     }
 
-    const list = [{date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
-    {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}]
+    // const list = [{date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}, 
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'},
+    // {date: '12/07/20203', time: '1pm', description: 'exhibit quiz'}]
     return (
         <Box sx={{
             flexGrow: 1,
@@ -44,7 +44,7 @@ const VerifiedBadges: FC<any> = (): ReactElement => {
                 </Box>
                 <Button sx={{marginTop:'30%', color:'#67C8D1', border:'1px solid #67C8D1'}} variant="outlined" onClick={changeState}>See all badges</Button>
                 </>) : <>
-                <TabContents content={list}></TabContents>
+                {/* <TabContents content={list} visited={false}></TabContents> */}
                 </>}
             </Box>
         </Box>
