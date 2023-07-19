@@ -15,7 +15,7 @@ var App = Express();
 
 var Server = Http.createServer(App);
 
-App.use(cosr());
+App.use(cors());
 App.use(BodyParser.json());
 App.use(BodyParser.urlencoded({
     extended: true
