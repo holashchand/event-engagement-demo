@@ -123,12 +123,14 @@ const Register: FC<{}> = (): ReactElement => {
           <div
             style={{
               position: "absolute",
-              left: "25%",
+              left: "8%",
               transform: "translate(30%, 0)",
             }}
           >
             <Link
-              href="#"
+              onClick={() => {
+                navigate(pageRoutes.LOGIN)
+              }}
               variant="body2"
               sx={{ textAlign: "center", color: "#1F3964 !important" }}
             >

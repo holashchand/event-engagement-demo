@@ -12,14 +12,13 @@ interface QuizResult {
   wrongCount: number;
 }
 
-export const useQuizQuestions = (exhibitId: string, enabled: boolean) => {
+export const useQuizQuestions = (exhibitId: string) => {
   return useQuery({
     queryKey: ["quiz-questions", exhibitId],
     queryFn: () =>
       axiosInst
         .get<QuizQuestionsResponse>(apiRoutes.QUIZ)
-        .then((res) => res.data),
-    enabled,
+        .then((res) => res.data)
   });
 };
 

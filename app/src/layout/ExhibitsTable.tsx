@@ -14,15 +14,17 @@ import { Exhibit } from "../types/exhibit";
 
 interface TabContentProps {
   content: Exhibit[];
+  visited: boolean;
 }
 
 const TabContents: React.FC<TabContentProps> = (props) => {
-  const { content } = props;
+  const { content, visited } = props;
   const navigate = useNavigate();
 
   function navigateToDetails(data: Exhibit) {
+    data.additionalProp1.visited = visited
     const path = pageRoutes.EXHIBIT_DETAILS;
-    navigate(`${path}/${data.exhibitId}`);
+    navigate(`${path}/${data.did}`, {state: data});
   }
   return (
     <List>
@@ -50,8 +52,8 @@ const TabContents: React.FC<TabContentProps> = (props) => {
                     justifyContent: "center",
                   }}
                 >
-                  {exhibit.logoUrl ? (
-                    <img src={exhibit.logoUrl} />
+                  {exhibit.logoURL ? (
+                    <img src={exhibit.logoURL} />
                   ) : (
                     <MuseumOutlinedIcon color={"disabled"} />
                   )}
@@ -65,11 +67,11 @@ const TabContents: React.FC<TabContentProps> = (props) => {
                   </Typography>
                 </div>
                 <div>
-                  <InputLabel>Date: {exhibit.date}</InputLabel>
-                  <InputLabel>Time: {exhibit.time} </InputLabel>
+                  <InputLabel>Kiosk Number: </InputLabel>
+                  {/* <InputLabel>Time: {new Date(`${exhibit.startDate}`).toLocaleTimeString()} </InputLabel> */}
                   <InputLabel>
                     Description:{" "}
-                    {exhibit.miniDescription || exhibit.description}
+                    {exhibit.shortDescription || exhibit.fullDescription}
                   </InputLabel>
                 </div>
                 <div>

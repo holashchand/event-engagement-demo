@@ -111,6 +111,7 @@ const Quiz: React.FC<QuizProps> = ({ questions, onFinish }) => {
           <NavigateBefore />
         </ContainedIconButton>
         <Button
+          disabled = {activeStep !== questions.length - 1}
           variant="outlined"
           color="primary"
           onClick={() => {
