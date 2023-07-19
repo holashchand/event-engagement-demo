@@ -1,21 +1,24 @@
 const QRCode = require('qrcode');
-const { verifiedVisitorCredentials } = require('./credentialService');
 const { VISITOR_QR_BASE_URL } = require('../config/config');
+const { findPresentationById } = require('./presentationService');
 
 
-const getQrCodeForVisitorDid = async (visitor, callback) => {
-    const visitorDid = visitor?.did;
-    const data = `${VISITOR_QR_BASE_URL}/api/v1/QRCode/${visitorDid}/verify`
+const getQrCodeForVisitor = async (visitor, callback) => {
+    const presentationDid = visitor?.latestPresentation;
+    if (!presentationDid) throw new Error("Play quiz to win a Badge!")
+    const data = `${VISITOR_QR_BASE_URL}/verification/${presentationDid}`
     QRCode.toDataURL(data,{type:'terminal'}, (err, url) => {
         callback && callback(err, url);
     });
 }
 
-const verifyQrCodeForVisitorDid = async (userDid) => {
-    return await verifiedVisitorCredentials(userDid);
+
+
+const verifyQrCodeForPresentationDid = async (presentationId) => {
+    return findPresentationById(presentationId);
 }
 
 module.exports = {
-    getQrCodeForVisitorDid,
-    verifyQrCodeForVisitorDid,
+    getQrCodeForVisitor,
+    verifyQrCodeForPresentationDid,
 }

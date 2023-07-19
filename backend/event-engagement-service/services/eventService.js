@@ -1,7 +1,7 @@
 
 const { REGISTRY_URL } = require("../config/config");
-const { _} = require("lodash");
-const { generateDid } = require("./credentialService");
+const { _ } = require("lodash");
+const { generateDid } = require("./identityService");
 
 
 const serviceUrl = `${REGISTRY_URL}/api/v1/Event`;

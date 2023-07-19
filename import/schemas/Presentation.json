@@ -1,0 +1,47 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "type": "object",
+    "properties": {
+      "Presentation": {
+        "$ref": "#/definitions/Presentation"
+      }
+    },
+    "required": [
+      "Presentation"
+    ],
+    "title": "Presentation",
+    "definitions": {
+      "Presentation": {
+        "$id": "#/properties/Presentation",
+        "type": "object",
+        "title": "The Presentation Schema",
+        "required": [],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "publicKey": {
+            "type": "object"
+          },
+          "signed": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "_osConfig": {
+      "systemFields": [
+        "osCreatedAt",
+        "osUpdatedAt",
+        "osCreatedBy",
+        "osUpdatedBy"
+        ],
+      "ownershipAttributes": [],
+      "roles": ["anonymous"],
+      "inviteRoles": [
+        "anonymous"
+      ],
+      "enableLogin": false
+    }
+  }
+  

@@ -1,6 +1,6 @@
 const { default: axios } = require("axios");
-const { REGISTRY_URL } = require("../config/config");
-const { generateDid } = require("./credentialService");
+const { REGISTRY_URL, NO_OF_QUESTIONS, BADGE_WIN_MIN_SCORE } = require("../config/config");
+const { generateDid } = require("./identityService");
 
 const serviceUrl = `${REGISTRY_URL}/api/v1/Exhibit`;
 
@@ -20,8 +20,8 @@ const checkAnswers = (submitions, questions) => {
     return {
         answers,
         score,
-        totalScore: 5,
-        badgeWon: score >= 4
+        totalScore: NO_OF_QUESTIONS,
+        badgeWon: score >= BADGE_WIN_MIN_SCORE
     }
 };
 
@@ -87,20 +87,6 @@ const getExhibitByQrId = async (qrId) => {
     return exhibit && exhibit?.length > 0 && exhibit[0];
 };
 
-const getExhibitByMobileNumber = async (mobileNumber) => {
-    const payload = {
-        "offset": 0,
-        "limit": 1,
-        "filters": {
-          "mobileNumber": {
-            "eq": mobileNumber
-          }
-        }
-    }
-    return axios.post(`${serviceUrl}/search`, payload)
-    .then(results => results?.data[0]);
-};
-
 const findExhibitByKeyValue = async (key, value) => {
     const payload = {
         "offset": 0,
@@ -131,6 +117,5 @@ module.exports = {
     listExhibit,
     checkAnswers,
     searchExhibit,
-    getExhibitByMobileNumber,
     findExhibitByKeyValue,
 }

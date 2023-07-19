@@ -41,6 +41,9 @@
         "organization": {
           "type": "string"
         },
+        "latestPresentation": {
+          "type": "string"
+        },
         "exhibitsVisited": {
           "type": "array",
           "items": {

@@ -6,5 +6,7 @@ module.exports = {
     REGISTRY_URL: process.env.REGISTRY_URL || "http://localhost:8081",
     CREDENTIAL_URL: process.env.CREDENTIAL_URL || "http://localhost:3000",
     IDENTITY_URL: process.env.IDENTITY_URL || "http://localhost:3332",
-    CREDENTIAL_SCHEMA_URL: process.env.CREDENTIAL_SCHEMA_URL || "http://localhost:3333"
+    CREDENTIAL_SCHEMA_URL: process.env.CREDENTIAL_SCHEMA_URL || "http://localhost:3333",
+    BADGE_WIN_MIN_SCORE: process.env.BADGE_WIN_MIN_SCORE || 4,
+    NO_OF_QUESTIONS: process.env.NO_OF_QUESTIONS || 5,
 }

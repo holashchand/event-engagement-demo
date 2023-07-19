@@ -1,8 +1,8 @@
 const { default: axios } = require("axios");
 const { REGISTRY_URL } = require("../config/config");
 const { _ } = require("lodash");
-const { generateDid } = require("./credentialService");
 const { findExhibitByKeyValue } = require("./exhibitService");
+const { generateDid } = require("./identityService");
 
 
 const serviceUrl = `${REGISTRY_URL}/api/v1/Visitor`;
@@ -11,8 +11,18 @@ const createVisitor = async (payload) => {
     console.log("creating a visitor", payload);
     const did = await generateDid("visitor");
     payload["did"] = `${did}`;
+    payload["exhibitsVisited"] = [];
     return axios.post(serviceUrl, payload).then(resp => resp.data);
 };
+
+const updateVisitorProperty = async (visitorOsid, propertyName, value) => {
+    return axios.post(`${serviceUrl}/${visitorOsid}/${propertyName}`, value, {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+    .then(resp => resp?.data);
+}
 
 const listVisitor = async (headers) => {
     return axios.get(serviceUrl).then(resp => resp?.data);
@@ -53,4 +63,5 @@ module.exports = {
     listVisitor,
     getVisitorByMobileNumber,
     markExhibitAsVisited,
+    updateVisitorProperty,
 }
