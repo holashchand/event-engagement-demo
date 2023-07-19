@@ -4,6 +4,7 @@ import {
   Box,
   Card,
   CardContent,
+  Grid,
   IconButton,
   InputLabel,
   SwipeableDrawer,
@@ -13,11 +14,11 @@ import {
 import { grey } from "@mui/material/colors";
 import {
   Document,
-  PDFViewer,
   Page,
+} from 'react-pdf';
+import {
   StyleSheet,
-  Text,
-  View,
+  BlobProvider, 
 } from "@react-pdf/renderer";
 import { FC, ReactElement, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -31,14 +32,14 @@ import {
   WhatsappIcon,
   WhatsappShareButton,
 } from "react-share";
-import eye from "../assets/eye.svg";
 import home from "../assets/home.svg";
 import leaderboard from "../assets/leaderboard.svg";
-import pdf from "../assets/pdf.svg";
 import playAgain from "../assets/playAgain.svg";
 import share from "../assets/share.svg";
 import ToolBar from "../layout/AppBar";
 import { pageRoutes } from "../routes";
+import qBank from '../layout/Questions';
+import { PDFDocumentProxy } from "pdfjs-dist/types/src/display/api";
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 30,
@@ -53,9 +54,9 @@ const Puller = styled(Box)(({ theme }) => ({
 
 const ExhibitResult: FC<any> = (): ReactElement => {
   let navigate = useNavigate();
-  const {
-    state: { quizResult },
-  } = useLocation();
+  const { state: content } = useLocation();
+  console.log('state quiz resuktt ', content)
+  const quizResult = content.quizResult
 
   const showMsg = true;
 
@@ -65,6 +66,7 @@ const ExhibitResult: FC<any> = (): ReactElement => {
     let label = row.label;
     switch (label) {
       case "Play Again":
+        navigate(`${pageRoutes.EXHIBIT_DETAILS}/${content.exhibit.did}`, {state: content.exhibit})
         break;
       case "Review Answer":
         break;
@@ -85,31 +87,62 @@ const ExhibitResult: FC<any> = (): ReactElement => {
     }
   };
 
+  const [openPdf, setStateOpen] = useState(false)
+  const generatePdf = () => {
+    setStateOpen(true)
+  }
+
   const styles = StyleSheet.create({
     page: {
-      flexDirection: "row",
+      flexDirection: 'column',
+      textAlign: 'center'
     },
     section: {
       flexGrow: 1,
+      textAlign: 'center', 
+      flexDirection:'column',
+      margin: 10,
+      padding: 10,
+      border: '0.5px solid black'
     },
   });
 
-  const MyDocument = (
-    <Document>
-      <Page size="A4" style={styles.page}>
-        <View style={styles.section}>
-          <Text>Hello World!</Text>
-        </View>
-        <View style={styles.section}>
-          <Text>We're inside a PDF!</Text>
-        </View>
+  const QuestionList = () => {
+    return (
+      <div style={{width:'100%', textAlign:'start', marginTop:20, marginLeft:10}}>
+        {qBank.map((value, index) => {
+          return(
+            <div style={{marginTop:20}}>
+              <li key={index}>
+                <p>{index+1}. {value.question}</p>
+                {value.options.map((opt, i) => {
+                  return(
+                    <div style={{marginLeft:20, margin:5, fontSize:14}}>
+                      <li key={i+1}>
+                        <p>{String.fromCharCode(97+i)}. {opt}</p>
+                      </li>
+                    </div>
+                  )
+                })}
+                <p style={{fontSize:16}}>Correct answer: {value.answer}</p>
+              </li>
+            </div>
+          )
+        })}
+      </div>
+    )
+  }
+    
+  const MyDocument = () => {
+    return (<Document>
+      <Page>
+        <div style={styles.section}>
+          <p>Exhibit</p>
+          <QuestionList/>
+        </div>
       </Page>
-    </Document>
-  );
-
-  const generatePdf = () => {
-    <PDFViewer height={"100%"} children={MyDocument}></PDFViewer>;
-  };
+    </Document>)
+  }
 
   const [showModal, setShowModal] = useState(false);
   const handleShare = () => {
@@ -119,14 +152,17 @@ const ExhibitResult: FC<any> = (): ReactElement => {
 
   const listRow1 = [
     { imgpath: playAgain, label: "Play Again" },
-    { imgpath: eye, label: "Review Answer" },
     { imgpath: share, label: "Share Score" },
-  ];
-  const listRow2 = [
-    { imgpath: pdf, label: "Generate PDF" },
-    { imgpath: home, label: "Home" },
     { imgpath: leaderboard, label: "Leader Board" },
   ];
+  const listRow2 = [
+    // { imgpath: pdf, label: "Generate PDF" },
+    { imgpath: home, label: "Home" },
+  ];
+
+  const handleLoadSuccess = (_pdf: PDFDocumentProxy, _blob: Blob | null) => {
+
+  }
 
   return (
     <Box
@@ -138,6 +174,8 @@ const ExhibitResult: FC<any> = (): ReactElement => {
         width: "100%",
       }}
     >
+      {!openPdf ? 
+      (<>
       <ToolBar
         hideBtn={false}
         show={false}
@@ -168,13 +206,17 @@ const ExhibitResult: FC<any> = (): ReactElement => {
           {showMsg ? (
             <>
               <div>
-                <CircleIcon sx={{ color: "green" }} />
-                {quizResult.correctCount}
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <CircleIcon sx={{ color: "green" }} />
+                  <InputLabel>{quizResult.correctCount}</InputLabel>
+                </div>
                 <InputLabel>Correct</InputLabel>
               </div>
               <div>
-                <CircleIcon sx={{ color: "red" }} />
-                {quizResult.wrongCount}
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                  <CircleIcon sx={{ color: "red" }} />
+                  <InputLabel>{quizResult.wrongCount}</InputLabel>
+                </div>
                 <InputLabel>Wrong</InputLabel>
               </div>
             </>
@@ -196,7 +238,7 @@ const ExhibitResult: FC<any> = (): ReactElement => {
               fontWeight={"bold"}
               color={"#4DD8DD"}
             >
-              Congratulation !{" "}
+              Congratulations !{" "}
             </Typography>
             <Typography
               variant="h5"
@@ -221,28 +263,32 @@ const ExhibitResult: FC<any> = (): ReactElement => {
             }}
           ></QrCode2RoundedIcon>
         </Box>
-        <Box mt={6} display={"flex"} justifyContent={"space-around"}>
+        <Grid mt={6} container spacing={3}>
           {listRow1.map((row) => (
-            <IconButton
-              sx={{ flexDirection: "column" }}
-              onClick={() => handleEvents(row)}
-            >
-              <img src={row.imgpath} />
-              <InputLabel>{row.label}</InputLabel>
-            </IconButton>
+            <Grid item xs={4}>
+              <IconButton
+                sx={{ flexDirection: "column" }}
+                onClick={() => handleEvents(row)}
+              >
+                <img src={row.imgpath} />
+                <InputLabel>{row.label}</InputLabel>
+              </IconButton>
+            </Grid>
           ))}
-        </Box>
-        <Box mt={6} display={"flex"} justifyContent={"space-around"}>
+        </Grid>
+        <Grid mt={2} container spacing={3}>
           {listRow2.map((row) => (
-            <IconButton
-              sx={{ flexDirection: "column" }}
-              onClick={() => handleEvents(row)}
-            >
-              <img src={row.imgpath} />
-              <InputLabel>{row.label}</InputLabel>
-            </IconButton>
+            <Grid item xs={4}>
+              <IconButton
+                sx={{ flexDirection: "column" }}
+                onClick={() => handleEvents(row)}
+              >
+                <img src={row.imgpath} />
+                <InputLabel>{row.label}</InputLabel>
+              </IconButton>
+            </Grid>
           ))}
-        </Box>
+        </Grid>
       </Box>
       <SwipeableDrawer
         onClose={() => setShowModal(!showModal)}
@@ -274,7 +320,7 @@ const ExhibitResult: FC<any> = (): ReactElement => {
             <EmailShareButton url={"https://www.email.com"}>
               <EmailIcon size={40} round></EmailIcon>
             </EmailShareButton>
-            <WhatsappShareButton url={"https://www.whatsapp.com"}>
+            <WhatsappShareButton title="Score" url={"https://www.whatsapp.com"}>
               <WhatsappIcon size={40} round={true} />
             </WhatsappShareButton>
             <TwitterShareButton url={"https://www.twitter.com"}>
@@ -283,6 +329,20 @@ const ExhibitResult: FC<any> = (): ReactElement => {
           </Box>
         </Box>
       </SwipeableDrawer>
+      </>): 
+      // (<PDFViewer width={`100%`}><MyDocument/></PDFViewer>)
+      (
+      <BlobProvider document={<MyDocument/>}>
+      {({ blob, url, loading }) => !loading ? (
+              <Document file={url}
+                onLoadSuccess={(pdf) => handleLoadSuccess(pdf, blob)}
+                renderMode="canvas">
+                <Page pageNumber={1}
+                  width={window.innerWidth} />
+              </Document>
+            ) : null}
+    </BlobProvider>)
+      }
     </Box>
   );
 };

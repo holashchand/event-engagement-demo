@@ -34,15 +34,15 @@ const LeaderBoard: FC<any> = (): ReactElement => {
             width: '100%'
         }}>
             <ToolBar hideBtn={false} show={false} badgeOpt={false} toolbarHeight={true}/>
-            <Box sx={{position: 'absolute', left: '15%', top: '12%'}}>
+            <Box sx={{position: 'absolute', left: '18%', top: '11%'}}>
                 <img src={rank}/>
             </Box>
-                <Avatar sx={{position: 'absolute', left: '17%', top: '12%'}}></Avatar>
-                <Avatar sx={{position: 'absolute', top: '8%'}}></Avatar>
-                <Avatar sx={{position: 'absolute', top: '12%', right:'18%'}}></Avatar>
-                <InputLabel sx={{position: 'absolute', left: '25%', top: '30%', color:'white'}}>{rows[0].points}</InputLabel>
+                <Avatar sx={{position: 'absolute', left: '22%', top: '11%'}}></Avatar>
+                <Avatar sx={{position: 'absolute', top: '7%'}}></Avatar>
+                <Avatar sx={{position: 'absolute', top: '11%', right:'22%'}}></Avatar>
+                <InputLabel sx={{position: 'absolute', left: '27%', top: '30%', color:'white'}}>{rows[0].points}</InputLabel>
                 <InputLabel sx={{position: 'absolute', top: '30%', color:'white'}}>{rows[1].points}</InputLabel>
-                <InputLabel sx={{position: 'absolute', top: '30%', right:'25%', color:'white'}}>{rows[2].points}</InputLabel>
+                <InputLabel sx={{position: 'absolute', top: '30%', right:'27%', color:'white'}}>{rows[2].points}</InputLabel>
             <Box sx={{ my: 50, mx: 2, color:'primary.dark', width: '100%'}}>
             <TableContainer component={Paper}>
                 <Table sx={{ }} aria-label="simple table">

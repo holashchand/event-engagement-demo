@@ -8,14 +8,14 @@ import {
   styled,
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
-import { FC, ReactElement, useMemo, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { FC, ReactElement, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Quiz from "../Quiz/Quiz";
-import { useExhibitsData } from "../api/exhibit";
-import { useQuizQuestions, useSubmitQuiz } from "../api/quiz";
+import { useExhibitsDataOnId } from "../api/exhibit";
+import { useSubmitQuiz } from "../api/quiz";
 import ToolBar from "../layout/AppBar";
 import { pageRoutes } from "../routes";
-import { Exhibit } from "../types/exhibit";
+import ArrowBackOutlinedIcon from "@mui/icons-material/ArrowBackOutlined";
 
 const Puller = styled(Box)(({ theme }) => ({
   width: 48,
@@ -26,6 +26,9 @@ const Puller = styled(Box)(({ theme }) => ({
 }));
 
 const ExhibitCardDetails: FC<any> = (): ReactElement => {
+  const { state } = useLocation();
+  console.log('props ', state);
+  const entity = state;
   const [open, setOpen] = useState(false);
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -36,21 +39,26 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
     navigate(-1);
   };
 
-  const { exhibitId } = useParams();
-  const { data } = useExhibitsData();
-  const exhibit: Exhibit = useMemo(() => {
-    return (
-      data?.visited.find((x) => x.exhibitId === exhibitId) ||
-      data?.notVisited.find((x) => x.exhibitId === exhibitId) ||
-      ({} as Exhibit)
-    );
-  }, [exhibitId, data]);
-  const { data: questionsData } = useQuizQuestions(
-    exhibit.exhibitId,
-    exhibit.visited,
-  );
+  // const { exhibitId } = useParams();
+  // const exhibit: Exhibit = state;
+  // const { data } = useExhibitsData();
+  // const exhibit: Exhibit = useMemo(() => {
+  //   return (
+  //     data?.visited.find((x) => x.did === exhibitId) ||
+  //     data?.unvisited.find((x) => x.did === exhibitId) ||
+  //     ({} as Exhibit)
+  //   );
+  // }, [exhibitId, data]);
+  const { data } = useExhibitsDataOnId(entity.did);
+  const exhibit = data?.exhibitDetails;
+  const questionsData = data?.quizConfig;
+  console.log('exhibit ', exhibit);
+  console.log('questionsData ', questionsData);
+  // const { data: questionsData } = useQuizQuestions(
+  //   exhibit.did
+  // );
 
-  const { mutate: submitQuiz } = useSubmitQuiz(exhibit.exhibitId);
+  const { mutate: submitQuiz } = useSubmitQuiz("1");
 
   const handleFinishQuiz = (data: any) => {
     const answers = questionsData?.questions.map((question, index) => {
@@ -59,11 +67,15 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         answer: data[index],
       };
     });
+    console.log('handle finish quiz')
     submitQuiz(answers, {
       onSuccess: (data) => {
+        console.log('id ', entity);
+        console.log('data ', data);
         navigate(pageRoutes.EXHIBIT_RESULT, {
           state: {
             quizResult: data,
+            exhibit: entity
           },
         });
       },
@@ -87,10 +99,11 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         toolbarHeight={false}
         hideBtn={false}
       />
-      <Box sx={{ my: 17, mx: 2, color: "primary.dark", width: "100%" }}>
-        <Typography variant="h6" mb={2} sx={{ color: "primary.main" }}>
-          {exhibit.name}
-        </Typography>
+      <Box sx={{ my: 15, mx: 2, color: "primary.dark", width: "100%" }}>
+        <div style={{textAlign:'start'}}>
+          <ArrowBackOutlinedIcon onClick={navigateBack} sx={{color:"black"}} fontSize="medium" />
+        </div>
+          <Typography variant="h6" mb={2} sx={{ color: "primary.main" }}>{exhibit?.name}</Typography>
         <Box
           border={"1px dotted #67C8D1"}
           sx={{
@@ -102,11 +115,11 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
         >
           <Box sx={{ height: "80%" }}>
             <div style={{ marginTop: "2%" }}>
-              <video src={exhibit.videoSrcUrl} width="95%" controls></video>
+              <video src={exhibit?.videoURL} width="95%" controls></video>
             </div>
             <Box mx={2}>
               <Typography variant="body2" color={"black"} textAlign={"justify"}>
-                {exhibit.description || exhibit.miniDescription}
+                {exhibit?.fullDescription || exhibit?.shortDescription}
               </Typography>
             </Box>
             <Box
@@ -121,7 +134,7 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
                 transform: "translate(25%, 0%)",
               }}
             >
-              {/* <img src="" width={80} height={80}></img> */}
+              <img src={exhibit?.logoURL} width={60} height={60}></img>
               <div style={{ margin: "1rem" }}>
                 <Typography
                   variant="body2"
@@ -146,14 +159,14 @@ const ExhibitCardDetails: FC<any> = (): ReactElement => {
             </Box>
           </Box>
           <Box mt={4} mb={2} display={"flex"} justifyContent={"space-around"}>
-            <Button
+            {/* <Button
               sx={{ color: "#67C8D1", border: "1px solid #67C8D1" }}
               variant="outlined"
               onClick={navigateBack}
             >
               Back
-            </Button>
-            {exhibit.visited ? (
+            </Button> */}
+            {state?.additionalProp1?.visited ? (
               <Button
                 sx={{ color: "#67C8D1", border: "1px solid #67C8D1" }}
                 variant="outlined"

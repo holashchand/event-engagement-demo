@@ -3,6 +3,8 @@ import { FC, ReactElement, useMemo, useState } from "react";
 import { useExhibitsData } from "../api/exhibit";
 import ToolBar from "../layout/AppBar";
 import TabContents from "../layout/ExhibitsTable";
+import ExhibitCenter from '../assets/ExhibitCenter.svg';
+import Agenda from '../assets/Agenda.jpeg';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -20,21 +22,8 @@ const ExhibitsHome: FC<any> = (): ReactElement => {
 
   const { visitedList, notVisitedList } = useMemo(() => {
     if (!data) return { visitedList: [], notVisitedList: [] };
-    return { visitedList: data.visited, notVisitedList: data.notVisited };
+    return { visitedList: data.visited, notVisitedList: data.unvisited };
   }, [data]);
-
-  //   const visitedList = [
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //     { date: "12/07/20203", time: "1pm", description: "exhibit quiz" },
-  //   ];
 
   function CustomTabPanel(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
@@ -86,23 +75,30 @@ const ExhibitsHome: FC<any> = (): ReactElement => {
           Exhibits:
         </Typography>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs value={tabIndex} onChange={handleTabChange} centered>
-            <Tab label="Visited" {...a11yProps(0)} />
-            <Tab label="Not visited" {...a11yProps(1)} />
+          <Tabs value={tabIndex} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
+            <Tab label="Events Scheduled" {...a11yProps(0)} />
+            <Tab label="Visited Exhibits" {...a11yProps(1)} />
+            <Tab label="Not visited Exhibits" {...a11yProps(2)} />
           </Tabs>
         </Box>
         <CustomTabPanel value={tabIndex} index={0}>
-          {isLoading ? (
-            "Loading ..."
-          ) : (
-            <TabContents content={visitedList}></TabContents>
-          )}
+          <Box mt={4}>
+            <img src={Agenda} width={'100%'} height={'100%'}/>
+          </Box>
         </CustomTabPanel>
         <CustomTabPanel value={tabIndex} index={1}>
           {isLoading ? (
+            // "Loading ..."
+            <img src={ExhibitCenter} style={{marginTop: '10%'}}/>
+          ) : (
+            <TabContents content={visitedList} visited={true}></TabContents>
+          )}
+        </CustomTabPanel>
+        <CustomTabPanel value={tabIndex} index={2}>
+          {isLoading ? (
             "Loading ..."
           ) : (
-            <TabContents content={notVisitedList}></TabContents>
+            <TabContents content={notVisitedList} visited={false}></TabContents>
           )}
         </CustomTabPanel>
       </Box>

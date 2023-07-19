@@ -24,4 +24,14 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    proxy: {
+      "/api/v1/Exhibit": {
+        target: "https://api.up-ai.in",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      },
+    },
+  },
+
 });

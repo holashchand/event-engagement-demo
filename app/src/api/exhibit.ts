@@ -1,12 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useQuery } from "react-query";
 import { apiRoutes } from "../routes";
-import { Exhibit } from "../types/exhibit";
+import { Exhibit, ExhibitDetailsResponse } from "../types/exhibit";
 import { axiosInst } from "./axios";
 
 interface ExhibitsResponse {
   visited: Exhibit[];
-  notVisited: Exhibit[];
-  count: number;
+  unvisited: Exhibit[];
 }
 
 export const useExhibitsData = () => {
@@ -17,38 +16,16 @@ export const useExhibitsData = () => {
     () =>
       axiosInst
         .get<ExhibitsResponse>(apiRoutes.EXHIBITS)
-        .then((res) => res.data),
+        .then((res) => {console.log('response ', res); return res.data}),
   );
 };
 
-export const useVisitExhibit = () => {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationFn: (exhibitId: string) =>
-      axiosInst.post(apiRoutes.VISIT_EXHIBIT, { exhibitId }),
-    onMutate: async (exhibitId) => {
-      await queryClient.cancelQueries(["exhibits"]);
-
-      queryClient.setQueryData<ExhibitsResponse>(["exhibits"], (oldData) => {
-        if (!oldData) {
-          return { visited: [], notVisited: [], count: 0 };
-        }
-        return {
-          visited: [
-            ...oldData.visited,
-            ...oldData.notVisited
-              .filter((x) => x.exhibitId === exhibitId)
-              .map((x) => ({
-                ...x,
-                visited: true,
-              })),
-          ],
-          notVisited: oldData.notVisited.filter(
-            (x) => x.exhibitId !== exhibitId,
-          ),
-          count: oldData.count,
-        };
-      });
-    },
-  });
-};
+export const useExhibitsDataOnId = (exhibitId: string) => {
+  return useQuery(
+    ["exhibitsDet", exhibitId],
+    () =>
+      axiosInst
+        .get<ExhibitDetailsResponse>(apiRoutes.EXHIBITS_DET)
+        .then((res) => res.data),
+  );
+}

@@ -21,11 +21,16 @@ export const pageRoutes = {
 };
 
 export const apiRoutes = {
-  EXHIBITS: "/exhibits",
   VISIT_EXHIBIT: "/visit",
-  QUIZ: "/quiz",
-  QUIZ_SUBMIT: "/quiz/submit",
-  BADGE: "/badge",
+
+  QUIZ: "/quiz",     // "/api/v1/Quiz/getQuestions/{exhibitionId}"  
+  QUIZ_SUBMIT: "/quiz/submit",   //   "/api/v1/Quiz/submit/{exhibitionId}"  "POST"
+  
+  BADGE: "/api/v1/Visitor/Quiz/list",   //"/badge",  
+  VISITOR_DETAILS: '/api/v1/visitor/details',  //'/visitorDet'
+  
+  EXHIBITS: "/api/v1/Exhibit", // "/exhibits", 
+  EXHIBITS_DET: "/api/v1/Exhibit/{entityId}"  // '/exhibitsDet'
 };
 
 interface Route {
