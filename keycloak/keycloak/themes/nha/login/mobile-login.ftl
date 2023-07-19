@@ -21,7 +21,7 @@
         </script>
     <#elseif section = "form">
         <div class="ndear-login-card-wrapper">
-            <h3>Pledger Login</h3>
+            <h3>UP@AI Login</h3>
             <br/>
             <b>Enter ABHA number/mobile number</b>
             <div class="box-container">
@@ -56,10 +56,9 @@
                         </form>
                     </div>
                     <div class="text-center mt-3">
-                        <a href="${properties.registerUrl}">Not Registered as Pledger? Register here</a>
+                        <a href="${properties.registerUrl}">Not Registered? Register here</a>
                     </div>
                     <div class="text-center mt-3">
-                        <span>Forgot your ABHA? Click <a href="${properties.forgotAbha}" target="_blank">here</a> to know your ABHA</span>
                     </div>
                 </#if>
             </div>

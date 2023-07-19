@@ -41,7 +41,6 @@
             <#if properties.keycloakLogo = "NA">
                 <img src="${url.resourcesPath}/img/ndearLogo.svg" alt="" width="88%" height="auto">
             <#else>
-                <img src="${properties.keycloakLogo!}" alt="" width="88%" height="auto">
             </#if>
 
 
