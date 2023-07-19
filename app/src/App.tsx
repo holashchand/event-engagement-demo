@@ -1,34 +1,38 @@
-import { CssBaseline, ThemeProvider } from "@mui/material";
+import { Box, CssBaseline, ThemeProvider } from "@mui/material";
+import { ReactKeycloakProvider } from "@react-keycloak/web";
 import { QueryClient, QueryClientProvider } from "react-query";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.css";
-import HomePage from "./pages/Home";
-import { pageRoutes } from "./routes";
+import Interceptor from "./Interceptor";
+import keycloak from "./keycloak";
+import { routes as appRoutes } from "./routes";
 import { theme } from "./theme";
-
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path={pageRoutes.HOME} element={<HomePage />} />,
-  ),
-);
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <>
+    <ReactKeycloakProvider authClient={keycloak}>
+      <Interceptor />
       <QueryClientProvider client={queryClient}>
         <ThemeProvider theme={theme}>
           <CssBaseline enableColorScheme />
-          <RouterProvider router={router} />
+          <Box height="100vh" display="flex" flexDirection="column">
+            <Router>
+              <Routes>
+                {appRoutes.map((route) => (
+                  <Route
+                    key={route.key}
+                    path={route.path}
+                    element={<route.component />}
+                  />
+                ))}
+              </Routes>
+            </Router>
+          </Box>
         </ThemeProvider>
       </QueryClientProvider>
-    </>
+    </ReactKeycloakProvider>
   );
 }
 
