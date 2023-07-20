@@ -23,7 +23,7 @@
         <div class="ndear-login-card-wrapper">
             <h3>UP@AI Login</h3>
             <br/>
-            <b>Enter ABHA number/mobile number</b>
+            <b>Enter mobile number</b>
             <div class="box-container">
                 <#if realm.password>
                     <div>
@@ -37,7 +37,7 @@
                                            pattern="[0-9]+"
                                            onchange="try{setCustomValidity('')}catch(e){}"
                                            oninput="try{setCustomValidity('')}catch(e){}"
-                                           oninvalid="try{setCustomValidity('Please enter valid ABHA/Mobile number')}catch(e){}"
+                                           oninvalid="try{setCustomValidity('Please enter Mobile number')}catch(e){}"
                                            tabindex="1"/>
                                 </div>
 
