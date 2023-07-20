@@ -45,7 +45,12 @@ App.all(["/api/v1/*"], (req, res, next) => {
      || /^\/api\/v1\/Exhibit\/([a-z]|[0-9]|\-)+$/.test(req.path)))) {
         console.log("Serving request without authentication");
         next();
-    }else{
+    } else if (req.method === "POST" && reqPath === "/api/v1/Exhibit") {
+        keycloak.protect("realm:exhibit-manager")(req, res, next);
+    } else if (req.method === "POST" && reqPath === "/api/v1/Event") {
+        keycloak.protect("realm:event-manager")(req, res, next);
+    }
+    else{
         keycloak.protect()(req, res, next);
     }
     // next();
