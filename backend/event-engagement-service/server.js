@@ -29,14 +29,20 @@ App.use((req, res, next) => {
 })
 
 App.all(["/api/v1/*"], (req, res, next) => {
-    if(
-        (req.method === 'GET' && req?.path === '/api/v1/Leaderboard')
-    || (req.method === 'POST' && ['/api/v1/Visitor', '/api/v1/Exhibit', '/api/v1/Event', '/api/v1/Exhibit/search']
+    let pattern = /.*\/$/g;
+    let reqPath = req?.path;
+    if(pattern.test(reqPath)) {
+        reqPath = reqPath?.slice(0, -1);
+    }
+    if(req.method === "GET" && reqPath === "/api/v1/QRCode") {
+        keycloak.protect()(req, res, next)
+    } else if(
+        (req.method === 'GET' && reqPath === '/api/v1/Leaderboard')
+    || (req.method === 'POST' && ['/api/v1/Visitor', '/api/v1/Event', '/api/v1/Exhibit/search']
     .some(d => req.path === d))
-    || (req.method === 'GET' && _.startsWith('/api/v1/QRCode/', req.path)
-     && _.endsWith('/verify', req.path))
-     || (req.method === 'GET' && ((req.path === '/api/v1/Exhibit') 
-     || /\/api\/v1\/Exhibit\/([a-z]|[0-9]|\-)*/.test(req.path)))) {
+    || (req.method === 'GET' && reqPath?.indexOf('/api/v1/QRCode') > -1)
+     || (req.method === 'GET' && ((reqPath === '/api/v1/Exhibit') 
+     || /^\/api\/v1\/Exhibit\/([a-z]|[0-9]|\-)+$/.test(req.path)))) {
         console.log("Serving request without authentication");
         next();
     }else{
@@ -71,6 +77,7 @@ App.use(function(err, req, res, next) {
         })
     } else {
         res.status(500).send({
+            "code": err?.code,
             "message": err?.message
         });
     }
