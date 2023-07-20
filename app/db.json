@@ -1,0 +1,325 @@
+{
+  "exhibits": {
+    "visited": [
+      {
+        "did": "1",
+        "name": "Whirpool",
+        "shortDescription": "A small description",
+        "fullDescription": "A long explanative description",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "01",
+        "startDate": "2023-07-17T14:42:29.810Z",
+        "endDate": "2023-07-17T14:42:29.810Z",
+        "organization": "abc",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      },
+      {
+        "did": "2",
+        "name": "Samsung",
+        "shortDescription": "A small description",
+        "fullDescription": "A long explanative description",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "02",
+        "startDate": "2023-07-17T13:42:29.810Z",
+        "endDate": "2023-07-17T14:42:29.810Z",
+        "organization": "def",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      },
+      {
+        "did": "3",
+        "name": "Panasonic",
+        "shortDescription": "A small description",
+        "fullDescription": "A long explanative description",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "03",
+        "startDate": "2023-07-17T15:42:29.810Z",
+        "endDate": "2023-07-17T16:42:29.810Z",
+        "organization": "def",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      },
+      {
+        "did": "4",
+        "name": "LG",
+        "shortDescription": "A small description",
+        "fullDescription": "A long explanative description",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "04",
+        "startDate": "2023-07-17T15:42:29.810Z",
+        "endDate": "2023-07-17T16:42:29.810Z",
+        "organization": "ghi",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      }
+    ],
+    "unvisited": [
+      {
+        "did": "5",
+        "name": "Sony",
+        "shortDescription": "A small description",
+        "fullDescription": "string",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "05",
+        "startDate": "2023-07-17T14:42:29.810Z",
+        "endDate": "2023-07-17T14:42:29.810Z",
+        "organization": "xyz",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      },
+      {
+        "did": "6",
+        "name": "Reliance",
+        "shortDescription": "A small description",
+        "fullDescription": "string",
+        "logoURL": "https://picsum.photos/20",
+        "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+        "boothNumber": "06",
+        "startDate": "2023-07-17T14:42:29.810Z",
+        "endDate": "2023-07-17T14:42:29.810Z",
+        "organization": "rst",
+        "qrId": "string",
+        "quizConfig": {
+          "title": "string",
+          "description": "string",
+          "questions": [
+            {
+              "question": "string",
+              "correctAnswer": "string",
+              "options": [
+                "string"
+              ]
+            }
+          ]
+        },
+        "additionalProp1": {}
+      }
+    ]
+  },
+  "events": [],
+  "quiz": {
+    "questions": [
+      {
+        "osid": 1,
+        "question": "What is the capital of Haryana?",
+        "options": ["Yamunanagar", "Panipat", "Gurgaon", "Chandigarh"],
+        "answer": "Chandigarh"
+      },
+      {
+        "osid": 2,
+        "question": "What is the capital of Punjab?",
+        "options": ["Patiala", "Ludhiana", "Amritsar", "Chandigarh"],
+        "answer": "Chandigarh"
+      },
+      {
+        "osid": 3,
+        "question": "What is the capital of India?",
+        "options": ["Delhi", "Mumbai", "Kolkata", "Chennai"],
+        "answer": "Delhi"
+      },
+      {
+        "osid": 4,
+        "question": "What is the capital of Uttarakhad?",
+        "options": ["Roorkee", "Haridwar", "Dehradun", "Nanital"],
+        "answer": "Dehradun"
+      },
+      {
+        "osid": 5,
+        "question": "What is capital of Uttar Pradesh?",
+        "options": ["GB Nagar", "Lucknow", "Prayagraj", "Agra"],
+        "answer": "Lucknow"
+      }
+    ]
+  },
+  "badge": [
+    {
+      "did": "string",
+      "title": "string",
+      "visitorName": "string",
+      "visitorMobileNumber": "string",
+      "date": "2023-07-17T15:06:35.276Z",
+      "exhibitOsid": "string",
+      "exhibitName": "string",
+      "exhibitOrganization": "string",
+      "score": 8,
+      "totalScore": 10,
+      "attempCount": 2,
+      "badgeWon": true
+    },
+    {
+      "did": "string",
+      "title": "string",
+      "visitorName": "string",
+      "visitorMobileNumber": "string",
+      "date": "2023-07-17T15:06:35.276Z",
+      "exhibitOsid": "string",
+      "exhibitName": "string",
+      "exhibitOrganization": "string",
+      "score": 8,
+      "totalScore": 10,
+      "attempCount": 5,
+      "badgeWon": false
+    },
+    {
+      "did": "string",
+      "title": "string",
+      "visitorName": "string",
+      "visitorMobileNumber": "string",
+      "date": "2023-07-17T15:06:35.276Z",
+      "exhibitOsid": "string",
+      "exhibitName": "string",
+      "exhibitOrganization": "string",
+      "score": 9,
+      "totalScore": 10,
+      "attempCount": 1,
+      "badgeWon": true
+    },
+    {
+      "did": "string",
+      "title": "string",
+      "visitorName": "string",
+      "visitorMobileNumber": "string",
+      "date": "2023-07-17T15:06:35.276Z",
+      "exhibitOsid": "string",
+      "exhibitName": "string",
+      "exhibitOrganization": "string",
+      "score": 10,
+      "totalScore": 10,
+      "attempCount": 3,
+      "badgeWon": true
+    }
+  ],
+  "visitorDet": {
+    "did": "1",
+    "name": "ABC",
+    "mobileNumber": "9876543212",
+    "email": "abc@gmail.com",
+    "exhibitsVisited": [
+      "1", "2"
+    ]
+  },
+  "exhibitsDet": {
+    "exhibitDetails": {
+      "name": "Whirpool",
+      "mobileNumber": "9876543212",
+      "shortDescription": "A small description",
+      "fullDescription": "A long explanative description",
+      "logoURL": "https://picsum.photos/20",
+      "videoURL": "http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+      "boothNumber": "01",
+      "startDate": "2023-07-17T14:42:29.810Z",
+      "endDate": "2023-07-17T14:42:29.810Z",
+      "organization": "ABC",
+      "qrId": "string"
+    },
+    "quizConfig": {
+      "title": "QUIZ",
+      "description": "A small quiz description",
+      "noOfQuestionPerQuiz": 5,
+      "thresholdLimit": 4,
+      "questions": [
+        {
+          "osid": 1,
+          "question": "What is the capital of Haryana?",
+          "options": ["Yamunanagar", "Panipat", "Gurgaon", "Chandigarh"],
+          "correctAnswer": "Chandigarh"
+        },
+        {
+          "osid": 2,
+          "question": "What is the capital of Punjab?",
+          "options": ["Patiala", "Ludhiana", "Amritsar", "Chandigarh"],
+          "correctAnswer": "Chandigarh"
+        },
+        {
+          "osid": 3,
+          "question": "What is the capital of India?",
+          "options": ["Delhi", "Mumbai", "Kolkata", "Chennai"],
+          "correctAnswer": "Delhi"
+        },
+        {
+          "osid": 4,
+          "question": "What is the capital of Uttarakhad?",
+          "options": ["Roorkee", "Haridwar", "Dehradun", "Nanital"],
+          "correctAnswer": "Dehradun"
+        },
+        {
+          "osid": 5,
+          "question": "What is capital of Uttar Pradesh?",
+          "options": ["GB Nagar", "Lucknow", "Prayagraj", "Agra"],
+          "correctAnswer": "Lucknow"
+        }
+      ]
+    }
+  }
+}
