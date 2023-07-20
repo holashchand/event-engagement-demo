@@ -82,7 +82,7 @@ App.use(function(err, req, res, next) {
         })
     } else {
         res.status(500).send({
-            "code": err?.code,
+            "status": err?.code,
             "message": err?.message
         });
     }

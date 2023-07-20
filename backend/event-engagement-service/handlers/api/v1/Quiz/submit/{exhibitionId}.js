@@ -9,7 +9,7 @@ module.exports = {
     post: async function (req, res, next) {
         const exhibitOsid = req.params.exhibitionId;
         getCurrentUser(req)
-        then(visitor => {
+        .then(visitor => {
             submitQuiz(exhibitOsid, visitor, {...req.body})
                 .then(badgeWon => {
                     let message;
