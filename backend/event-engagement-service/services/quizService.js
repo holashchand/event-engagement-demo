@@ -135,7 +135,7 @@ const getLeaderboard = async () => {
         result[item?.visitorMobileNumber] = {
             ...result[item?.visitorMobileNumber],
             badges: result[item?.visitorMobileNumber].badges + 1,
-            attempts: result[item?.visitorMobileNumber].attempts + item?.attempts,
+            attempts: result[item?.visitorMobileNumber].attempts + item?.attemptCount,
             score: result[item?.visitorMobileNumber].score + item?.score,
         }
         return result;
