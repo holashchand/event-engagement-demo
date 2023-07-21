@@ -138,7 +138,7 @@ const getLeaderboard = async () => {
             attempts: result[item?.visitorMobileNumber].attempts + item?.attempts,
             score: result[item?.visitorMobileNumber].score + item?.score,
         }
-        return res;
+        return result;
     }, {});
     return sortLeaderboard(visitorQuizes);
 }
