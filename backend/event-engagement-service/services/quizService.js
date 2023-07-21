@@ -27,7 +27,7 @@ const createOrUpdate = async (exhibit, visitor, results) => {
         quiz.attemptCount += 1;
     }
     quiz.date = new Date().toISOString();
-    quiz = {...quiz, results};
+    quiz = {...quiz, ...results};
     let url = `${serviceUrl}`;
     let method = 'post';
     if (quizExists) {
