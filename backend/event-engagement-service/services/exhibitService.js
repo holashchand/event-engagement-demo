@@ -16,7 +16,7 @@ const checkAnswers = (submitions, questions) => {
             isCorrect: answer === correctAnswer
         };
     });
-    const score = answers?.filter(d => d.isCorrect).length;
+    const score = answers?.filter(d => d.isCorrect)?.length || 0;
     return {
         answers,
         score,
